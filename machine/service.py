@@ -117,10 +117,16 @@ class RuleService:
         engine = self._get_engine(law, reference_date)
 
         # Gather sources from all services for cross-service lookups
+        # Use pd.concat when multiple services share a table name (e.g. multiple municipalities
+        # each having a "werk_en_re_integratie" table) so no data is lost.
         all_sources = {}
         if self.services and hasattr(self.services, "services"):
             for service_name, service in self.services.services.items():
-                all_sources.update(service.source_dataframes)
+                for table_name, df in service.source_dataframes.items():
+                    if table_name in all_sources:
+                        all_sources[table_name] = pd.concat([all_sources[table_name], df], ignore_index=True)
+                    else:
+                        all_sources[table_name] = df
         else:
             # Fallback to just this service's sources
             all_sources = self.source_dataframes

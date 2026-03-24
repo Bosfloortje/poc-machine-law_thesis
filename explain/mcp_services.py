@@ -43,10 +43,15 @@ class MCPServiceRegistry:
             "wet_kinderopvang": "kinderopvangtoeslag",
         }
 
-        # Get all discoverable services for citizens
+        # Get all discoverable services for citizens and businesses
         try:
-            # Get discoverable service laws from the resolver for citizens
+            # Get discoverable service laws from the resolver for citizens and businesses
             discoverable_laws = self.services.get_discoverable_service_laws("CITIZEN")
+            for svc, laws in self.services.get_discoverable_service_laws("BUSINESS").items():
+                if svc in discoverable_laws:
+                    discoverable_laws[svc].extend(l for l in laws if l not in discoverable_laws[svc])
+                else:
+                    discoverable_laws[svc] = laws
             print(f"Discovered services and laws: {discoverable_laws}")
 
             # Generate service instances for each discoverable law
