@@ -1,0 +1,1911 @@
+globalServices:
+  CBS: &id001
+    levensverwachting:
+    - jaar: 2025
+      verwachting_65: 20.5
+  KIESRAAD: &id002
+    verkiezingen:
+    - type: TWEEDE_KAMER
+      verkiezingsdatum: '2025-10-29'
+  JenV: &id003
+    jurisdicties:
+    - gemeente: Amsterdam
+      arrondissement: AMSTERDAM
+      rechtbank: RECHTBANK_AMSTERDAM
+    - gemeente: Amstelveen
+      arrondissement: AMSTERDAM
+      rechtbank: RECHTBANK_AMSTERDAM
+    - gemeente: Haarlem
+      arrondissement: NOORD-HOLLAND
+      rechtbank: RECHTBANK_NOORD_HOLLAND
+    - gemeente: Alkmaar
+      arrondissement: NOORD-HOLLAND
+      rechtbank: RECHTBANK_NOORD_HOLLAND
+    - gemeente: Rotterdam
+      arrondissement: ROTTERDAM
+      rechtbank: RECHTBANK_ROTTERDAM
+    - gemeente: Utrecht
+      arrondissement: MIDDEN-NEDERLAND
+      rechtbank: RECHTBANK_MIDDEN_NEDERLAND
+    - gemeente: Den Haag
+      arrondissement: DEN_HAAG
+      rechtbank: RECHTBANK_DEN_HAAG
+    - gemeente: Groningen
+      arrondissement: NOORD-NEDERLAND
+      rechtbank: RECHTBANK_NOORD_NEDERLAND
+    - gemeente: Maastricht
+      arrondissement: LIMBURG
+      rechtbank: RECHTBANK_LIMBURG
+    - gemeente: Arnhem
+      arrondissement: GELDERLAND
+      rechtbank: RECHTBANK_GELDERLAND
+profiles:
+  '140592532':
+    name: Anna van Leeuwen
+    description: In loondienst, met laag inkomen, met partner.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '140592532'
+          geboortedatum: '1990-02-22'
+          verblijfsadres: Maastricht
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 36
+          age: 36
+          geslacht: V
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: true
+          residence_address: Schoolstraat 128, 6225NK Maastricht
+          has_fixed_address: true
+          household_size: 2
+        relaties:
+        - bsn: '140592532'
+          partnerschap_type: GEHUWD
+          partner_bsn: '356029085'
+          has_partner: true
+          kinderen: []
+        verblijfplaats:
+        - bsn: '140592532'
+          straat: Schoolstraat
+          huisnummer: '128'
+          postcode: 6225NK
+          woonplaats: Maastricht
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '140592532'
+          leeftijd: 36
+          geboortedatum: '1990-02-22'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: true
+          verblijfsadres: Schoolstraat 128, 6225NK Maastricht
+          huishoudgrootte: 2
+      BELASTINGDIENST:
+        box1:
+        - bsn: '140592532'
+          loon_uit_dienstbetrekking: 2691811
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: 0
+        box2:
+        - bsn: '140592532'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '140592532'
+          spaargeld: 282787
+          beleggingen: 0
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '140592532'
+          bedrag: 224317
+        maandelijks_inkomen:
+        - bsn: '140592532'
+          bedrag: 224317
+        assets:
+        - bsn: '140592532'
+          bedrag: 282787
+        bezittingen:
+        - bsn: '140592532'
+          bedrag: 282787
+        business_income:
+        - bsn: '140592532'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '140592532'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '140592532'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '140592532'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '140592532'
+          vermogen: 282787
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '140592532'
+          dienstverband_type: TIJDELIJK
+          verzekerd_ww: true
+          verzekerd_wia: true
+        uwv_toetsingsinkomen:
+        - bsn: '140592532'
+          toetsingsinkomen: 2691811
+        uwv_werkgegevens:
+        - bsn: '140592532'
+          gemiddeld_uren_per_week: 38.0
+          huidige_uren_per_week: 38.0
+          gewerkte_weken_36: 52
+          arbeidsverleden_jaren: 26
+          jaarloon: 2691811
+        ziektewet:
+        - bsn: '140592532'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '140592532'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '140592532'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '140592532'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '140592532'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '140592532'
+          waarde: false
+        receives_study_grant:
+        - bsn: '140592532'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '140592532'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '140592532'
+          waarde: false
+        detentie:
+        - bsn: '140592532'
+          is_gedetineerd: false
+      GEMEENTE_MAASTRICHT:
+        werk_en_re_integratie:
+        - bsn: '140592532'
+          arbeidsvermogen: MEDISCH_VOLLEDIG
+          ontheffing_reden: MEDISCH_VOLLEDIG
+          ontheffing_einddatum: '2025-12-12'
+          re_integratie_traject: null
+      SVB:
+        retirement_age:
+        - bsn: '140592532'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '140592532'
+          pensioenleeftijd: 68
+      IND:
+        verblijfsvergunningen:
+        - bsn: '140592532'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '140592532'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '140592532'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '602947376':
+    name: Lotte van Dijk
+    description: Gepensioneerd, met partner.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '602947376'
+          geboortedatum: '1939-12-23'
+          verblijfsadres: Utrecht
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 87
+          age: 87
+          geslacht: V
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: true
+          residence_address: Amsteldijk 91, 3521DM Utrecht
+          has_fixed_address: true
+          household_size: 2
+        relaties:
+        - bsn: '602947376'
+          partnerschap_type: GEHUWD
+          partner_bsn: '258007337'
+          has_partner: true
+          kinderen: []
+        verblijfplaats:
+        - bsn: '602947376'
+          straat: Amsteldijk
+          huisnummer: '91'
+          postcode: 3521DM
+          woonplaats: Utrecht
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '602947376'
+          leeftijd: 87
+          geboortedatum: '1939-12-23'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: true
+          verblijfsadres: Amsteldijk 91, 3521DM Utrecht
+          huishoudgrootte: 2
+      BELASTINGDIENST:
+        box1:
+        - bsn: '602947376'
+          loon_uit_dienstbetrekking: 0
+          uitkeringen_en_pensioenen: 1508997
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: -50000
+        box2:
+        - bsn: '602947376'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '602947376'
+          spaargeld: 1432152
+          beleggingen: 0
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '602947376'
+          bedrag: 125749
+        maandelijks_inkomen:
+        - bsn: '602947376'
+          bedrag: 125749
+        assets:
+        - bsn: '602947376'
+          bedrag: 1432152
+        bezittingen:
+        - bsn: '602947376'
+          bedrag: 1432152
+        business_income:
+        - bsn: '602947376'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '602947376'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '602947376'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '602947376'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '602947376'
+          vermogen: 1432152
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '602947376'
+          dienstverband_type: GEEN
+          verzekerd_ww: false
+          verzekerd_wia: false
+        uwv_toetsingsinkomen:
+        - bsn: '602947376'
+          toetsingsinkomen: 1508997
+        uwv_werkgegevens:
+        - bsn: '602947376'
+          gemiddeld_uren_per_week: 0.0
+          huidige_uren_per_week: 0.0
+          gewerkte_weken_36: 0
+          arbeidsverleden_jaren: 0
+          jaarloon: 0
+        ziektewet:
+        - bsn: '602947376'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '602947376'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '602947376'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '602947376'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '602947376'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '602947376'
+          waarde: false
+        receives_study_grant:
+        - bsn: '602947376'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '602947376'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '602947376'
+          waarde: false
+        detentie:
+        - bsn: '602947376'
+          is_gedetineerd: false
+      GEMEENTE_UTRECHT: {}
+      SVB:
+        retirement_age:
+        - bsn: '602947376'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '602947376'
+          pensioenleeftijd: 68
+      IND:
+        verblijfsvergunningen:
+        - bsn: '602947376'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '602947376'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '602947376'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '878266001':
+    name: Eva van den Berg
+    description: In loondienst, alleenstaand.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '878266001'
+          geboortedatum: '1972-03-17'
+          verblijfsadres: Maastricht
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 54
+          age: 54
+          geslacht: V
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: false
+          residence_address: Dorpsstraat 86, 6226MR Maastricht
+          has_fixed_address: true
+          household_size: 1
+        relaties:
+        - bsn: '878266001'
+          partnerschap_type: GEEN
+          partner_bsn: null
+          has_partner: false
+          kinderen: []
+        verblijfplaats:
+        - bsn: '878266001'
+          straat: Dorpsstraat
+          huisnummer: '86'
+          postcode: 6226MR
+          woonplaats: Maastricht
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '878266001'
+          leeftijd: 54
+          geboortedatum: '1972-03-17'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: false
+          verblijfsadres: Dorpsstraat 86, 6226MR Maastricht
+          huishoudgrootte: 1
+      BELASTINGDIENST:
+        box1:
+        - bsn: '878266001'
+          loon_uit_dienstbetrekking: 6457537
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: 0
+        box2:
+        - bsn: '878266001'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '878266001'
+          spaargeld: 1853621
+          beleggingen: 0
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '878266001'
+          bedrag: 538128
+        maandelijks_inkomen:
+        - bsn: '878266001'
+          bedrag: 538128
+        assets:
+        - bsn: '878266001'
+          bedrag: 1853621
+        bezittingen:
+        - bsn: '878266001'
+          bedrag: 1853621
+        business_income:
+        - bsn: '878266001'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '878266001'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '878266001'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '878266001'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '878266001'
+          vermogen: 1853621
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '878266001'
+          dienstverband_type: VAST
+          verzekerd_ww: true
+          verzekerd_wia: true
+        uwv_toetsingsinkomen:
+        - bsn: '878266001'
+          toetsingsinkomen: 6457537
+        uwv_werkgegevens:
+        - bsn: '878266001'
+          gemiddeld_uren_per_week: 32.0
+          huidige_uren_per_week: 32.0
+          gewerkte_weken_36: 52
+          arbeidsverleden_jaren: 3
+          jaarloon: 6457537
+        ziektewet:
+        - bsn: '878266001'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '878266001'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '878266001'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '878266001'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '878266001'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '878266001'
+          waarde: false
+        receives_study_grant:
+        - bsn: '878266001'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '878266001'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '878266001'
+          waarde: false
+        detentie:
+        - bsn: '878266001'
+          is_gedetineerd: false
+      GEMEENTE_MAASTRICHT:
+        werk_en_re_integratie:
+        - bsn: '878266001'
+          arbeidsvermogen: MANTELZORG_VOLLEDIG
+          ontheffing_reden: MANTELZORG_VOLLEDIG
+          ontheffing_einddatum: null
+          re_integratie_traject: null
+      SVB:
+        retirement_age:
+        - bsn: '878266001'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '878266001'
+          pensioenleeftijd: 68
+      IND:
+        verblijfsvergunningen:
+        - bsn: '878266001'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '878266001'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '878266001'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '454362506':
+    name: Henk de Wit
+    description: In loondienst, met hoog inkomen, met partner.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '454362506'
+          geboortedatum: '1975-04-28'
+          verblijfsadres: Rotterdam
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 51
+          age: 51
+          geslacht: M
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: true
+          residence_address: Kerkstraat 62, 3006IP Rotterdam
+          has_fixed_address: true
+          household_size: 2
+        relaties:
+        - bsn: '454362506'
+          partnerschap_type: GEHUWD
+          partner_bsn: '147843207'
+          has_partner: true
+          kinderen: []
+        verblijfplaats:
+        - bsn: '454362506'
+          straat: Kerkstraat
+          huisnummer: '62'
+          postcode: 3006IP
+          woonplaats: Rotterdam
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '454362506'
+          leeftijd: 51
+          geboortedatum: '1975-04-28'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: true
+          verblijfsadres: Kerkstraat 62, 3006IP Rotterdam
+          huishoudgrootte: 2
+      BELASTINGDIENST:
+        box1:
+        - bsn: '454362506'
+          loon_uit_dienstbetrekking: 12884305
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: -50000
+        box2:
+        - bsn: '454362506'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '454362506'
+          spaargeld: 2629588
+          beleggingen: 934241
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '454362506'
+          bedrag: 1073692
+        maandelijks_inkomen:
+        - bsn: '454362506'
+          bedrag: 1073692
+        assets:
+        - bsn: '454362506'
+          bedrag: 2629588
+        bezittingen:
+        - bsn: '454362506'
+          bedrag: 2629588
+        business_income:
+        - bsn: '454362506'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '454362506'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '454362506'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '454362506'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '454362506'
+          vermogen: 2629588
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '454362506'
+          dienstverband_type: VAST
+          verzekerd_ww: true
+          verzekerd_wia: true
+        uwv_toetsingsinkomen:
+        - bsn: '454362506'
+          toetsingsinkomen: 12884305
+        uwv_werkgegevens:
+        - bsn: '454362506'
+          gemiddeld_uren_per_week: 28.0
+          huidige_uren_per_week: 28.0
+          gewerkte_weken_36: 52
+          arbeidsverleden_jaren: 30
+          jaarloon: 12884305
+        ziektewet:
+        - bsn: '454362506'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '454362506'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '454362506'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '454362506'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '454362506'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '454362506'
+          waarde: false
+        receives_study_grant:
+        - bsn: '454362506'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '454362506'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '454362506'
+          waarde: false
+        detentie:
+        - bsn: '454362506'
+          is_gedetineerd: false
+      GEMEENTE_ROTTERDAM:
+        werk_en_re_integratie:
+        - bsn: '454362506'
+          arbeidsvermogen: SOCIALE_OMSTANDIGHEDEN_VOLLEDIG
+          ontheffing_reden: SOCIALE_OMSTANDIGHEDEN_VOLLEDIG
+          ontheffing_einddatum: null
+          re_integratie_traject: null
+      SVB:
+        retirement_age:
+        - bsn: '454362506'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '454362506'
+          pensioenleeftijd: 68
+      IND:
+        verblijfsvergunningen:
+        - bsn: '454362506'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '454362506'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '454362506'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '527389578':
+    name: Lotte Dekker
+    description: Gepensioneerd, met hoog inkomen, alleenstaand.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '527389578'
+          geboortedatum: '1947-12-11'
+          verblijfsadres: Groningen
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 79
+          age: 79
+          geslacht: V
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: false
+          residence_address: Nassaulaan 144, 9710JF Groningen
+          has_fixed_address: true
+          household_size: 1
+        relaties:
+        - bsn: '527389578'
+          partnerschap_type: GEEN
+          partner_bsn: null
+          has_partner: false
+          kinderen: []
+        verblijfplaats:
+        - bsn: '527389578'
+          straat: Nassaulaan
+          huisnummer: '144'
+          postcode: 9710JF
+          woonplaats: Groningen
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '527389578'
+          leeftijd: 79
+          geboortedatum: '1947-12-11'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: false
+          verblijfsadres: Nassaulaan 144, 9710JF Groningen
+          huishoudgrootte: 1
+      BELASTINGDIENST:
+        box1:
+        - bsn: '527389578'
+          loon_uit_dienstbetrekking: 0
+          uitkeringen_en_pensioenen: 2443820
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: -50000
+        box2:
+        - bsn: '527389578'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '527389578'
+          spaargeld: 7218796
+          beleggingen: 1939658
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '527389578'
+          bedrag: 203651
+        maandelijks_inkomen:
+        - bsn: '527389578'
+          bedrag: 203651
+        assets:
+        - bsn: '527389578'
+          bedrag: 7218796
+        bezittingen:
+        - bsn: '527389578'
+          bedrag: 7218796
+        business_income:
+        - bsn: '527389578'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '527389578'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '527389578'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '527389578'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '527389578'
+          vermogen: 7218796
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '527389578'
+          dienstverband_type: GEEN
+          verzekerd_ww: false
+          verzekerd_wia: false
+        uwv_toetsingsinkomen:
+        - bsn: '527389578'
+          toetsingsinkomen: 2443820
+        uwv_werkgegevens:
+        - bsn: '527389578'
+          gemiddeld_uren_per_week: 0.0
+          huidige_uren_per_week: 0.0
+          gewerkte_weken_36: 0
+          arbeidsverleden_jaren: 0
+          jaarloon: 0
+        ziektewet:
+        - bsn: '527389578'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '527389578'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '527389578'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '527389578'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '527389578'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '527389578'
+          waarde: false
+        receives_study_grant:
+        - bsn: '527389578'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '527389578'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '527389578'
+          waarde: false
+        detentie:
+        - bsn: '527389578'
+          is_gedetineerd: false
+      GEMEENTE_GRONINGEN: {}
+      SVB:
+        retirement_age:
+        - bsn: '527389578'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '527389578'
+          pensioenleeftijd: 68
+      IND:
+        verblijfsvergunningen:
+        - bsn: '527389578'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '527389578'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '527389578'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '176262737':
+    name: Gerrit de Vries
+    description: In loondienst, met hoog inkomen, met partner, met 3 kinderen, waarvan
+      één met chronische aandoening.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '176262737'
+          geboortedatum: '1994-03-21'
+          verblijfsadres: Rotterdam
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 32
+          age: 32
+          geslacht: M
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: true
+          residence_address: Nassaulaan 173, 3089QG Rotterdam
+          has_fixed_address: true
+          household_size: 5
+        relaties:
+        - bsn: '176262737'
+          partnerschap_type: GEHUWD
+          partner_bsn: '349094389'
+          has_partner: true
+          kinderen:
+          - bsn: '545537853'
+            geboortedatum: '2020-03-01'
+            naam: Kind 1 de Vries
+          - bsn: '217196410'
+            geboortedatum: '2021-08-01'
+            naam: Kind 2 de Vries
+          - bsn: '301157029'
+            geboortedatum: '2009-12-01'
+            naam: Kind 3 de Vries
+        verblijfplaats:
+        - bsn: '176262737'
+          straat: Nassaulaan
+          huisnummer: '173'
+          postcode: 3089QG
+          woonplaats: Rotterdam
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '176262737'
+          leeftijd: 32
+          geboortedatum: '1994-03-21'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: true
+          verblijfsadres: Nassaulaan 173, 3089QG Rotterdam
+          huishoudgrootte: 5
+        CHILDREN_DATA:
+        - bsn: '176262737'
+          kinderen:
+          - geboortedatum: '2020-03-01'
+            kind_bsn: '545537853'
+            age: 6
+            zorgbehoefte: true
+          - geboortedatum: '2021-08-01'
+            kind_bsn: '217196410'
+            age: 5
+          - geboortedatum: '2009-12-01'
+            kind_bsn: '301157029'
+            age: 17
+        gezag_relaties:
+        - bsn_gezagdrager: '176262737'
+          bsn_kind: '545537853'
+          naam_kind: Kind 1 de Vries
+          geboortedatum_kind: '2020-03-01'
+          type_gezag: OUDERLIJK_GEZAG
+          datum_ingang: '2020-03-01'
+          datum_einde: null
+          status: ACTIEF
+        - bsn_gezagdrager: '176262737'
+          bsn_kind: '217196410'
+          naam_kind: Kind 2 de Vries
+          geboortedatum_kind: '2021-08-01'
+          type_gezag: OUDERLIJK_GEZAG
+          datum_ingang: '2021-08-01'
+          datum_einde: null
+          status: ACTIEF
+        - bsn_gezagdrager: '176262737'
+          bsn_kind: '301157029'
+          naam_kind: Kind 3 de Vries
+          geboortedatum_kind: '2009-12-01'
+          type_gezag: OUDERLIJK_GEZAG
+          datum_ingang: '2009-12-01'
+          datum_einde: null
+          status: ACTIEF
+      BELASTINGDIENST:
+        box1:
+        - bsn: '176262737'
+          loon_uit_dienstbetrekking: 11168228
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: -50000
+        box2:
+        - bsn: '176262737'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '176262737'
+          spaargeld: 5179528
+          beleggingen: 1309167
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '176262737'
+          bedrag: 930685
+        maandelijks_inkomen:
+        - bsn: '176262737'
+          bedrag: 930685
+        assets:
+        - bsn: '176262737'
+          bedrag: 5179528
+        bezittingen:
+        - bsn: '176262737'
+          bedrag: 5179528
+        business_income:
+        - bsn: '176262737'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '176262737'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '176262737'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '176262737'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '176262737'
+          vermogen: 5179528
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '176262737'
+          dienstverband_type: VAST
+          verzekerd_ww: true
+          verzekerd_wia: true
+        uwv_toetsingsinkomen:
+        - bsn: '176262737'
+          toetsingsinkomen: 11168228
+        uwv_werkgegevens:
+        - bsn: '176262737'
+          gemiddeld_uren_per_week: 36.0
+          huidige_uren_per_week: 36.0
+          gewerkte_weken_36: 52
+          arbeidsverleden_jaren: 29
+          jaarloon: 11168228
+        ziektewet:
+        - bsn: '176262737'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '176262737'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '176262737'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '176262737'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '176262737'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '176262737'
+          waarde: false
+        receives_study_grant:
+        - bsn: '176262737'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '176262737'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '176262737'
+          waarde: false
+        detentie:
+        - bsn: '176262737'
+          is_gedetineerd: false
+      GEMEENTE_ROTTERDAM:
+        werk_en_re_integratie:
+        - bsn: '176262737'
+          arbeidsvermogen: null
+          ontheffing_reden: null
+          ontheffing_einddatum: null
+          re_integratie_traject: null
+      SVB:
+        retirement_age:
+        - bsn: '176262737'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '176262737'
+          pensioenleeftijd: 68
+        algemene_kinderbijslagwet:
+        - ouder_bsn: '176262737'
+          aantal_kinderen: 3
+          kinderen_leeftijden:
+          - 6
+          - 5
+          - 17
+          ontvangt_kinderbijslag: true
+      IND:
+        verblijfsvergunningen:
+        - bsn: '176262737'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '176262737'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '176262737'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '768499135':
+    name: Ali El-Moussaoui
+    description: In loondienst, met laag inkomen, alleenstaand.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '768499135'
+          geboortedatum: '2007-01-26'
+          verblijfsadres: Rotterdam
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 19
+          age: 19
+          geslacht: M
+          herkomst: MAROKKAANS
+          has_dutch_nationality: true
+          has_partner: false
+          residence_address: Nassaulaan 122, 3034QE Rotterdam
+          has_fixed_address: true
+          household_size: 1
+        relaties:
+        - bsn: '768499135'
+          partnerschap_type: GEEN
+          partner_bsn: null
+          has_partner: false
+          kinderen: []
+        verblijfplaats:
+        - bsn: '768499135'
+          straat: Nassaulaan
+          huisnummer: '122'
+          postcode: 3034QE
+          woonplaats: Rotterdam
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '768499135'
+          leeftijd: 19
+          geboortedatum: '2007-01-26'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: false
+          verblijfsadres: Nassaulaan 122, 3034QE Rotterdam
+          huishoudgrootte: 1
+      BELASTINGDIENST:
+        box1:
+        - bsn: '768499135'
+          loon_uit_dienstbetrekking: 1090440
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: 0
+        box2:
+        - bsn: '768499135'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '768499135'
+          spaargeld: 317982
+          beleggingen: 0
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '768499135'
+          bedrag: 90870
+        maandelijks_inkomen:
+        - bsn: '768499135'
+          bedrag: 90870
+        assets:
+        - bsn: '768499135'
+          bedrag: 317982
+        bezittingen:
+        - bsn: '768499135'
+          bedrag: 317982
+        business_income:
+        - bsn: '768499135'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '768499135'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '768499135'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '768499135'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '768499135'
+          vermogen: 317982
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '768499135'
+          dienstverband_type: VAST
+          verzekerd_ww: true
+          verzekerd_wia: true
+        uwv_toetsingsinkomen:
+        - bsn: '768499135'
+          toetsingsinkomen: 1090440
+        uwv_werkgegevens:
+        - bsn: '768499135'
+          gemiddeld_uren_per_week: 32.0
+          huidige_uren_per_week: 32.0
+          gewerkte_weken_36: 52
+          arbeidsverleden_jaren: 13
+          jaarloon: 1090440
+        ziektewet:
+        - bsn: '768499135'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '768499135'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '768499135'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '768499135'
+          onderwijssoort: HBO
+        studiefinanciering:
+        - bsn: '768499135'
+          ontvangt_studiefinanciering: true
+        is_student:
+        - bsn: '768499135'
+          waarde: true
+        receives_study_grant:
+        - bsn: '768499135'
+          waarde: true
+      DJI:
+        detenties:
+        - bsn: '768499135'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '768499135'
+          waarde: false
+        detentie:
+        - bsn: '768499135'
+          is_gedetineerd: false
+      GEMEENTE_ROTTERDAM:
+        werk_en_re_integratie:
+        - bsn: '768499135'
+          arbeidsvermogen: null
+          ontheffing_reden: null
+          ontheffing_einddatum: null
+          re_integratie_traject: null
+      SVB:
+        retirement_age:
+        - bsn: '768499135'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '768499135'
+          pensioenleeftijd: 68
+      IND:
+        verblijfsvergunningen:
+        - bsn: '768499135'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '768499135'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '768499135'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '993914510':
+    name: Stijn Bos
+    description: In loondienst, met partner.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '993914510'
+          geboortedatum: '1986-09-06'
+          verblijfsadres: Den Haag
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 40
+          age: 40
+          geslacht: M
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: true
+          residence_address: Beatrixlaan 152, 2524BF Den Haag
+          has_fixed_address: true
+          household_size: 2
+        relaties:
+        - bsn: '993914510'
+          partnerschap_type: GEHUWD
+          partner_bsn: '210230367'
+          has_partner: true
+          kinderen: []
+        verblijfplaats:
+        - bsn: '993914510'
+          straat: Beatrixlaan
+          huisnummer: '152'
+          postcode: 2524BF
+          woonplaats: Den Haag
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '993914510'
+          leeftijd: 40
+          geboortedatum: '1986-09-06'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: true
+          verblijfsadres: Beatrixlaan 152, 2524BF Den Haag
+          huishoudgrootte: 2
+      BELASTINGDIENST:
+        box1:
+        - bsn: '993914510'
+          loon_uit_dienstbetrekking: 6629806
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: -50000
+        box2:
+        - bsn: '993914510'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '993914510'
+          spaargeld: 1800493
+          beleggingen: 0
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '993914510'
+          bedrag: 552483
+        maandelijks_inkomen:
+        - bsn: '993914510'
+          bedrag: 552483
+        assets:
+        - bsn: '993914510'
+          bedrag: 1800493
+        bezittingen:
+        - bsn: '993914510'
+          bedrag: 1800493
+        business_income:
+        - bsn: '993914510'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '993914510'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '993914510'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '993914510'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '993914510'
+          vermogen: 1800493
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '993914510'
+          dienstverband_type: VAST
+          verzekerd_ww: true
+          verzekerd_wia: true
+        uwv_toetsingsinkomen:
+        - bsn: '993914510'
+          toetsingsinkomen: 6629806
+        uwv_werkgegevens:
+        - bsn: '993914510'
+          gemiddeld_uren_per_week: 24.0
+          huidige_uren_per_week: 24.0
+          gewerkte_weken_36: 52
+          arbeidsverleden_jaren: 23
+          jaarloon: 6629806
+        ziektewet:
+        - bsn: '993914510'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '993914510'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '993914510'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '993914510'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '993914510'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '993914510'
+          waarde: false
+        receives_study_grant:
+        - bsn: '993914510'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '993914510'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '993914510'
+          waarde: false
+        detentie:
+        - bsn: '993914510'
+          is_gedetineerd: false
+      GEMEENTE_DEN_HAAG:
+        werk_en_re_integratie:
+        - bsn: '993914510'
+          arbeidsvermogen: null
+          ontheffing_reden: null
+          ontheffing_einddatum: null
+          re_integratie_traject: null
+      SVB:
+        retirement_age:
+        - bsn: '993914510'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '993914510'
+          pensioenleeftijd: 68
+      IND:
+        verblijfsvergunningen:
+        - bsn: '993914510'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '993914510'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '993914510'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '732345638':
+    name: Cornelis van Dijk
+    description: In loondienst, met laag inkomen, alleenstaand, met 2 kinderen.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '732345638'
+          geboortedatum: '1987-06-28'
+          verblijfsadres: Rotterdam
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 39
+          age: 39
+          geslacht: M
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: false
+          residence_address: Hoofdweg 45, 3018MS Rotterdam
+          has_fixed_address: true
+          household_size: 3
+        relaties:
+        - bsn: '732345638'
+          partnerschap_type: GEEN
+          partner_bsn: null
+          has_partner: false
+          kinderen:
+          - bsn: '250532306'
+            geboortedatum: '2014-09-01'
+            naam: Kind 1 van Dijk
+          - bsn: '787940669'
+            geboortedatum: '2018-01-01'
+            naam: Kind 2 van Dijk
+        verblijfplaats:
+        - bsn: '732345638'
+          straat: Hoofdweg
+          huisnummer: '45'
+          postcode: 3018MS
+          woonplaats: Rotterdam
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '732345638'
+          leeftijd: 39
+          geboortedatum: '1987-06-28'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: false
+          verblijfsadres: Hoofdweg 45, 3018MS Rotterdam
+          huishoudgrootte: 3
+        CHILDREN_DATA:
+        - bsn: '732345638'
+          kinderen:
+          - geboortedatum: '2014-09-01'
+            kind_bsn: '250532306'
+            age: 12
+          - geboortedatum: '2018-01-01'
+            kind_bsn: '787940669'
+            age: 8
+        gezag_relaties:
+        - bsn_gezagdrager: '732345638'
+          bsn_kind: '250532306'
+          naam_kind: Kind 1 van Dijk
+          geboortedatum_kind: '2014-09-01'
+          type_gezag: OUDERLIJK_GEZAG
+          datum_ingang: '2014-09-01'
+          datum_einde: null
+          status: ACTIEF
+        - bsn_gezagdrager: '732345638'
+          bsn_kind: '787940669'
+          naam_kind: Kind 2 van Dijk
+          geboortedatum_kind: '2018-01-01'
+          type_gezag: OUDERLIJK_GEZAG
+          datum_ingang: '2018-01-01'
+          datum_einde: null
+          status: ACTIEF
+      BELASTINGDIENST:
+        box1:
+        - bsn: '732345638'
+          loon_uit_dienstbetrekking: 3825947
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 0
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: 0
+        box2:
+        - bsn: '732345638'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '732345638'
+          spaargeld: 377293
+          beleggingen: 0
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '732345638'
+          bedrag: 318828
+        maandelijks_inkomen:
+        - bsn: '732345638'
+          bedrag: 318828
+        assets:
+        - bsn: '732345638'
+          bedrag: 377293
+        bezittingen:
+        - bsn: '732345638'
+          bedrag: 377293
+        business_income:
+        - bsn: '732345638'
+          bedrag: 0
+        bedrijfsinkomen:
+        - bsn: '732345638'
+          bedrag: 0
+        buitenlands_inkomen:
+        - bsn: '732345638'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '732345638'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '732345638'
+          vermogen: 377293
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '732345638'
+          dienstverband_type: TIJDELIJK
+          verzekerd_ww: true
+          verzekerd_wia: true
+        uwv_toetsingsinkomen:
+        - bsn: '732345638'
+          toetsingsinkomen: 3825947
+        uwv_werkgegevens:
+        - bsn: '732345638'
+          gemiddeld_uren_per_week: 16.0
+          huidige_uren_per_week: 16.0
+          gewerkte_weken_36: 52
+          arbeidsverleden_jaren: 13
+          jaarloon: 3825947
+        ziektewet:
+        - bsn: '732345638'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '732345638'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '732345638'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '732345638'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '732345638'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '732345638'
+          waarde: false
+        receives_study_grant:
+        - bsn: '732345638'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '732345638'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '732345638'
+          waarde: false
+        detentie:
+        - bsn: '732345638'
+          is_gedetineerd: false
+      GEMEENTE_ROTTERDAM:
+        werk_en_re_integratie:
+        - bsn: '732345638'
+          arbeidsvermogen: null
+          ontheffing_reden: null
+          ontheffing_einddatum: null
+          re_integratie_traject: null
+      SVB:
+        retirement_age:
+        - bsn: '732345638'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '732345638'
+          pensioenleeftijd: 68
+        algemene_kinderbijslagwet:
+        - ouder_bsn: '732345638'
+          aantal_kinderen: 2
+          kinderen_leeftijden:
+          - 12
+          - 8
+          ontvangt_kinderbijslag: true
+      IND:
+        verblijfsvergunningen:
+        - bsn: '732345638'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '732345638'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '732345638'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+  '363324268':
+    name: Jeroen Smit
+    description: ZZP'er, met laag inkomen, alleenstaand, met 2 kinderen, waarvan één
+      met chronische aandoening.
+    sources:
+      CBS: *id001
+      KIESRAAD: *id002
+      JenV: *id003
+      RvIG:
+        personen:
+        - bsn: '363324268'
+          geboortedatum: '1954-10-17'
+          verblijfsadres: Utrecht
+          land_verblijf: NEDERLAND
+          nationaliteit: NEDERLANDS
+          leeftijd: 72
+          age: 72
+          geslacht: M
+          herkomst: NL_AUTOCHTOON
+          has_dutch_nationality: true
+          has_partner: false
+          residence_address: Wilhelminastraat 199, 3554DX Utrecht
+          has_fixed_address: true
+          household_size: 3
+        relaties:
+        - bsn: '363324268'
+          partnerschap_type: GEEN
+          partner_bsn: null
+          has_partner: false
+          kinderen:
+          - bsn: '539464660'
+            geboortedatum: '2017-09-01'
+            naam: Kind 1 Smit
+          - bsn: '568818720'
+            geboortedatum: '2009-02-01'
+            naam: Kind 2 Smit
+        verblijfplaats:
+        - bsn: '363324268'
+          straat: Wilhelminastraat
+          huisnummer: '199'
+          postcode: 3554DX
+          woonplaats: Utrecht
+          type: WOONADRES
+          heeft_vast_adres: true
+        brp_gegevens:
+        - bsn: '363324268'
+          leeftijd: 72
+          geboortedatum: '1954-10-17'
+          heeft_vast_adres: true
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: false
+          verblijfsadres: Wilhelminastraat 199, 3554DX Utrecht
+          huishoudgrootte: 3
+        CHILDREN_DATA:
+        - bsn: '363324268'
+          kinderen:
+          - geboortedatum: '2017-09-01'
+            kind_bsn: '539464660'
+            age: 9
+            zorgbehoefte: true
+          - geboortedatum: '2009-02-01'
+            kind_bsn: '568818720'
+            age: 17
+        gezag_relaties:
+        - bsn_gezagdrager: '363324268'
+          bsn_kind: '539464660'
+          naam_kind: Kind 1 Smit
+          geboortedatum_kind: '2017-09-01'
+          type_gezag: OUDERLIJK_GEZAG
+          datum_ingang: '2017-09-01'
+          datum_einde: null
+          status: ACTIEF
+        - bsn_gezagdrager: '363324268'
+          bsn_kind: '568818720'
+          naam_kind: Kind 2 Smit
+          geboortedatum_kind: '2009-02-01'
+          type_gezag: OUDERLIJK_GEZAG
+          datum_ingang: '2009-02-01'
+          datum_einde: null
+          status: ACTIEF
+      BELASTINGDIENST:
+        box1:
+        - bsn: '363324268'
+          loon_uit_dienstbetrekking: 0
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 1775368
+          resultaat_overige_werkzaamheden: 0
+          eigen_woning: 0
+        box2:
+        - bsn: '363324268'
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - bsn: '363324268'
+          spaargeld: 486867
+          beleggingen: 0
+          onroerend_goed: 0
+          schulden: 0
+          buitenlands_inkomen: 0
+        monthly_income:
+        - bsn: '363324268'
+          bedrag: 147947
+        maandelijks_inkomen:
+        - bsn: '363324268'
+          bedrag: 147947
+        assets:
+        - bsn: '363324268'
+          bedrag: 486867
+        bezittingen:
+        - bsn: '363324268'
+          bedrag: 486867
+        business_income:
+        - bsn: '363324268'
+          bedrag: 1775368
+        bedrijfsinkomen:
+        - bsn: '363324268'
+          bedrag: 1775368
+        buitenlands_inkomen:
+        - bsn: '363324268'
+          bedrag: 0
+          land: GEEN
+        aftrekposten:
+        - bsn: '363324268'
+          persoonsgebonden_aftrek: 0
+        belastingdienst_vermogen:
+        - bsn: '363324268'
+          vermogen: 486867
+      KVK:
+        organisaties:
+        - kvk_nummer: '53760890'
+          handelsnaam: Smit Services
+          rechtsvorm: EENMANSZAAK
+          status: Actief
+          aantal_werknemers: 10
+          datum_telling: '2024-01-01'
+          datum_aanvang: '2019-11-01'
+          vestigingsadres: Utrecht
+        inschrijvingen:
+        - bsn: '363324268'
+          kvk_nummer: '53760890'
+          handelsnaam: Smit Services
+          rechtsvorm: EENMANSZAAK
+          status: ACTIEF
+          activiteit: Slagerij
+        functionarissen:
+        - bsn: '363324268'
+          kvk_nummer: '53760890'
+          handelsnaam: Smit Services
+          rechtsvorm: EENMANSZAAK
+          status: ACTIEF
+          functie: EIGENAAR
+          bevoegdheid: VOLLEDIG
+        is_entrepreneur:
+        - bsn: '363324268'
+          waarde: true
+      SVH:
+        registraties:
+        - bsn: '363324268'
+          is_geregistreerd: false
+          registratienummer: null
+      UWV:
+        arbeidsverhoudingen:
+        - bsn: '363324268'
+          dienstverband_type: GEEN
+          verzekerd_ww: false
+          verzekerd_wia: false
+        uwv_toetsingsinkomen:
+        - bsn: '363324268'
+          toetsingsinkomen: 1775368
+        uwv_werkgegevens:
+        - bsn: '363324268'
+          gemiddeld_uren_per_week: 0.0
+          huidige_uren_per_week: 0.0
+          gewerkte_weken_36: 0
+          arbeidsverleden_jaren: 0
+          jaarloon: 0
+        ziektewet:
+        - bsn: '363324268'
+          heeft_ziektewet_uitkering: false
+        WIA:
+        - bsn: '363324268'
+          heeft_wia_uitkering: false
+      RVZ:
+        verzekeringen:
+        - bsn: '363324268'
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      DUO:
+        inschrijvingen:
+        - bsn: '363324268'
+          onderwijssoort: GEEN
+        studiefinanciering:
+        - bsn: '363324268'
+          ontvangt_studiefinanciering: false
+        is_student:
+        - bsn: '363324268'
+          waarde: false
+        receives_study_grant:
+        - bsn: '363324268'
+          waarde: false
+      DJI:
+        detenties:
+        - bsn: '363324268'
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: '363324268'
+          waarde: false
+        detentie:
+        - bsn: '363324268'
+          is_gedetineerd: false
+      GEMEENTE_UTRECHT: {}
+      SVB:
+        retirement_age:
+        - bsn: '363324268'
+          leeftijd: 68
+        algemene_ouderdomswet_gegevens:
+        - bsn: '363324268'
+          pensioenleeftijd: 68
+        algemene_kinderbijslagwet:
+        - ouder_bsn: '363324268'
+          aantal_kinderen: 2
+          kinderen_leeftijden:
+          - 9
+          - 17
+          ontvangt_kinderbijslag: true
+      IND:
+        verblijfsvergunningen:
+        - bsn: '363324268'
+          type: PERMANENT
+          status: VERLEEND
+        residence_permit_type:
+        - bsn: '363324268'
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: '363324268'
+          verblijfsvergunning_type: null
+      RECHTSPRAAK:
+        curatele_registraties: []
+      SZW:
+        bbz_aanvraag:
+        - bsn: '363324268'
+          type_zelfstandige: GEVESTIGD
+          bedrijf_levensvatbaar: true
+          jaren_ondernemerschap: 5
+          uren_per_week: 40
+          beeindigingsdatum: null

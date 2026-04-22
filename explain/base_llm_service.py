@@ -75,18 +75,47 @@ class BaseLLMService(abc.ABC):
         """
 
     @lru_cache(maxsize=1000)  # Cache responses to avoid repeated calls
-    def generate_explanation(self, path_json: str, rule_spec_json: str) -> str:
+    def generate_explanation(self, path_json: str, rule_spec_json: str, lang: str = "nl") -> str:
         """Generate explanation for a law evaluation path
 
         Args:
             path_json: JSON string of the evaluation path
             rule_spec_json: JSON string of the rule specification
+            lang: Language for the explanation ('nl' or 'en')
 
         Returns:
             Generated explanation
         """
         try:
-            prompt = f"""
+            if lang == "en":
+                prompt = f"""
+You are a very helpful government employee explaining to a citizen how a law has been applied to their situation.
+
+This is the evaluation path of the law execution:
+```json
+{path_json}
+```
+
+And this is the law (the rule set) that was used:
+```json
+{rule_spec_json}
+```
+
+Write a simple explanation in plain English (B1 level).
+Make it personal (based on the path), specific, not generic.
+Amounts are always in cents (so divide by 100). Mention the amounts (and relevant calculations where logical).
+
+This is NOT a formal decision.
+
+In 1 SHORT paragraph, focus on the specific facts for this citizen.
+It should be a paragraph I can include in a letter to the citizen (not a full letter, no salutation etc.).
+Be friendly and helpful. Do NOT include contact details or next steps.
+Never be absolute. Instead of "You are entitled to" use "You are probably entitled to".
+Plain text, no markdown, no headers, no formatting.
+"""
+                system = "You are a very helpful government employee explaining to citizens how a law applies to them. You always give clear explanations in plain English (B1 level)."
+            else:
+                prompt = f"""
 Je bent een zeer behulpzame overheidsmedewerker die een specifieke burger uitlegt hoe een wet uitgevoerd is.
 
 Dit is het evaluatie pad van de wetsuitvoering:
@@ -112,9 +141,8 @@ Graag vriendelijk en behulpzaam. Maar GEEN informatie over contact opnemen en ve
 Wees nooit stellig. Dus niet "U heeft recht op" maar "U heeft waarschijnlijk recht op".
 Platte tekst, geen markdown/kopjes/andere gekkigheden.
 """
+                system = "Je bent een zeer behulpzame overheidsmedewerker die burgers uitlegt hoe een wet op hen werkt. Je geeft altijd duidelijke uitleg in begrijpelijk Nederlands (B1)."
 
-            # Use chat_completion with system message
-            system = "Je bent een zeer behulpzame overheidsmedewerker die burgers uitlegt hoe een wet op hen werkt. Je geeft altijd duidelijke uitleg in begrijpelijk Nederlands (B1)."
             response = self.chat_completion(
                 messages=[{"role": "user", "content": prompt}], max_tokens=1000, temperature=0, system=system
             )
@@ -125,4 +153,4 @@ Platte tekst, geen markdown/kopjes/andere gekkigheden.
         except Exception as e:
             # Log the error and return a fallback message
             print(f"Error generating explanation with {self.provider_name}: {e}")
-            return "We konden geen uitleg genereren. Probeer het later opnieuw."
+            return "We could not generate an explanation. Please try again later." if lang == "en" else "We konden geen uitleg genereren. Probeer het later opnieuw."

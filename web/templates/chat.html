@@ -100,6 +100,12 @@
                                 <div x-html="message.html"></div>
                             </div>
                         </template>
+                        <!-- Graph Panel -->
+                        <template x-if="message.graphPanel">
+                            <div class="bg-white text-gray-800 rounded-lg px-4 py-2 max-w-3xl w-full border border-gray-200">
+                                <div x-html="message.html"></div>
+                            </div>
+                        </template>
                         <!-- User Avatar -->
                         <template x-if="message.isUser">
                             <div class="flex-shrink-0 bg-gray-300 w-8 h-8 rounded-full flex items-center justify-center ml-3">
@@ -226,6 +232,13 @@
                             html: data.html,
                             isUser: false,
                             isTemporary: true
+                        });
+                    } else if (data.graphPanel) {
+                        // Decision graph panel — shown before the LLM explanation
+                        this.messages.push({
+                            html: data.html,
+                            isUser: false,
+                            graphPanel: true,
                         });
                     } else if (data.applicationPanel) {
                         // If there's a temporary message, remove it

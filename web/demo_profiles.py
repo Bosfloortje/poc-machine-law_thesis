@@ -32,7 +32,9 @@ DEMO_PROFILES: dict[str, dict] = {
         "zaaksysteem_service": "TOESLAGEN",
         "portal_tab_label": "Burger.nl",
         "portal_heading": "Waar heb ik recht op? Wat zijn mijn plichten?",
+        "portal_heading_en": "What am I entitled to? What are my obligations?",
         "portal_subtitle": "Bekijk hier uw toeslagen, uitkeringen, aangiften, en andere regelingen van de overheid.",
+        "portal_subtitle_en": "View your allowances, benefits, declarations, and other government regulations here.",
         "feature_flags": {
             "DELEGATION": False,
             "AUTO_APPROVE_CLAIMS": False,
@@ -95,10 +97,12 @@ DEMO_PROFILES: dict[str, dict] = {
         "zaaksysteem_service": "GEMEENTE_ROTTERDAM",
         "portal_tab_label": "Overheid.nl",
         "portal_heading": "Welke regelingen passen bij mijn bedrijf?",
+        "portal_heading_en": "Which regulations apply to my business?",
         "portal_subtitle": (
             "Bekijk beschikbare subsidies, rapportageverplichtingen, vergunningen,"
             " wetten en andere ondernemersregelingen."
         ),
+        "portal_subtitle_en": "View available subsidies, reporting obligations, licences, and other business regulations.",
         "feature_flags": {
             "DELEGATION": True,
             "AUTO_APPROVE_CLAIMS": True,

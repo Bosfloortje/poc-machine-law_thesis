@@ -7,12 +7,14 @@
         {% if error %}
             <div class="flex-grow space-y-6">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ rule_spec.name }}</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-2"
+                        x-data
+                        x-text="$store.lang === 'en' ? (window.LAW_NAME_TRANSLATIONS?.['{{ rule_spec.name }}'] || '{{ rule_spec.name }}') : '{{ rule_spec.name }}'">{{ rule_spec.name }}</h3>
                     {% if current_case %}
                         <div class="mt-2">{% include "partials/tiles/components/case_status_badge.html" %}</div>
                     {% endif %}
                     <div class="bg-red-50 border border-red-200 rounded-lg p-4">
-                        <p class="text-red-600">Er is een fout opgetreden bij het berekenen: {{ message }}</p>
+                        <p class="text-red-600" x-data x-text="$store.lang === 'en' ? 'An error occurred during calculation: {{ message }}' : 'Er is een fout opgetreden bij het berekenen: {{ message }}'">Er is een fout opgetreden bij het berekenen: {{ message }}</p>
                     </div>
                 </div>
                 <div class="p-2">{{ org_logo(service) }}</div>
@@ -22,7 +24,9 @@
                 <!-- Header -->
                 <div class="flex items-start justify-between border-b border-gray-100 pb-4">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-900">{{ rule_spec.name }}</h3>
+                        <h3 class="text-lg font-semibold text-gray-900"
+                            x-data
+                            x-text="$store.lang === 'en' ? (window.LAW_NAME_TRANSLATIONS?.['{{ rule_spec.name }}'] || '{{ rule_spec.name }}') : '{{ rule_spec.name }}'">{{ rule_spec.name }}</h3>
                         {% if current_case %}
                             <div class="mt-2">{% include "partials/tiles/components/case_status_badge.html" %}</div>
                         {% endif %}
@@ -43,7 +47,8 @@
                                 <button hx-get="/laws/application-panel?service={{ service }}&law={{ law|urlencode }}&bsn={{ effective_bsn|default(bsn) }}{% if kvk %}&kvk={{ kvk }}{% endif %}&default_tab=application"
                                         hx-target="#shared-application-panel"
                                         hx-swap="innerHTML"
-                                        class="w-full px-6 py-3 bg-blue-600 text-white text-center rounded-md hover:bg-blue-700 transition-colors cursor-pointer">
+                                        class="w-full px-6 py-3 bg-blue-600 text-white text-center rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
+                                        x-data x-text="$store.lang === 'en' ? 'Apply' : 'Aanvragen'">
                                     Aanvragen
                                 </button>
                             {% else %}
@@ -51,80 +56,88 @@
                             {% endif %}
                         {% endblock %}
                     {% elif current_case.status == 'SUBMITTED' %}
-                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
-                            <p class="text-sm text-blue-800">
-                                Uw aanvraag wordt beoordeeld. Heeft u vragen? <a href="#" class="underline">Klik hier</a>, of bel
-                                1234.
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4" x-data>
+                            <p class="text-sm text-blue-800" x-show="$store.lang === 'nl'">
+                                Uw aanvraag wordt beoordeeld. Heeft u vragen? <a href="#" class="underline">Klik hier</a>, of bel 1234.
+                            </p>
+                            <p class="text-sm text-blue-800" x-show="$store.lang === 'en'">
+                                Your application is being reviewed. Have questions? <a href="#" class="underline">Click here</a>, or call 1234.
                             </p>
                         </div>
                     {% elif current_case.status == 'IN_REVIEW' %}
-                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4">
-                            <h4 class="font-medium text-blue-900 mb-3">Wat gebeurt er nu?</h4>
+                        <div class="bg-blue-50 border border-blue-100 rounded-lg p-4" x-data>
+                            <h4 class="font-medium text-blue-900 mb-3" x-text="$store.lang === 'en' ? 'What happens now?' : 'Wat gebeurt er nu?'">Wat gebeurt er nu?</h4>
                             <ol class="space-y-2 text-sm text-blue-800">
                                 <li class="flex items-start">
                                     <span class="font-medium mr-2">1.</span>
-                                    <span>Een medewerker bekijkt uw aanvraag binnen 5 werkdagen</span>
+                                    <span x-text="$store.lang === 'en' ? 'A staff member will review your application within 5 working days' : 'Een medewerker bekijkt uw aanvraag binnen 5 werkdagen'">Een medewerker bekijkt uw aanvraag binnen 5 werkdagen</span>
                                 </li>
                                 <li class="flex items-start">
                                     <span class="font-medium mr-2">2.</span>
-                                    <span>U krijgt mogelijk een uitnodiging voor een gesprek</span>
+                                    <span x-text="$store.lang === 'en' ? 'You may receive an invitation for an interview' : 'U krijgt mogelijk een uitnodiging voor een gesprek'">U krijgt mogelijk een uitnodiging voor een gesprek</span>
                                 </li>
                                 <li class="flex items-start">
                                     <span class="font-medium mr-2">3.</span>
-                                    <span>Binnen 6 weken ontvangt u bericht over uw aanvraag</span>
+                                    <span x-text="$store.lang === 'en' ? 'You will receive a decision within 6 weeks' : 'Binnen 6 weken ontvangt u bericht over uw aanvraag'">Binnen 6 weken ontvangt u bericht over uw aanvraag</span>
                                 </li>
                             </ol>
-                            <p class="mt-3 text-sm text-blue-800">
+                            <p class="mt-3 text-sm text-blue-800" x-show="$store.lang === 'nl'">
                                 Heeft u vragen? <a href="#" class="underline">Klik hier</a>, of bel 1234.
+                            </p>
+                            <p class="mt-3 text-sm text-blue-800" x-show="$store.lang === 'en'">
+                                Have questions? <a href="#" class="underline">Click here</a>, or call 1234.
                             </p>
                         </div>
                     {% elif current_case.status == 'DECIDED' %}
                         {% if current_case and current_case.approved %}
                             {% block approved_status %}
-                                <div class="bg-green-50 border border-green-100 rounded-lg p-4">
-                                    <p class="text-green-800 font-medium">Uw aanvraag is goedgekeurd</p>
+                                <div class="bg-green-50 border border-green-100 rounded-lg p-4" x-data>
+                                    <p class="text-green-800 font-medium" x-text="$store.lang === 'en' ? 'Your application has been approved' : 'Uw aanvraag is goedgekeurd'">Uw aanvraag is goedgekeurd</p>
                                 </div>
                             {% endblock %}
                         {% elif not current_case.can_object() %}
-                            <div class="space-y-4">
+                            <div class="space-y-4" x-data>
                                 <div class="bg-red-50 border border-red-100 rounded-lg p-4">
                                     <p class="text-red-800">
-                                        Uw aanvraag is afgekeurd. U kunt niet in bezwaar want
+                                        <span x-text="$store.lang === 'en' ? 'Your application has been rejected. You cannot object because' : 'Uw aanvraag is afgekeurd. U kunt niet in bezwaar want'">Uw aanvraag is afgekeurd. U kunt niet in bezwaar want</span>
                                         {{ current_case.objection_status.not_possible_reason }}
                                     </p>
                                 </div>
                                 {% if current_case.can_appeal() %}
                                     <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                        <h4 class="font-medium text-gray-900 mb-2">Mogelijkheid tot beroep</h4>
+                                        <h4 class="font-medium text-gray-900 mb-2" x-text="$store.lang === 'en' ? 'Option to appeal' : 'Mogelijkheid tot beroep'">Mogelijkheid tot beroep</h4>
                                         <p class="text-sm text-gray-600 mb-4">
-                                            U kunt wel in beroep gaan. Dit kan tot {{ current_case.appeal_status.appeal_period }}
-                                            weken na het besluit.
+                                            <span x-text="$store.lang === 'en' ? 'You can appeal within' : 'U kunt wel in beroep gaan. Dit kan tot'"></span>
+                                            {{ current_case.appeal_status.appeal_period }}
+                                            <span x-text="$store.lang === 'en' ? 'weeks of the decision.' : 'weken na het besluit.'"></span>
                                         </p>
                                         <button type="button"
                                                 onclick="showAppealDialog('{{ current_case.id }}')"
                                                 class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer">
-                                            Ga in beroep bij {{ current_case.appeal_status.competent_court|replace('_', ' ') |title }}
+                                            <span x-text="$store.lang === 'en' ? 'Appeal at' : 'Ga in beroep bij'"></span> {{ current_case.appeal_status.competent_court|replace('_', ' ') |title }}
                                         </button>
                                     </div>
                                 {% else %}
                                     <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
                                         <p class="text-sm text-gray-800">
-                                            U kunt ook niet in beroep gaan want
+                                            <span x-text="$store.lang === 'en' ? 'You also cannot appeal because' : 'U kunt ook niet in beroep gaan want'"></span>
                                             {{ current_case.appeal_status.not_possible_reason }}
                                         </p>
                                     </div>
                                 {% endif %}
                             </div>
                         {% elif current_case.can_object() %}
-                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                <h4 class="font-medium text-gray-900 mb-2">Mogelijkheid tot bezwaar</h4>
+                            <div class="bg-gray-50 border border-gray-200 rounded-lg p-4" x-data>
+                                <h4 class="font-medium text-gray-900 mb-2" x-text="$store.lang === 'en' ? 'Option to object' : 'Mogelijkheid tot bezwaar'">Mogelijkheid tot bezwaar</h4>
                                 <p class="text-sm text-gray-600 mb-4">
-                                    U kunt binnen {{ current_case.objection_status.objection_period }} weken
-                                    bezwaar maken tegen dit besluit.
+                                    <span x-text="$store.lang === 'en' ? 'You can object within' : 'U kunt binnen'"></span>
+                                    {{ current_case.objection_status.objection_period }}
+                                    <span x-text="$store.lang === 'en' ? 'weeks of this decision.' : 'weken bezwaar maken tegen dit besluit.'"></span>
                                 </p>
                                 <button type="button"
                                         onclick="showAppealDialog('{{ current_case.id }}')"
-                                        class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer">
+                                        class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer"
+                                        x-text="$store.lang === 'en' ? 'File objection' : 'Ga in bezwaar'">
                                     Ga in bezwaar
                                 </button>
                             </div>
@@ -145,7 +158,7 @@
                 </div>
                 <div class="space-y-6">
                     <div class="flex items-center">
-                        <h4 class="text-sm font-medium text-gray-500 mb-1">Er ontbreken gegevens.</h4>
+                        <h4 class="text-sm font-medium text-gray-500 mb-1" x-data x-text="$store.lang === 'en' ? 'Missing data.' : 'Er ontbreken gegevens.'">Er ontbreken gegevens.</h4>
                     </div>
                 </div>
                 {# Handle case status - show objection/appeal options if case was decided #}
@@ -153,51 +166,54 @@
                     {% if not current_case.can_object() %}
                         <div class="space-y-4">
                             <div class="bg-red-50 border border-red-100 rounded-lg p-4">
-                                <p class="text-red-800">
-                                    Uw aanvraag is afgekeurd. U kunt niet in bezwaar want
+                                <p class="text-red-800" x-data>
+                                    <span x-text="$store.lang === 'en' ? 'Your application has been rejected. You cannot object because' : 'Uw aanvraag is afgekeurd. U kunt niet in bezwaar want'"></span>
                                     {{ current_case.objection_status.not_possible_reason }}
                                 </p>
                             </div>
                             {% if current_case.can_appeal() %}
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                    <h4 class="font-medium text-gray-900 mb-2">Mogelijkheid tot beroep</h4>
+                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4" x-data>
+                                    <h4 class="font-medium text-gray-900 mb-2" x-text="$store.lang === 'en' ? 'Option to appeal' : 'Mogelijkheid tot beroep'">Mogelijkheid tot beroep</h4>
                                     <p class="text-sm text-gray-600 mb-4">
-                                        U kunt wel in beroep gaan. Dit kan tot {{ current_case.appeal_status.appeal_period }}
-                                        weken na het besluit.
+                                        <span x-text="$store.lang === 'en' ? 'You can appeal within' : 'U kunt wel in beroep gaan. Dit kan tot'"></span>
+                                        {{ current_case.appeal_status.appeal_period }}
+                                        <span x-text="$store.lang === 'en' ? 'weeks of the decision.' : 'weken na het besluit.'"></span>
                                     </p>
                                     <button type="button"
                                             onclick="showAppealDialog('{{ current_case.id }}')"
                                             class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer">
-                                        Ga in beroep bij {{ current_case.appeal_status.competent_court|replace('_', ' ') |title }}
+                                        <span x-text="$store.lang === 'en' ? 'Appeal at' : 'Ga in beroep bij'"></span> {{ current_case.appeal_status.competent_court|replace('_', ' ') |title }}
                                     </button>
                                 </div>
                             {% else %}
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4" x-data>
                                     <p class="text-sm text-gray-800">
-                                        U kunt ook niet in beroep gaan want
+                                        <span x-text="$store.lang === 'en' ? 'You also cannot appeal because' : 'U kunt ook niet in beroep gaan want'"></span>
                                         {{ current_case.appeal_status.not_possible_reason }}
                                     </p>
                                 </div>
                             {% endif %}
                         </div>
                     {% elif current_case.can_object() %}
-                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                            <h4 class="font-medium text-gray-900 mb-2">Mogelijkheid tot bezwaar</h4>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4" x-data>
+                            <h4 class="font-medium text-gray-900 mb-2" x-text="$store.lang === 'en' ? 'Option to object' : 'Mogelijkheid tot bezwaar'">Mogelijkheid tot bezwaar</h4>
                             <p class="text-sm text-gray-600 mb-4">
-                                U kunt binnen {{ current_case.objection_status.objection_period }} weken
-                                bezwaar maken tegen dit besluit.
+                                <span x-text="$store.lang === 'en' ? 'You can object within' : 'U kunt binnen'"></span>
+                                {{ current_case.objection_status.objection_period }}
+                                <span x-text="$store.lang === 'en' ? 'weeks of this decision.' : 'weken bezwaar maken tegen dit besluit.'"></span>
                             </p>
                             <button type="button"
                                     onclick="showAppealDialog('{{ current_case.id }}')"
-                                    class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer">
+                                    class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer"
+                                    x-text="$store.lang === 'en' ? 'File objection' : 'Ga in bezwaar'">
                                 Ga in bezwaar
                             </button>
                         </div>
                     {% endif %}
                 {% else %}
                     <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                        <h4 class="font-medium text-gray-900 mb-2">Gegevens aanleveren</h4>
-                        <p class="text-sm text-gray-600 mb-4">
+                        <h4 class="font-medium text-gray-900 mb-2" x-data x-text="$store.lang === 'en' ? 'Provide additional data' : 'Gegevens aanleveren'">Gegevens aanleveren</h4>
+                        <p class="text-sm text-gray-600 mb-4" x-data x-text="$store.lang === 'en' ? 'Additional data is needed to determine your eligibility. You can provide it here.' : 'Om te weten of u in aanmerking komt zijn extra gegevens nodig. Die kunt u hier aanleveren.'">
                             Om te weten of u in aanmerking komt zijn extra gegevens nodig. Die kunt u hier aanleveren.
                         </p>
                         {% if can_submit_claims|default(true) %}
@@ -205,7 +221,7 @@
                                     hx-target="#shared-application-panel"
                                     hx-swap="innerHTML"
                                     class="w-full px-4 py-2 bg-gray-600 text-white text-center rounded-md hover:bg-gray-700 transition-colors cursor-pointer">
-                                Gegevens aanleveren
+                                <span x-data x-text="$store.lang === 'en' ? 'Provide data' : 'Gegevens aanleveren'">Gegevens aanleveren</span>
                             </button>
                         {% else %}
                             <p class="text-sm text-gray-500">
@@ -216,7 +232,7 @@
                                      stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
-                                Vraag je wettelijk vertegenwoordiger om gegevens aan te leveren.
+                                <span x-data x-text="$store.lang === 'en' ? 'Ask your legal representative to provide data.' : 'Vraag je wettelijk vertegenwoordiger om gegevens aan te leveren.'">Vraag je wettelijk vertegenwoordiger om gegevens aan te leveren.</span>
                             </p>
                         {% endif %}
                     </div>
@@ -226,7 +242,9 @@
             <div class="flex-grow space-y-6">
                 <div class="flex items-start justify-between border-b border-gray-100 pb-4">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ rule_spec.name }}</h3>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2"
+                            x-data
+                            x-text="$store.lang === 'en' ? (window.LAW_NAME_TRANSLATIONS?.['{{ rule_spec.name }}'] || '{{ rule_spec.name }}') : '{{ rule_spec.name }}'">{{ rule_spec.name }}</h3>
                         {% if current_case %}
                             <div class="mt-2">{% include "partials/tiles/components/case_status_badge.html" %}</div>
                         {% endif %}
@@ -235,12 +253,11 @@
                 </div>
                 <div class="space-y-6">
                     <div class="flex items-center">
-                        <h4 class="text-sm font-medium text-gray-500 mb-1">
-                            U komt waarschijnlijk niet in aanmerking
-                            <button hx-get="/laws/application-panel?service={{ service }}&law={{ law|urlencode }}&bsn={{ effective_bsn|default(bsn) }}{% if kvk %}&kvk={{ kvk }}{% endif %}&default_tab=explanation"
-                                    hx-target="#shared-application-panel"
-                                    hx-swap="innerHTML"
-                                    class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
+                        <h4 class="text-sm font-medium text-gray-500 mb-1" x-data>
+                            <span x-text="$store.lang === 'en' ? 'You probably do not qualify' : 'U komt waarschijnlijk niet in aanmerking'">U komt waarschijnlijk niet in aanmerking</span>
+                            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
+                                    class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer"
+                                    x-text="$store.lang === 'en' ? 'why?' : 'waarom?'">
                                 waarom?
                             </button>
                         </h4>
@@ -251,60 +268,62 @@
                     {% if not current_case.can_object() %}
                         <div class="space-y-4">
                             <div class="bg-red-50 border border-red-100 rounded-lg p-4">
-                                <p class="text-red-800">
-                                    Uw aanvraag is afgekeurd. U kunt niet in bezwaar want
+                                <p class="text-red-800" x-data>
+                                    <span x-text="$store.lang === 'en' ? 'Your application has been rejected. You cannot object because' : 'Uw aanvraag is afgekeurd. U kunt niet in bezwaar want'"></span>
                                     {{ current_case.objection_status.not_possible_reason }}
                                 </p>
                             </div>
                             {% if current_case.can_appeal() %}
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                                    <h4 class="font-medium text-gray-900 mb-2">Mogelijkheid tot beroep</h4>
+                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4" x-data>
+                                    <h4 class="font-medium text-gray-900 mb-2" x-text="$store.lang === 'en' ? 'Option to appeal' : 'Mogelijkheid tot beroep'">Mogelijkheid tot beroep</h4>
                                     <p class="text-sm text-gray-600 mb-4">
-                                        U kunt wel in beroep gaan. Dit kan tot {{ current_case.appeal_status.appeal_period }}
-                                        weken na het besluit.
+                                        <span x-text="$store.lang === 'en' ? 'You can appeal within' : 'U kunt wel in beroep gaan. Dit kan tot'"></span>
+                                        {{ current_case.appeal_status.appeal_period }}
+                                        <span x-text="$store.lang === 'en' ? 'weeks of the decision.' : 'weken na het besluit.'"></span>
                                     </p>
                                     <button type="button"
                                             onclick="showAppealDialog('{{ current_case.id }}')"
                                             class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer">
-                                        Ga in beroep bij {{ current_case.appeal_status.competent_court|replace('_', ' ') |title }}
+                                        <span x-text="$store.lang === 'en' ? 'Appeal at' : 'Ga in beroep bij'"></span> {{ current_case.appeal_status.competent_court|replace('_', ' ') |title }}
                                     </button>
                                 </div>
                             {% else %}
-                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                                <div class="bg-gray-50 border border-gray-200 rounded-lg p-4" x-data>
                                     <p class="text-sm text-gray-800">
-                                        U kunt ook niet in beroep gaan want
+                                        <span x-text="$store.lang === 'en' ? 'You also cannot appeal because' : 'U kunt ook niet in beroep gaan want'"></span>
                                         {{ current_case.appeal_status.not_possible_reason }}
                                     </p>
                                 </div>
                             {% endif %}
                         </div>
                     {% elif current_case.can_object() %}
-                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                            <h4 class="font-medium text-gray-900 mb-2">Mogelijkheid tot bezwaar</h4>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-4" x-data>
+                            <h4 class="font-medium text-gray-900 mb-2" x-text="$store.lang === 'en' ? 'Option to object' : 'Mogelijkheid tot bezwaar'">Mogelijkheid tot bezwaar</h4>
                             <p class="text-sm text-gray-600 mb-4">
-                                U kunt binnen {{ current_case.objection_status.objection_period }} weken
-                                bezwaar maken tegen dit besluit.
+                                <span x-text="$store.lang === 'en' ? 'You can object within' : 'U kunt binnen'"></span>
+                                {{ current_case.objection_status.objection_period }}
+                                <span x-text="$store.lang === 'en' ? 'weeks of this decision.' : 'weken bezwaar maken tegen dit besluit.'"></span>
                             </p>
                             <button type="button"
                                     onclick="showAppealDialog('{{ current_case.id }}')"
-                                    class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer">
+                                    class="w-full px-4 py-2 bg-red-600 text-white text-center rounded-md hover:bg-red-700 transition-colors cursor-pointer"
+                                    x-text="$store.lang === 'en' ? 'File objection' : 'Ga in bezwaar'">
                                 Ga in bezwaar
                             </button>
                         </div>
                     {% endif %}
                 {% else %}
                     <div class="bg-gray-50 border border-gray-200 rounded-lg p-4">
-                        <h4 class="font-medium text-gray-900 mb-2">Mogelijkheid om toch aan te vragen</h4>
-                        <p class="text-sm text-gray-600 mb-4">
-                            U lijkt niet in aanmerking te komen voor deze regeling. Als u denkt dat u toch recht heeft kunt u
-                            een aanvraag indienen.
+                        <h4 class="font-medium text-gray-900 mb-2" x-data x-text="$store.lang === 'en' ? 'Option to apply anyway' : 'Mogelijkheid om toch aan te vragen'">Mogelijkheid om toch aan te vragen</h4>
+                        <p class="text-sm text-gray-600 mb-4" x-data x-text="$store.lang === 'en' ? 'You do not appear to qualify. If you believe you are entitled, you can still submit an application.' : 'U lijkt niet in aanmerking te komen voor deze regeling. Als u denkt dat u toch recht heeft kunt u een aanvraag indienen.'">
+                            U lijkt niet in aanmerking te komen voor deze regeling. Als u denkt dat u toch recht heeft kunt u een aanvraag indienen.
                         </p>
                         {% if can_submit_claims|default(true) %}
                             <button hx-get="/laws/application-panel?service={{ service }}&law={{ law|urlencode }}&bsn={{ effective_bsn|default(bsn) }}{% if kvk %}&kvk={{ kvk }}{% endif %}&default_tab=application"
                                     hx-target="#shared-application-panel"
                                     hx-swap="innerHTML"
                                     class="w-full px-4 py-2 bg-gray-600 text-white text-center rounded-md hover:bg-gray-700 transition-colors cursor-pointer">
-                                Toch aanvragen
+                                <span x-data x-text="$store.lang === 'en' ? 'Apply anyway' : 'Toch aanvragen'">Toch aanvragen</span>
                             </button>
                         {% else %}
                             <p class="text-sm text-gray-500">
@@ -315,7 +334,7 @@
                                      stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                                 </svg>
-                                Vraag je wettelijk vertegenwoordiger om een aanvraag te doen.
+                                <span x-data x-text="$store.lang === 'en' ? 'Ask your legal representative to apply.' : 'Vraag je wettelijk vertegenwoordiger om een aanvraag te doen.'">Vraag je wettelijk vertegenwoordiger om een aanvraag te doen.</span>
                             </p>
                         {% endif %}
                     </div>
@@ -329,11 +348,11 @@
                 class="rounded-lg shadow-lg p-0 border-0 backdrop:bg-gray-500/50">
             <div class="w-[32rem] m-8">
                 <div class="px-6 py-4 border-b">
-                    <h3 class="text-xl font-semibold">
+                    <h3 class="text-xl font-semibold" x-data>
                         {% if current_case.can_object() %}
-                            Reden voor bezwaar
+                            <span x-text="$store.lang === 'en' ? 'Reason for objection' : 'Reden voor bezwaar'">Reden voor bezwaar</span>
                         {% else %}
-                            Reden voor beroep
+                            <span x-text="$store.lang === 'en' ? 'Reason for appeal' : 'Reden voor beroep'">Reden voor beroep</span>
                         {% endif %}
                     </h3>
                 </div>
@@ -341,11 +360,11 @@
                     <form hx-post="/laws/objection-case?service={{ service }}&law={{ law|urlencode }}&bsn={{ effective_bsn|default(bsn) }}{% if kvk %}&kvk={{ kvk }}{% endif %}&case_id={{ current_case.id }}"
                           hx-target="closest div.law-result-card"
                           hx-swap="outerHTML">
-                        <label class="block text-lg mb-3">
+                        <label class="block text-lg mb-3" x-data>
                             {% if current_case.can_object() %}
-                                Geef een reden voor uw bezwaar:
+                                <span x-text="$store.lang === 'en' ? 'Provide a reason for your objection:' : 'Geef een reden voor uw bezwaar:'">Geef een reden voor uw bezwaar:</span>
                             {% else %}
-                                Geef een reden voor uw beroep:
+                                <span x-text="$store.lang === 'en' ? 'Provide a reason for your appeal:' : 'Geef een reden voor uw beroep:'">Geef een reden voor uw beroep:</span>
                             {% endif %}
                         </label>
                         <textarea name="reason"
@@ -355,9 +374,11 @@
                         <div class="mt-6 flex justify-end space-x-3">
                             <button type="button"
                                     class="px-5 py-2.5 bg-gray-100 text-gray-800 rounded-md hover:bg-gray-200 text-base cursor-pointer"
+                                    x-data x-text="$store.lang === 'en' ? 'Cancel' : 'Annuleren'"
                                     onclick="closeAppealDialog('{{ current_case.id }}')">Annuleren</button>
                             <button type="submit"
-                                    class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-md text-base cursor-pointer">
+                                    class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-md text-base cursor-pointer"
+                                    x-data x-text="$store.lang === 'en' ? 'Confirm' : 'Bevestigen'">
                                 Bevestigen
                             </button>
                         </div>

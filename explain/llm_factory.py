@@ -4,6 +4,8 @@ from fastapi import Request
 
 from .base_llm_service import BaseLLMService
 from .claude_service import claude_service
+from .ollama_service import OllamaService
+from .openai_service import gpt4o_mini_service, gpt4o_service
 from .vlam_service import vlam_service
 
 
@@ -15,7 +17,20 @@ class LLMFactory:
     PROVIDER_VLAM = "vlam"
 
     # Provider mapping
-    _provider_map = {PROVIDER_CLAUDE: claude_service, PROVIDER_VLAM: vlam_service}
+    _provider_map = {
+        PROVIDER_CLAUDE: claude_service,
+        PROVIDER_VLAM: vlam_service,
+        # OpenAI
+        "gpt-4o":      gpt4o_service,
+        "gpt-4o-mini": gpt4o_mini_service,
+        # Local Ollama models
+        "llama3.1": OllamaService("llama3.1:8b", "llama3.1"),
+        "llama3.2": OllamaService("llama3.2:3b", "llama3.2"),
+        "llama3.3": OllamaService("llama3.3:70b", "llama3.3"),
+        "mistral":  OllamaService("mistral:7b", "mistral"),
+        "deepseek": OllamaService("deepseek-r1:8b", "deepseek"),
+        "gemma2":   OllamaService("gemma2:9b", "gemma2"),
+    }
 
     @staticmethod
     def get_available_providers() -> list[str]:

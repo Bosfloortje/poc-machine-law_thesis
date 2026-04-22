@@ -341,6 +341,7 @@ def precompute_graph_entries(
     graphs_dir: Path | None = None,
     verbose: bool = True,
     cache_file: Path | None = None,
+    profiles_file: str | None = None,
 ) -> list[dict]:
     """Compute calc_result + decision graph + skeleton for every profile once.
 
@@ -357,7 +358,7 @@ def precompute_graph_entries(
     load_law_yaml = extractor_mod.load_law_yaml
     run_calculation = extractor_mod.run_calculation
 
-    all_profiles = load_profiles()
+    all_profiles = load_profiles(profiles_file) if profiles_file else load_profiles()
     profiles_to_process = profiles_filter or list(all_profiles.keys())
     law_yaml = load_law_yaml(law)
 
@@ -388,7 +389,7 @@ def precompute_graph_entries(
         else:
             if verbose:
                 print(f"  [{i}/{total}] Processing {bsn}...", file=sys.stderr)
-            calc_result = run_calculation(law, bsn)
+            calc_result = run_calculation(law, bsn, law_yaml, profile_data)
             if calc_result and verbose:
                 req_met = calc_result.get("requirements_met", False)
                 print(f"    Calculation: requirements_met={req_met}", file=sys.stderr)
@@ -542,6 +543,7 @@ def run_graph_approach(
                     "prompt_used": result["prompt_used"],
                     "model": result["model"],
                     "usage": result["usage"],
+                    "evaluation_trace": decision_extractor.to_evaluation_trace(),
                     "graph_stats": {"nodes": len(graph.nodes), "edges": len(graph.edges)},
                     "calculation_result": {
                         "requirements_met": calc_result.get("requirements_met") if calc_result else None,
@@ -651,6 +653,11 @@ Examples:
         help="Specific BSN(s) to process (default: all profiles)",
     )
     parser.add_argument(
+        "--profiles-file",
+        default=None,
+        help="Path to a profiles YAML file (default: data/profiles.yaml). Use a smaller file for faster startup.",
+    )
+    parser.add_argument(
         "--output",
         default=None,
         help="Output file path (single model + single approach only).",
@@ -724,6 +731,7 @@ Examples:
                 graphs_dir=run_dir / "graphs" / law if args.graphs else None,
                 verbose=verbose,
                 cache_file=cache_path,
+                profiles_file=args.profiles_file,
             )
 
     open_entries: list[dict] = []

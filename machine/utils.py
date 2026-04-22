@@ -1,3 +1,4 @@
+import os
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
@@ -81,6 +82,15 @@ class RuleResolver:
         """Load all rule specifications from the rules directory"""
         # Use Path.rglob to find all .yaml and .yml files recursively
         yaml_files = list(self.rules_dir.rglob("*.yaml")) + list(self.rules_dir.rglob("*.yml"))
+
+        # Optional filter: LAWS_FILTER=zorgtoeslag,bijstand,alcoholwet loads only those law dirs
+        laws_filter = os.getenv("LAWS_FILTER")
+        if laws_filter:
+            allowed = {law.strip() for law in laws_filter.split(",")}
+            yaml_files = [
+                p for p in yaml_files
+                if any(part in allowed for part in p.parts)
+            ]
 
         for path in yaml_files:
             try:

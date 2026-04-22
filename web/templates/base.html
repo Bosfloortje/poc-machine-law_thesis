@@ -36,6 +36,39 @@
 
     </style>
     <script>
+        // Language store — persisted in localStorage
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('lang', localStorage.getItem('regelrecht-lang') || 'nl');
+        });
+        window.toggleLang = function() {
+            const next = Alpine.store('lang') === 'nl' ? 'en' : 'nl';
+            Alpine.store('lang', next);
+            localStorage.setItem('regelrecht-lang', next);
+        };
+        // Helper used in templates: tl('Dutch', 'English')
+        window.tl = function(nl, en) {
+            return Alpine.store('lang') === 'en' ? en : nl;
+        };
+        // Translations for law tile names (rule_spec.name from YAML)
+        window.LAW_NAME_TRANSLATIONS = {
+            'Zorgtoeslag': 'Healthcare allowance',
+            'Bijstand Gemeente Amsterdam': 'Social assistance Amsterdam',
+            'Bijstand Gemeente Rotterdam': 'Social assistance Rotterdam',
+            'Bijstand Gemeente Utrecht': 'Social assistance Utrecht',
+            'Bijstand Gemeente Den Haag': 'Social assistance The Hague',
+            'Bijstand Gemeente Maastricht': 'Social assistance Maastricht',
+            'Bijstand Gemeente Groningen': 'Social assistance Groningen',
+            'Bijstand Gemeente Eindhoven': 'Social assistance Eindhoven',
+            'Bijstand voor Zelfstandigen (Bbz 2004)': 'Self-employed social assistance (Bbz 2004)',
+            'Alcoholwetvergunning Horeca Rotterdam': 'Alcohol licence Rotterdam',
+            'Alcoholwetvergunning Horeca Amsterdam': 'Alcohol licence Amsterdam',
+            'Alcoholwetvergunning Horeca Den Haag': 'Alcohol licence The Hague',
+            'Alcoholwetvergunning Horeca Groningen': 'Alcohol licence Groningen',
+            'Alcoholwetvergunning Horeca Maastricht': 'Alcohol licence Maastricht',
+            'Alcoholwetvergunning Horeca Eindhoven': 'Alcohol licence Eindhoven',
+        };
+    </script>
+    <script>
         function attach_wallet_handlers() {
             const wallet_button = document.getElementsByTagName("nl-wallet-button").item(0);
             if (wallet_button) {
@@ -167,6 +200,13 @@
                 </div>
                 <!-- Right side: Desktop Profile & More menu -->
                 <div class="hidden lg:flex items-center space-x-2">
+                    <!-- Language toggle -->
+                    <button onclick="toggleLang()"
+                            x-data
+                            class="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-white/15 hover:bg-white/25 text-white transition-colors cursor-pointer border border-white/20"
+                            :title="$store.lang === 'nl' ? 'Switch to English' : 'Wisselen naar Nederlands'">
+                        <span x-text="$store.lang === 'nl' ? '🇬🇧 EN' : '🇳🇱 NL'">🇬🇧 EN</span>
+                    </button>
                     <!-- Desktop User Switcher -->
                     <div class="relative"
                          x-data="{ profileSelectorOpen: false, selectedProfile: '{{ bsn }}' }">
@@ -571,5 +611,6 @@
             </div>
         </div>
     </footer>
+    {% include "partials/chat_popup.html" %}
 </body>
 </html>

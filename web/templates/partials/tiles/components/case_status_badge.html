@@ -1,16 +1,24 @@
-<div class="flex items-center space-x-3">
-    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if current_case.status == 'SUBMITTED' %} bg-blue-100 text-blue-800">Ingediend
+<div class="flex items-center space-x-3" x-data>
+    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if current_case.status == 'SUBMITTED' %} bg-blue-100 text-blue-800"
+          x-text="$store.lang === 'en' ? 'Submitted' : 'Ingediend'">Ingediend
     {% elif current_case.status == 'IN_REVIEW' %}
-        bg-yellow-100 text-yellow-800">In behandeling
+        bg-yellow-100 text-yellow-800"
+          x-text="$store.lang === 'en' ? 'Under review' : 'In behandeling'">In behandeling
     {% elif current_case.status == 'DECIDED' and current_case.approved and not hide_toegekend_badge %}
-        bg-green-100 text-green-800">Toegekend
+        bg-green-100 text-green-800"
+          x-text="$store.lang === 'en' ? 'Granted' : 'Toegekend'">Toegekend
     {% elif current_case.status == 'DECIDED' and not current_case.approved %}
-        bg-red-100 text-red-800">Afgewezen
+        bg-red-100 text-red-800"
+          x-text="$store.lang === 'en' ? 'Rejected' : 'Afgewezen'">Afgewezen
     {% elif current_case.status == 'OBJECTED' %}
-        bg-purple-100 text-purple-800">In bezwaar gegaan
+        bg-purple-100 text-purple-800"
+          x-text="$store.lang === 'en' ? 'Objection filed' : 'In bezwaar gegaan'">In bezwaar gegaan
     {% endif %}
 </span>
 {% if current_case.modified_on %}
-    <span class="text-sm text-gray-400">laatste wijziging {{ current_case.modified_on.strftime("%-d %B %Y") }}</span>
+    <span class="text-sm text-gray-400">
+        <span x-text="$store.lang === 'en' ? 'last modified' : 'laatste wijziging'">laatste wijziging</span>
+        {{ current_case.modified_on.strftime("%d %B %Y").lstrip("0") }}
+    </span>
 {% endif %}
 </div>

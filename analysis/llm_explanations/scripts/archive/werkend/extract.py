@@ -51,35 +51,240 @@ sys.path.insert(0, str(Path(__file__).parent))  # for sibling imports within scr
 OUTPUT_DIR = Path(__file__).parent.parent / "output"
 
 # ---------------------------------------------------------------------------
-# Per-law extraction module dispatch
+# Per-law extraction module dispatch — all laws use extraction_generic
 # ---------------------------------------------------------------------------
-# Maps --law argument → extraction module name.
-# Add a new entry here whenever a new extraction_*.py is created.
-LAW_EXTRACTORS: dict[str, str] = {
-    "zorgtoeslag":          "extraction_zorgtoeslag",
-    "bijstand":             "extraction_bijstand",
-    "alcoholwet":           "extraction_alcoholwet",
-    "alcoholwetvergunning": "extraction_alcoholwet",
-}
 
-_DEFAULT_EXTRACTOR = "extraction_zorgtoeslag"
+_DEFAULT_EXTRACTOR = "extraction_generic"
 
 
 def _get_extractor(law: str):
-    """Dynamically import the right extraction module for a given law."""
+    """Import the extraction module for a given law (always extraction_generic)."""
     import importlib
-    module_name = LAW_EXTRACTORS.get(law, _DEFAULT_EXTRACTOR)
-    return importlib.import_module(module_name)
+    return importlib.import_module(_DEFAULT_EXTRACTOR)
 
 
-# Lazy-loaded shared symbols — resolved the first time run_graph_approach is called.
-# AVAILABLE_MODELS is the same across all modules, so we just import it once here.
-from extraction_zorgtoeslag import (  # noqa: E402
+from extraction_generic import (  # noqa: E402
     AVAILABLE_MODELS,
     get_git_info,
     load_profiles,
 )
-from extract_explanations import extract_explanations, precompute_open_entries  # noqa: E402
+
+
+# ---------------------------------------------------------------------------
+# Open-approach helpers (inlined from extract_explanations.py)
+# ---------------------------------------------------------------------------
+
+import json as _json
+import os as _os
+
+SYSTEM_PROMPT = "Je bent een behulpzame assistent die Nederlandse burgers helpt met vragen over overheidsregelingen. Geef duidelijke, begrijpelijke uitleg in eenvoudig Nederlands (B1-niveau)."
+DEFAULT_MODEL = "haiku"
+
+
+def _call_llm(
+    model_id: str,
+    provider: str,
+    system_prompt: str,
+    user_prompt: str,
+    api_key: str | None = None,
+) -> tuple[str, dict]:
+    """Call LLM (Ollama or Anthropic) and return (text, usage_dict)."""
+    if provider == "ollama":
+        import ollama
+        response = ollama.chat(
+            model=model_id,
+            messages=[{"role": "system", "content": system_prompt},
+                      {"role": "user", "content": user_prompt}],
+            options={"temperature": 0.3, "num_predict": 1500},
+        )
+        return response["message"]["content"], {
+            "input_tokens": response.get("prompt_eval_count", 0),
+            "output_tokens": response.get("eval_count", 0),
+        }
+    import anthropic
+    client = anthropic.Anthropic(api_key=api_key)
+    response = client.messages.create(
+        model=model_id, max_tokens=1500, temperature=0.3,
+        system=system_prompt, messages=[{"role": "user", "content": user_prompt}],
+    )
+    return response.content[0].text, {
+        "input_tokens": response.usage.input_tokens,
+        "output_tokens": response.usage.output_tokens,
+    }
+
+
+def _create_open_prompt(service_name: str, result: dict, profile: dict, bsn: str) -> str:
+    requirements_met = result.get("requirements_met", False)
+    missing_required = result.get("missing_required", False)
+    output = result.get("result", {})
+    explanation = result.get("explanation", "")
+    return (
+        f"Ik heb zojuist een berekening uitgevoerd voor de regeling '{service_name}'.\n\n"
+        f"Burgerprofiel:\n"
+        f"- Naam: {profile.get('name', 'Onbekend')}\n"
+        f"- Beschrijving: {profile.get('description', 'Geen beschrijving')}\n"
+        f"- BSN: {bsn}\n\n"
+        f"Resultaat van de berekening:\n"
+        f"- Voldoet aan voorwaarden: {'Ja' if requirements_met else 'Nee'}\n"
+        f"- Ontbrekende essentiële gegevens: {'Ja' if missing_required else 'Nee'}\n"
+        f"- Uitkomst: {_json.dumps(output, indent=2, ensure_ascii=False)}\n\n"
+        f"Korte uitleg van het systeem: {explanation}\n\n"
+        f"Geef een duidelijke uitleg in eenvoudig Nederlands (B1-niveau) over:\n"
+        f"1. WAAROM deze burger wel of niet in aanmerking komt voor deze regeling\n"
+        f"2. Welke factoren uit het profiel van de burger hebben geleid tot dit resultaat\n"
+        f"3. Wat de burger eventueel kan doen als ze niet in aanmerking komen\n\n"
+        f"Let op: bedragen in de uitkomst zijn in eurocenten, deel door 100 voor euros."
+    )
+
+
+def _load_profiles_raw(profiles_path: str = "data/profiles.yaml") -> tuple[dict, dict]:
+    import yaml as _yaml
+    with open(profiles_path) as f:
+        raw_data = _yaml.safe_load(f)
+    return raw_data.get("profiles", {}), raw_data
+
+
+def precompute_open_entries(
+    laws_filter: list[str] | None = None,
+    profiles_filter: list[str] | None = None,
+    verbose: bool = True,
+) -> tuple[list[dict], list[str], dict]:
+    """Compute law calculations for all profile × law combinations once."""
+    from explain.mcp_connector import MCPLawConnector
+    from web.dependencies import get_case_manager, get_claim_manager, get_machine_service
+
+    services = get_machine_service()
+    connector = MCPLawConnector(services, get_case_manager(), get_claim_manager())
+    profiles, raw_profiles_data = _load_profiles_raw()
+
+    available_laws = connector.registry.get_service_names()
+    if laws_filter:
+        available_laws = [law for law in available_laws if law in laws_filter]
+    if profiles_filter:
+        profiles = {bsn: p for bsn, p in profiles.items() if bsn in profiles_filter}
+
+    if verbose:
+        print(f"Loaded {len(profiles)} profiles, {len(available_laws)} laws", file=sys.stderr)
+
+    total = len(profiles) * len(available_laws)
+    entries: list[dict] = []
+
+    for current, (bsn, profile) in enumerate(profiles.items(), 1):
+        full_profile = raw_profiles_data.get("profiles", {}).get(bsn, profile)
+        for law_name in available_laws:
+            if verbose:
+                print(f"[{current}/{total}] {law_name} / {profile.get('name', bsn)}...", file=sys.stderr)
+
+            entry: dict = {
+                "bsn": bsn, "profile": profile, "law_name": law_name,
+                "profile_name": profile.get("name", "Unknown"),
+                "calc_result": None, "prompt": None, "error": None,
+                "requirements_met": None, "calculation_result": None,
+            }
+            try:
+                service = connector.registry.get_service(law_name)
+                if not service:
+                    entry["error"] = "Service not found"
+                    entries.append(entry)
+                    continue
+                extra_params: dict = {}
+                for svc_name in ["KVK", "GEMEENTE_ROTTERDAM", "GEMEENTE_AMSTERDAM", "GEMEENTE_DEN_HAAG",
+                                  "GEMEENTE_EINDHOVEN", "GEMEENTE_GRONINGEN", "GEMEENTE_MAASTRICHT", "GEMEENTE_UTRECHT"]:
+                    rows = full_profile.get("sources", {}).get(svc_name, {}).get("leidinggevenden", [])
+                    if isinstance(rows, list) and rows and rows[0].get("kvk_nummer"):
+                        extra_params["KVK_NUMMER"] = str(rows[0]["kvk_nummer"])
+                        break
+                calc_result = service.execute(bsn, extra_params)
+                if "error" in calc_result:
+                    entry["error"] = calc_result["error"]
+                    entries.append(entry)
+                    continue
+                entry["calc_result"] = calc_result
+                entry["requirements_met"] = calc_result.get("requirements_met")
+                entry["calculation_result"] = {
+                    "requirements_met": calc_result.get("requirements_met"),
+                    "missing_required": calc_result.get("missing_required"),
+                    "missing_fields": calc_result.get("missing_fields", []),
+                    "output": calc_result.get("result", {}),
+                    "input_data": calc_result.get("input_data", {}),
+                    "system_explanation": calc_result.get("explanation", ""),
+                }
+                entry["prompt"] = _create_open_prompt(law_name, calc_result, profile, bsn)
+            except Exception as e:
+                entry["error"] = str(e)
+            entries.append(entry)
+
+    return entries, available_laws, raw_profiles_data
+
+
+def extract_explanations(
+    api_key: str | None = None,
+    laws_filter: list[str] | None = None,
+    profiles_filter: list[str] | None = None,
+    output_file: str = "explanations_output.jsonl",
+    model: str = DEFAULT_MODEL,
+    verbose: bool = True,
+    precomputed: list[dict] | None = None,
+    available_laws: list[str] | None = None,
+    raw_profiles_data: dict | None = None,
+) -> list[dict]:
+    """Extract LLM explanations for all profile × law combinations (open approach)."""
+    model_info = AVAILABLE_MODELS[model]
+    model_id = model_info["id"]
+    provider = model_info["provider"]
+    actual_api_key = api_key or _os.environ.get("ANTHROPIC_API_KEY") if provider == "anthropic" else None
+
+    from web.dependencies import TODAY
+
+    entries, laws_used, raw_data = (
+        (precomputed, available_laws or [], raw_profiles_data or {})
+        if precomputed is not None
+        else precompute_open_entries(laws_filter=laws_filter, profiles_filter=profiles_filter, verbose=verbose)
+    )
+
+    results = []
+    output_path = Path(output_file)
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(_json.dumps({
+            "record_type": "metadata",
+            "timestamp": datetime.now().isoformat(),
+            "model": model_id, "provider": provider,
+            "law": laws_filter[0] if laws_filter and len(laws_filter) == 1 else None,
+            "profiles_count": len({e["bsn"] for e in entries}),
+            "approach": "open_prompt",
+            "git_info": get_git_info(),
+            "reference_date": TODAY,
+            "filters": {"laws_filter": laws_filter, "profiles_filter": profiles_filter},
+        }, ensure_ascii=False) + "\n")
+
+        for i, entry in enumerate(entries, 1):
+            bsn, law_name = entry["bsn"], entry["law_name"]
+            record: dict = {
+                "record_type": "explanation", "approach": "open", "graph_type": None,
+                "law": law_name, "profile": bsn, "profile_name": entry["profile_name"],
+                "requirements_met": entry["requirements_met"],
+                "explanation": None, "skeleton_used": None,
+                "prompt_used": entry["prompt"], "model": model_id,
+                "usage": None, "graph_stats": None,
+                "calculation_result": entry["calculation_result"],
+            }
+            if entry.get("error"):
+                record["error"] = entry["error"]
+            elif entry.get("prompt"):
+                try:
+                    text, usage = _call_llm(model_id, provider, SYSTEM_PROMPT, entry["prompt"], actual_api_key)
+                    record["explanation"] = text
+                    record["usage"] = usage
+                except Exception as e:
+                    record["error"] = str(e)
+            else:
+                record["error"] = "No prompt (calculation failed)"
+            f.write(_json.dumps(record, ensure_ascii=False) + "\n")
+            results.append(record)
+
+    if verbose:
+        print(f"\nOpen approach complete: {len(results)} records → {output_path}", file=sys.stderr)
+    return results
 
 
 # ---------------------------------------------------------------------------
@@ -135,11 +340,17 @@ def precompute_graph_entries(
     save_graphs: bool = False,
     graphs_dir: Path | None = None,
     verbose: bool = True,
+    cache_file: Path | None = None,
 ) -> list[dict]:
     """Compute calc_result + decision graph + skeleton for every profile once.
 
     Returns a list of entry dicts (one per profile) that can be reused across
     multiple models without re-running the calculation or graph extraction.
+
+    If cache_file is given:
+    - On first run: saves calc_results to JSON after computing each profile.
+    - On resume: loads cached calc_results and skips the engine call entirely;
+      only rebuilds the in-memory extractor/graph objects (fast, no API calls).
     """
     extractor_mod = _get_extractor(law)
     DecisionGraphExtractor = extractor_mod.DecisionGraphExtractor
@@ -150,6 +361,14 @@ def precompute_graph_entries(
     profiles_to_process = profiles_filter or list(all_profiles.keys())
     law_yaml = load_law_yaml(law)
 
+    # Load existing cache if present
+    cached: dict[str, dict] = {}  # bsn → calc_result
+    if cache_file and cache_file.exists():
+        with open(cache_file, encoding="utf-8") as f:
+            cached = json.load(f)
+        if verbose:
+            print(f"  Loaded calculation cache: {len(cached)} profiles from {cache_file.name}", file=sys.stderr)
+
     total = len(profiles_to_process)
     entries: list[dict] = []
 
@@ -159,16 +378,26 @@ def precompute_graph_entries(
                 print(f"  [{i}/{total}] Warning: Profile {bsn} not found, skipping", file=sys.stderr)
             continue
 
-        if verbose:
-            print(f"  [{i}/{total}] Processing {bsn}...", file=sys.stderr)
-
         profile_data = all_profiles[bsn]
         person_name = profile_data.get("name", f"Burger {bsn}")
 
-        calc_result = run_calculation(law, bsn)
-        if calc_result and verbose:
-            req_met = calc_result.get("requirements_met", False)
-            print(f"    Calculation: requirements_met={req_met}", file=sys.stderr)
+        if bsn in cached:
+            calc_result = cached[bsn]
+            if verbose:
+                print(f"  [{i}/{total}] {bsn} — from cache (skipping engine)", file=sys.stderr)
+        else:
+            if verbose:
+                print(f"  [{i}/{total}] Processing {bsn}...", file=sys.stderr)
+            calc_result = run_calculation(law, bsn, law_yaml, profile_data)
+            if calc_result and verbose:
+                req_met = calc_result.get("requirements_met", False)
+                print(f"    Calculation: requirements_met={req_met}", file=sys.stderr)
+            # Save to cache immediately (so partial runs are also cached)
+            if cache_file:
+                cached[bsn] = calc_result
+                cache_file.parent.mkdir(parents=True, exist_ok=True)
+                with open(cache_file, "w", encoding="utf-8") as f:
+                    json.dump(cached, f, ensure_ascii=False)
 
         decision_extractor = DecisionGraphExtractor(law_yaml, profile_data, bsn, calc_result)
         graph = decision_extractor.extract()
@@ -305,7 +534,7 @@ def run_graph_approach(
                     "law": law,
                     "profile": bsn,
                     "profile_name": person_name,
-                    "requirements_met": calc_result.get("requirements_met") if calc_result else None,
+                    "requirements_met": decision_extractor.effective_requirements_met,
                     "law_output": calc_output,
                     "law_input": {k: v["value"] for k, v in profile_vals.items()},
                     "explanation": result["explanation"],
@@ -409,11 +638,7 @@ Examples:
         default=["zorgtoeslag"],
         metavar="LAW",
         dest="laws_graph",
-        help=(
-            "Law(s) for the graph approach (default: zorgtoeslag). "
-            f"Known laws with dedicated extractors: {', '.join(LAW_EXTRACTORS.keys())}. "
-            "Any other value falls back to the zorgtoeslag extractor."
-        ),
+        help="Law(s) for the graph approach (default: zorgtoeslag). Works for any law.",
     )
     parser.add_argument(
         "--laws",
@@ -487,13 +712,18 @@ Examples:
     graph_precomputed: dict[str, list[dict]] = {}
     if do_graph:
         for law in graph_laws:
-            print(f"\nPrecomputing graph for law: {law}...")
+            cache_path = run_dir / f"cache_{law}.json"
+            if cache_path.exists():
+                print(f"\nLoading cached calculations for law: {law} ({cache_path.name})")
+            else:
+                print(f"\nPrecomputing graph for law: {law}...")
             graph_precomputed[law] = precompute_graph_entries(
                 law=law,
                 profiles_filter=args.profiles,
                 save_graphs=args.graphs,
-                graphs_dir=OUTPUT_DIR / "graphs" if args.graphs else None,
+                graphs_dir=run_dir / "graphs" / law if args.graphs else None,
                 verbose=verbose,
+                cache_file=cache_path,
             )
 
     open_entries: list[dict] = []

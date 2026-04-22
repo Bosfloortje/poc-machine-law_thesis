@@ -299,6 +299,32 @@ async def root(
         # Check if user can submit claims
         can_submit_claims = "CLAIMS_INDIENEN" in user_permissions
 
+    # Derive the profile's gemeente from RvIG verblijfplaats
+    _gemeente_service: str | None = None
+    try:
+        _verblijfplaats = (profile.get("sources", {}).get("RvIG", {}).get("verblijfplaats") or [])
+        _woonplaats = next(
+            (v.get("woonplaats") for v in _verblijfplaats if v.get("type") == "WOONADRES"),
+            _verblijfplaats[0].get("woonplaats") if _verblijfplaats else None,
+        )
+        if _woonplaats:
+            _gemeente_service = f"GEMEENTE_{_woonplaats.upper().replace(' ', '_')}"
+    except Exception:
+        pass
+
+    # Municipality-specific laws: only show the one matching the profile's gemeente
+    _gemeente_laws = {"participatiewet/bijstand", "alcoholwet/vergunning"}
+
+    def _filter_by_gemeente(law_info: dict) -> bool:
+        law_name = law_info.get("law", "")
+        service = law_info.get("service", "")
+        if law_name in _gemeente_laws:
+            if _gemeente_service:
+                return service == _gemeente_service
+            # No gemeente known: show all
+            return True
+        return True
+
     return templates.TemplateResponse(
         "index.html",
         {
@@ -307,9 +333,12 @@ async def root(
             "bsn": bsn,
             "effective_bsn": effective_bsn,
             "all_profiles": services.get_all_profiles(),
-            "discoverable_service_laws": services.get_sorted_discoverable_service_laws(
-                effective_bsn, discoverable_by=discoverable_by
-            ),
+            "discoverable_service_laws": [
+                law for law in services.get_sorted_discoverable_service_laws(
+                    effective_bsn, discoverable_by=discoverable_by
+                )
+                if _filter_by_gemeente(law)
+            ],
             "wallet_enabled": is_wallet_enabled(),
             "chat_enabled": is_chat_enabled(),
             "change_wizard_enabled": is_change_wizard_enabled(),
@@ -331,13 +360,25 @@ async def root(
 
 
 if __name__ == "__main__":
+    import argparse
+    import asyncio
     import os
+    import platform
 
     import uvicorn
 
+    # On Windows, ProactorEventLoop (the default) has unreliable SIGINT/Ctrl+C handling
+    # when spawned via a subprocess wrapper like `uv run`. SelectorEventLoop handles it correctly.
+    if platform.system() == "Windows":
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--port", type=int, default=None)
+    args, _ = parser.parse_known_args()
+
     # Use single worker for demo mode to maintain in-memory state
     # Multiple workers would have separate memory spaces, breaking the _test_runs dictionary
-    port = int(os.environ.get("PORT", 8000))
+    port = args.port or int(os.environ.get("PORT", 8000))
     config = uvicorn.Config(
         app=app,
         host="0.0.0.0",

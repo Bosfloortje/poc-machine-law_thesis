@@ -22,16 +22,17 @@
                         </span>
                     </div>
                     <div class="text-sm text-gray-700 space-y-2">
-                        <p>
+                        <p x-data x-text="$store.lang === 'en' ? 'This is a technical demonstration of how Dutch legislation works as executable code. All data is fictional and for demonstration purposes only.' : 'Dit is een technische demonstratie van hoe Nederlandse wetgeving als uitvoerbare code werkt. Alle gegevens zijn fictief en uitsluitend voor demonstratiedoeleinden.'">
                             Dit is een technische demonstratie van hoe Nederlandse wetgeving als uitvoerbare code werkt.
                             Alle gegevens zijn fictief en uitsluitend voor demonstratiedoeleinden.
                         </p>
-                        <p class="text-xs text-gray-600">Deze demo is niet geschikt voor productie of daadwerkelijke besluitvorming.</p>
+                        <p class="text-xs text-gray-600" x-data x-text="$store.lang === 'en' ? 'This demo is not suitable for production or actual decision-making.' : 'Deze demo is niet geschikt voor productie of daadwerkelijke besluitvorming.'">Deze demo is niet geschikt voor productie of daadwerkelijke besluitvorming.</p>
                     </div>
                     <div class="mt-3">
                         <a href="https://minbzk.github.io/regelrecht"
                            target="_blank"
-                           class="inline-flex items-center text-sm font-medium text-yellow-700 hover:text-yellow-900">
+                           class="inline-flex items-center text-sm font-medium text-yellow-700 hover:text-yellow-900"
+                           x-data x-text="$store.lang === 'en' ? 'More information about RegelRecht' : 'Meer informatie over RegelRecht'">
                             Meer informatie over RegelRecht
                             <svg class="ml-1 w-4 h-4"
                                  fill="none"
@@ -96,18 +97,22 @@
 <section class="mb-8">
     <div class="flex justify-between items-start">
         <div>
-            <h2 class="text-2xl font-semibold text-gray-900 mb-2">{{ active_profile_config.portal_heading }}</h2>
-            <p class="text-gray-600">{{ active_profile_config.portal_subtitle }}</p>
+            <h2 class="text-2xl font-semibold text-gray-900 mb-2"
+                x-data
+                x-text="$store.lang === 'en' ? '{{ active_profile_config.portal_heading_en | default(active_profile_config.portal_heading) }}' : '{{ active_profile_config.portal_heading }}'">{{ active_profile_config.portal_heading }}</h2>
+            <p class="text-gray-600"
+               x-data
+               x-text="$store.lang === 'en' ? '{{ active_profile_config.portal_subtitle_en | default(active_profile_config.portal_subtitle) }}' : '{{ active_profile_config.portal_subtitle }}'">{{ active_profile_config.portal_subtitle }}</p>
         </div>
         <div class="flex items-center space-x-2">
-            <span class="text-sm text-gray-600">Datum:
+            <span class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Date:' : 'Datum:'">Datum:
                 {% if adjustable_effective_date_enabled %}
                     <input id="date-input"
                            class="bg-white px-2 py-1 border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                            type="date"
                            value="{{ request.query_params.get('date') if request.query_params.get('date') else now.strftime('%Y-%m-%d') }}">
                 {% else %}
-                    {{ effective_date.strftime("%-d %B %Y") }}
+                    {{ effective_date.strftime("%d %B %Y").lstrip("0") }}
                 {% endif %}
             </span>
         </div>
@@ -121,7 +126,7 @@
         <div class="mb-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl shadow-lg border border-blue-100 overflow-hidden">
             <div class="p-8 text-center">
                 <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-                <p class="mt-4 text-gray-600">Berekenen van totaal inkomen...</p>
+                <p class="mt-4 text-gray-600" x-data x-text="$store.lang === 'en' ? 'Calculating total income...' : 'Berekenen van totaal inkomen...'">Berekenen van totaal inkomen...</p>
             </div>
         </div>
     </div>
@@ -131,8 +136,8 @@
     <div class="p-6">
         {% if delegation_context and delegation_context.subject_type == "BUSINESS" and business_profile %}
             <!-- Delegation indicator for BUSINESS -->
-            <div class="mb-3 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
-                Namens bedrijf · {{ delegation_context.delegation_type }}
+            <div class="mb-3 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200" x-data>
+                <span x-text="$store.lang === 'en' ? 'On behalf of company' : 'Namens bedrijf'">Namens bedrijf</span> · {{ delegation_context.delegation_type }}
             </div>
             <!-- Business Profile Section -->
             <div class="flex items-center justify-between mb-4">
@@ -144,7 +149,7 @@
                 </div>
                 <button class="text-blue-600 hover:text-blue-800 flex items-center cursor-pointer"
                         onclick="document.getElementById('profile-details').classList.toggle('hidden')">
-                    <span class="mr-2">Bekijk alle gegevens</span>
+                    <span class="mr-2" x-data x-text="$store.lang === 'en' ? 'View all data' : 'Bekijk alle gegevens'">Bekijk alle gegevens</span>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          class="h-5 w-5"
                          viewBox="0 0 20 20"
@@ -159,63 +164,49 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Bedrijfsgegevens -->
                         <div>
-                            <h4 class="font-semibold text-gray-900 mb-3">Bedrijfsgegevens</h4>
+                            <h4 class="font-semibold text-gray-900 mb-3" x-data x-text="$store.lang === 'en' ? 'Company details' : 'Bedrijfsgegevens'">Bedrijfsgegevens</h4>
                             <dl class="space-y-2">
                                 <div>
-                                    <dt class="text-sm text-gray-600">KVK-nummer</dt>
+                                    <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Chamber of Commerce number' : 'KVK-nummer'">KVK-nummer</dt>
                                     <dd>
                                         {{ delegation_context.subject_id }}
                                     </dd>
                                 </div>
                                 <div>
-                                    <dt class="text-sm text-gray-600">Handelsnaam</dt>
-                                    <dd>
-                                        {{ business_profile.handelsnaam }}
-                                    </dd>
+                                    <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Trade name' : 'Handelsnaam'">Handelsnaam</dt>
+                                    <dd>{{ business_profile.handelsnaam }}</dd>
                                 </div>
                                 <div>
-                                    <dt class="text-sm text-gray-600">Rechtsvorm</dt>
-                                    <dd>
-                                        {{ business_profile.rechtsvorm }}
-                                    </dd>
+                                    <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Legal form' : 'Rechtsvorm'">Rechtsvorm</dt>
+                                    <dd>{{ business_profile.rechtsvorm }}</dd>
                                 </div>
                                 {% if business_profile.activiteit %}
                                     <div>
-                                        <dt class="text-sm text-gray-600">Activiteit</dt>
-                                        <dd>
-                                            {{ business_profile.activiteit }}
-                                        </dd>
+                                        <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Activity' : 'Activiteit'">Activiteit</dt>
+                                        <dd>{{ business_profile.activiteit }}</dd>
                                     </div>
                                 {% endif %}
                                 <div>
                                     <dt class="text-sm text-gray-600">Status</dt>
-                                    <dd>
-                                        {{ business_profile.status }}
-                                    </dd>
+                                    <dd>{{ business_profile.status }}</dd>
                                 </div>
                             </dl>
                         </div>
                         <!-- Vertegenwoordiger -->
                         <div>
-                            <h4 class="font-semibold text-gray-900 mb-3">Vertegenwoordiger</h4>
+                            <h4 class="font-semibold text-gray-900 mb-3" x-data x-text="$store.lang === 'en' ? 'Representative' : 'Vertegenwoordiger'">Vertegenwoordiger</h4>
                             <dl class="space-y-2">
                                 <div>
-                                    <dt class="text-sm text-gray-600">Naam</dt>
-                                    <dd>
-                                        {{ profile.name }}
-                                    </dd>
+                                    <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Name' : 'Naam'">Naam</dt>
+                                    <dd>{{ profile.name }}</dd>
                                 </div>
                                 <div>
                                     <dt class="text-sm text-gray-600">BSN</dt>
-                                    <dd>
-                                        {{ bsn }}
-                                    </dd>
+                                    <dd>{{ bsn }}</dd>
                                 </div>
                                 <div>
-                                    <dt class="text-sm text-gray-600">Functie</dt>
-                                    <dd>
-                                        {{ delegation_context.delegation_type }}
-                                    </dd>
+                                    <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Role' : 'Functie'">Functie</dt>
+                                    <dd>{{ delegation_context.delegation_type }}</dd>
                                 </div>
                             </dl>
                         </div>
@@ -225,14 +216,14 @@
         {% elif profile.sources.RvIG %}
             <!-- Delegation indicator for CITIZEN delegations -->
             {% if delegation_context and delegation_context.subject_type == "CITIZEN" %}
-                <div class="mb-3 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">
-                    Namens {{ delegation_context.subject_name }} ·
+                <div class="mb-3 inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200" x-data>
+                    <span x-text="$store.lang === 'en' ? 'On behalf of' : 'Namens'">Namens</span> {{ delegation_context.subject_name }} ·
                     {% if delegation_context.delegation_type == "VOOGDIJ" %}
-                        Voogdij
+                        <span x-text="$store.lang === 'en' ? 'Guardianship' : 'Voogdij'">Voogdij</span>
                     {% elif delegation_context.delegation_type == "OUDERLIJK_GEZAG" %}
-                        Ouderlijk gezag
+                        <span x-text="$store.lang === 'en' ? 'Parental authority' : 'Ouderlijk gezag'">Ouderlijk gezag</span>
                     {% elif delegation_context.delegation_type == "GEZAMENLIJK_GEZAG" %}
-                        Gezamenlijk gezag
+                        <span x-text="$store.lang === 'en' ? 'Joint custody' : 'Gezamenlijk gezag'">Gezamenlijk gezag</span>
                     {% else %}
                         {{ delegation_context.delegation_type }}
                     {% endif %}
@@ -242,14 +233,14 @@
             <div class="flex items-center justify-between mb-4">
                 <div>
                     <h3 class="font-semibold text-lg">{{ profile.name }}</h3>
-                    <div class="text-sm text-gray-600 mt-1">
-                        BSN: {{ bsn }} | Geboortedatum: {{
+                    <div class="text-sm text-gray-600 mt-1" x-data>
+                        BSN: {{ bsn }} | <span x-text="$store.lang === 'en' ? 'Date of birth:' : 'Geboortedatum:'">Geboortedatum:</span> {{
                         profile.sources.RvIG.personen[0].geboortedatum|format_date }}
                     </div>
                 </div>
                 <button class="text-blue-600 hover:text-blue-800 flex items-center cursor-pointer"
                         onclick="document.getElementById('profile-details').classList.toggle('hidden')">
-                    <span class="mr-2">Bekijk alle gegevens</span>
+                    <span class="mr-2" x-data x-text="$store.lang === 'en' ? 'View all data' : 'Bekijk alle gegevens'">Bekijk alle gegevens</span>
                     <svg xmlns="http://www.w3.org/2000/svg"
                          class="h-5 w-5"
                          viewBox="0 0 20 20"
@@ -264,21 +255,21 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Persoonsgegevens -->
                         <div>
-                            <h4 class="font-semibold text-gray-900 mb-3">Persoonsgegevens</h4>
+                            <h4 class="font-semibold text-gray-900 mb-3" x-data x-text="$store.lang === 'en' ? 'Personal details' : 'Persoonsgegevens'">Persoonsgegevens</h4>
                             <dl class="space-y-2">
                                 <div>
-                                    <dt class="text-sm text-gray-600">Nationaliteit</dt>
+                                    <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Nationality' : 'Nationaliteit'">Nationaliteit</dt>
                                     <dd>
                                         {{ accepted_claims["nationaliteit"] or profile.sources.RvIG.personen[0].nationaliteit }}
                                     </dd>
                                 </div>
                                 {% if accepted_claims["verblijfplaats"] %}
                                     <div>
-                                        <dt class="text-sm text-gray-600">
+                                        <dt class="text-sm text-gray-600" x-data>
                                             {% if accepted_claims["verblijfplaats"].type == "BRIEFADRES" %}
-                                                Briefadres
+                                                <span x-text="$store.lang === 'en' ? 'Postal address' : 'Briefadres'">Briefadres</span>
                                             {% else %}
-                                                Woonadres
+                                                <span x-text="$store.lang === 'en' ? 'Home address' : 'Woonadres'">Woonadres</span>
                                             {% endif %}
                                         </dt>
                                         <dd>
@@ -292,19 +283,19 @@
                                     </div>
                                 {% elif accepted_claims["verblijfsadres"] %}
                                     <div>
-                                        <dt class="text-sm text-gray-600">Verblijfplaats</dt>
+                                        <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Place of residence' : 'Verblijfplaats'">Verblijfplaats</dt>
                                         <dd>
                                             {{ accepted_claims["verblijfsadres"] }}
                                         </dd>
                                     </div>
                                 {% elif profile.sources.RvIG.get('verblijfplaats') %}
                                     <div>
-                                        <dt class="text-sm text-gray-600">
+                                        <dt class="text-sm text-gray-600" x-data>
                                             {% if profile.sources.RvIG.verblijfplaats[0].type ==
                                                 "BRIEFADRES" %}
-                                                Briefadres
+                                                <span x-text="$store.lang === 'en' ? 'Postal address' : 'Briefadres'">Briefadres</span>
                                             {% else %}
-                                                Woonadres
+                                                <span x-text="$store.lang === 'en' ? 'Home address' : 'Woonadres'">Woonadres</span>
                                             {% endif %}
                                         </dt>
                                         <dd>
@@ -318,7 +309,7 @@
                                     </div>
                                 {% elif profile.sources.RvIG.personen[0].verblijfsadres %}
                                     <div>
-                                        <dt class="text-sm text-gray-600">Verblijfplaats</dt>
+                                        <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Place of residence' : 'Verblijfplaats'">Verblijfplaats</dt>
                                         <dd>
                                             {{ profile.sources.RvIG.personen[0].verblijfsadres }}
                                         </dd>
@@ -327,7 +318,7 @@
                                 {% if profile.sources.RvIG.relaties and
                                     profile.sources.RvIG.relaties[0].partnerschap_type != "GEEN" %}
                                     <div>
-                                        <dt class="text-sm text-gray-600">Partnerschap</dt>
+                                        <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Partnership' : 'Partnerschap'">Partnerschap</dt>
                                         <dd>
                                             {{ profile.sources.RvIG.relaties[0].partnerschap_type }}
                                         </dd>
@@ -339,14 +330,14 @@
                         {% if profile.sources.BELASTINGDIENST and
                             profile.sources.BELASTINGDIENST.box1 %}
                             <div>
-                                <h4 class="font-semibold text-gray-900 mb-3">Inkomen</h4>
+                                <h4 class="font-semibold text-gray-900 mb-3" x-data x-text="$store.lang === 'en' ? 'Income' : 'Inkomen'">Inkomen</h4>
                                 <dl class="space-y-2">
                                     {% if
                                         accepted_claims["BOX1_DIENSTBETREKKING"] or
                                         profile.sources.BELASTINGDIENST.box1[0].loon_uit_dienstbetrekking
                                         %}
                                         <div>
-                                            <dt class="text-sm text-gray-600">Inkomen uit werk</dt>
+                                            <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Employment income' : 'Inkomen uit werk'">Inkomen uit werk</dt>
                                             <dd>
                                                 {{
                                                 ((accepted_claims["BOX1_DIENSTBETREKKING"] or profile.sources.BELASTINGDIENST.box1[0].loon_uit_dienstbetrekking)
@@ -358,7 +349,7 @@
                                         accepted_claims["BOX1_ONDERNEMING"] or
                                         profile.sources.BELASTINGDIENST.box1[0].winst_uit_onderneming %}
                                         <div>
-                                            <dt class="text-sm text-gray-600">Winst uit onderneming</dt>
+                                            <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Business profit' : 'Winst uit onderneming'">Winst uit onderneming</dt>
                                             <dd>
                                                 {{
                                                 ((accepted_claims["BOX1_ONDERNEMING"] or profile.sources.BELASTINGDIENST.box1[0].winst_uit_onderneming)
@@ -370,7 +361,7 @@
                                         (profile.sources.BELASTINGDIENST.box3 and
                                         profile.sources.BELASTINGDIENST.box3[0].spaargeld) %}
                                         <div>
-                                            <dt class="text-sm text-gray-600">Spaargeld</dt>
+                                            <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Savings' : 'Spaargeld'">Spaargeld</dt>
                                             <dd>
                                                 {{ ((accepted_claims["BOX3_SPAREN"] or profile.sources.BELASTINGDIENST.box3[0].spaargeld) / 100) |
                                                 format_currency }}
@@ -383,17 +374,17 @@
                         <!-- Opleiding -->
                         {% if profile.sources.DUO and profile.sources.DUO.inschrijvingen %}
                             <div>
-                                <h4 class="font-semibold text-gray-900 mb-3">Opleiding</h4>
+                                <h4 class="font-semibold text-gray-900 mb-3" x-data x-text="$store.lang === 'en' ? 'Education' : 'Opleiding'">Opleiding</h4>
                                 <dl class="space-y-2">
                                     <div>
-                                        <dt class="text-sm text-gray-600">Onderwijssoort</dt>
+                                        <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Type of education' : 'Onderwijssoort'">Onderwijssoort</dt>
                                         <dd>
                                             {{ profile.sources.DUO.inschrijvingen[0].onderwijssoort }}
                                         </dd>
                                     </div>
                                     {% if profile.sources.DUO.inschrijvingen[0].niveau %}
                                         <div>
-                                            <dt class="text-sm text-gray-600">Niveau</dt>
+                                            <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Level' : 'Niveau'">Niveau</dt>
                                             <dd>
                                                 Niveau {{ profile.sources.DUO.inschrijvingen[0].niveau }}
                                             </dd>
@@ -406,10 +397,10 @@
                         {% if profile.sources.GEMEENTE_AMSTERDAM and
                             profile.sources.GEMEENTE_AMSTERDAM.werk_en_re_integratie %}
                             <div>
-                                <h4 class="font-semibold text-gray-900 mb-3">Werk & Re-integratie</h4>
+                                <h4 class="font-semibold text-gray-900 mb-3" x-data x-text="$store.lang === 'en' ? 'Work & Reintegration' : 'Werk & Re-integratie'">Werk & Re-integratie</h4>
                                 <dl class="space-y-2">
                                     <div>
-                                        <dt class="text-sm text-gray-600">Arbeidsvermogen</dt>
+                                        <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Work capacity' : 'Arbeidsvermogen'">Arbeidsvermogen</dt>
                                         <dd>
                                             {{
                                             profile.sources.GEMEENTE_AMSTERDAM.werk_en_re_integratie[0].arbeidsvermogen
@@ -420,7 +411,7 @@
                                         profile.sources.GEMEENTE_AMSTERDAM.werk_en_re_integratie[0].re_integratie_traject
                                         %}
                                         <div>
-                                            <dt class="text-sm text-gray-600">Re-integratietraject</dt>
+                                            <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Reintegration programme' : 'Re-integratietraject'">Re-integratietraject</dt>
                                             <dd>
                                                 {{
                                                 profile.sources.GEMEENTE_AMSTERDAM.werk_en_re_integratie[0].re_integratie_traject
@@ -432,7 +423,7 @@
                                         profile.sources.GEMEENTE_AMSTERDAM.werk_en_re_integratie[0].ontheffing_reden
                                         %}
                                         <div>
-                                            <dt class="text-sm text-gray-600">Ontheffing</dt>
+                                            <dt class="text-sm text-gray-600" x-data x-text="$store.lang === 'en' ? 'Exemption' : 'Ontheffing'">Ontheffing</dt>
                                             <dd>
                                                 {{
                                                 profile.sources.GEMEENTE_AMSTERDAM.werk_en_re_integratie[0].ontheffing_reden
@@ -447,14 +438,14 @@
                 </div>
             </div>
         {% else %}
-            <h4 class="font-semibold text-gray-900 mb-3">Persoonsgegevens</h4>
-            <p>Geen profieldata gevonden.</p>
+            <h4 class="font-semibold text-gray-900 mb-3" x-data x-text="$store.lang === 'en' ? 'Personal details' : 'Persoonsgegevens'">Persoonsgegevens</h4>
+            <p x-data x-text="$store.lang === 'en' ? 'No profile data found.' : 'Geen profieldata gevonden.'">Geen profieldata gevonden.</p>
         {% endif %}
     </div>
 </section>
 <!-- Laws Grid -->
 <section class="mb-8">
-    <h3 class="font-semibold text-lg mb-4">Berekende regelingen</h3>
+    <h3 class="font-semibold text-lg mb-4" x-data x-text="$store.lang === 'en' ? 'Applicable regulations' : 'Berekende regelingen'">Berekende regelingen</h3>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {% for law in discoverable_service_laws %}
             <div hx-get="/laws/execute?service={{ law['service'] }}&law={{ law['law']|urlencode }}&bsn={{ effective_bsn|default(bsn) }}{% if delegation_context and delegation_context.subject_type == 'BUSINESS' %}&kvk={{ delegation_context.subject_id }}{% endif %}{% if request.query_params.get('date') %}&date={{ request.query_params.get("date") }}{% endif %}&can_submit_claims={{ can_submit_claims|default(true) }}"
@@ -544,13 +535,13 @@
     </style>
     <section class="mb-8 bg-white rounded-lg shadow">
         <div class="p-6">
-            <h3 class="font-semibold text-lg mb-4">Wijziging doorgeven</h3>
-            <p class="text-gray-600 mb-6">Geef hier wijzigingen door. Velden die niet gewijzigd zijn, kunt u leeg laten.</p>
+            <h3 class="font-semibold text-lg mb-4" x-data x-text="$store.lang === 'en' ? 'Submit change' : 'Wijziging doorgeven'">Wijziging doorgeven</h3>
+            <p class="text-gray-600 mb-6" x-data x-text="$store.lang === 'en' ? 'Submit changes here. Fields that have not changed can be left blank.' : 'Geef hier wijzigingen door. Velden die niet gewijzigd zijn, kunt u leeg laten.'">Geef hier wijzigingen door. Velden die niet gewijzigd zijn, kunt u leeg laten.</p>
             <div id="wizard-container">
                 <!-- Step 0: Select type -->
                 <div id="step-0" class="wizard-step">
-                    <h4 class="mb-2 block font-medium">Type wijziging</h4>
-                    <div class="grid grid-cols-2 gap-4">
+                    <h4 class="mb-2 block font-medium" x-data x-text="$store.lang === 'en' ? 'Type of change' : 'Type wijziging'">Type wijziging</h4>
+                    <div class="grid grid-cols-2 gap-4" x-data>
                         <button type="button" class="wizard-type-btn" data-type="inkomen">
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  class="h-8 w-8 text-blue-600"
@@ -561,7 +552,7 @@
                                 <path stroke-width="2" stroke="currentColor" fill="none" d="M5 6v6c0 1.66 3.13 3 7 3s7-1.34 7-3V6" />
                                 <path stroke-width="2" stroke="currentColor" fill="none" d="M5 12v6c0 1.66 3.13 3 7 3s7-1.34 7-3v-6" />
                             </svg>
-                            <span class="font-medium">Inkomen</span>
+                            <span class="font-medium" x-text="$store.lang === 'en' ? 'Income' : 'Inkomen'">Inkomen</span>
                         </button>
                         <button type="button" class="wizard-type-btn" data-type="woonadres">
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -571,7 +562,7 @@
                                  stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                             </svg>
-                            <span class="font-medium">Woonadres</span>
+                            <span class="font-medium" x-text="$store.lang === 'en' ? 'Home address' : 'Woonadres'">Woonadres</span>
                         </button>
                         <button type="button" class="wizard-type-btn" data-type="huurprijs">
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -582,7 +573,7 @@
                                 <rect x="6" y="4" width="12" height="16" rx="2" stroke-width="2" stroke="currentColor" fill="none" />
                                 <path stroke-width="2" stroke="currentColor" fill="none" d="M9 8h6M9 12h6M9 16h2" />
                             </svg>
-                            <span class="font-medium">Huurprijs</span>
+                            <span class="font-medium" x-text="$store.lang === 'en' ? 'Rent price' : 'Huurprijs'">Huurprijs</span>
                         </button>
                         <button type="button" class="wizard-type-btn" data-type="huishouden">
                             <svg xmlns="http://www.w3.org/2000/svg"
@@ -592,7 +583,7 @@
                                  stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                             </svg>
-                            <span class="font-medium">Gezin of huishouden</span>
+                            <span class="font-medium" x-text="$store.lang === 'en' ? 'Family or household' : 'Gezin of huishouden'">Gezin of huishouden</span>
                         </button>
                     </div>
                 </div>
@@ -603,17 +594,17 @@
                         <div id="step-navigation" class="flex justify-between">
                             <button type="button"
                                     id="prev-btn"
-                                    class="cursor-pointer rounded bg-gray-200 px-4 py-2 font-medium text-gray-700 hover:bg-gray-300 focus:outline-none">
+                                    class="cursor-pointer rounded bg-gray-200 px-4 py-2 font-medium text-gray-700 hover:bg-gray-300 focus:outline-none" x-data x-text="$store.lang === 'en' ? 'Back' : 'Terug'">
                                 Terug
                             </button>
                             <button type="submit"
                                     id="next-btn"
-                                    class="cursor-pointer rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 focus:outline-none">
+                                    class="cursor-pointer rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 focus:outline-none" x-data x-text="$store.lang === 'en' ? 'Next' : 'Volgende'">
                                 Volgende
                             </button>
                             <button type="submit"
                                     id="submit-btn"
-                                    class="cursor-pointer rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 focus:outline-none hidden">
+                                    class="cursor-pointer rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700 focus:outline-none hidden" x-data x-text="$store.lang === 'en' ? 'Submit change' : 'Wijziging doorgeven'">
                                 Wijziging doorgeven
                             </button>
                         </div>
@@ -626,14 +617,14 @@
 <!-- Info Section -->
 <section class="mt-12 grid md:grid-cols-2 gap-8">
     <div class="bg-blue-50 rounded-lg p-6">
-        <h3 class="font-semibold text-lg mb-4">Over deze demo</h3>
-        <p class="text-gray-600">
+        <h3 class="font-semibold text-lg mb-4" x-data x-text="$store.lang === 'en' ? 'About this demo' : 'Over deze demo'">Over deze demo</h3>
+        <p class="text-gray-600" x-data x-text="$store.lang === 'en' ? 'This demo shows how laws work as code. The profiles shown are examples from the test scenarios.' : 'Deze demo laat zien hoe wetten als code werken. De getoonde profielen zijn voorbeelden uit de testscenarios.'">
             Deze demo laat zien hoe wetten als code werken. De getoonde
             profielen zijn voorbeelden uit de testscenarios.
         </p>
     </div>
     <div class="bg-gray-50 rounded-lg p-6">
-        <h3 class="font-semibold text-lg mb-4">Beschikbare regelingen</h3>
+        <h3 class="font-semibold text-lg mb-4" x-data x-text="$store.lang === 'en' ? 'Available regulations' : 'Beschikbare regelingen'">Beschikbare regelingen</h3>
         <ul class="space-y-2">
             {% if active_profile_config and active_profile_config.type == 'ondernemer' %}
                 <li class="flex items-center">

@@ -45,6 +45,31 @@ class FeatureFlags:
         ("AWB", "algemene_wet_bestuursrecht"): False,
         ("RVO", "omgevingswet/werkgebonden_personenmobiliteit/gegevens"): False,
         ("RvIG", "wet_brp"): False,
+        # Thesis scope: only zorgtoeslag, participatiewet/bijstand, and alcoholwet/vergunning enabled by default
+        # Citizen laws (disabled)
+        ("BELASTINGDIENST", "wet_inkomstenbelasting"): False,
+        ("BELASTINGDIENST", "zorgverzekeringswet/bijdrage"): False,
+        ("KIESRAAD", "kieswet"): False,
+        ("PENSIOENFONDS", "pensioenwet"): False,
+        ("SVB", "algemene_nabestaandenwet"): False,
+        ("SVB", "algemene_ouderdomswet"): False,
+        ("SVB", "participatiewet/aio"): False,
+        ("SZW", "besluit_bijstandverlening_zelfstandigen"): False,
+        ("TOESLAGEN", "wet_kinderopvang"): False,
+        ("TOESLAGEN", "wet_op_de_huurtoeslag"): False,
+        ("TOESLAGEN", "wet_op_het_kindgebonden_budget"): False,
+        ("UWV", "werkloosheidswet"): False,
+        # Business laws (disabled except alcoholwet/vergunning)
+        ("BELASTINGDIENST", "zvw"): False,
+        ("GEMEENTE_ROTTERDAM", "algemene_plaatselijke_verordening/exploitatievergunning"): False,
+        ("GEMEENTE_ROTTERDAM", "algemene_plaatselijke_verordening/ontheffingspas_geluid"): False,
+        ("GEMEENTE_ROTTERDAM", "algemene_plaatselijke_verordening/terrassen"): False,
+        ("GEMEENTE_ROTTERDAM", "verordening_precariobelasting"): False,
+        ("KVK", "handelsregisterwet/jaarrekening"): False,
+        ("NVWA", "warenwet/haccp"): False,
+        ("NVWA", "warenwet/meldplicht"): False,
+        ("RVO", "omgevingswet/energiebesparing/informatieplicht"): False,
+        ("RVO", "omgevingswet/werkgebonden_personenmobiliteit"): False,
     }
 
     @classmethod

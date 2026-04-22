@@ -2,11 +2,21 @@
 MCP Formatter for formatting service execution results.
 """
 
+import re
 from typing import Any
 
 from .mcp_logging import logger
 from .mcp_services import MCPServiceRegistry
 from .mcp_types import ClaimsResponse, MCPResult
+
+
+def _to_dutch_format(value: float) -> str:
+    """Format a euro value in Dutch notation (1.234,56)."""
+    int_part = int(value)
+    cents = round((value - int_part) * 100)
+    if cents:
+        return f"{int_part:,}".replace(",", ".") + f",{cents:02d}"
+    return f"{int_part:,}".replace(",", ".")
 
 
 class MCPResultFormatter:
@@ -276,3 +286,86 @@ class MCPResultFormatter:
         formatted += "\n"
 
         return formatted
+
+    def fix_amounts_in_text(self, text: str, results: MCPResult) -> str:
+        """Replace incorrectly formatted euro amounts in LLM output with correct Dutch-formatted values.
+
+        LLMs (especially small models) often confuse eurocent values with euros, or use
+        wrong decimal/thousands separators. This post-processes the response by replacing
+        any recognizable wrong representation with the exact Dutch-formatted value.
+
+        Args:
+            text: The LLM output text to fix
+            results: The service results used in this response (used to build expected values)
+
+        Returns:
+            Text with corrected euro amounts
+        """
+        # Build expected euro values from all service results
+        expected: dict[str, float] = {}
+        for service_name, result in results.items():
+            if service_name == "claims" or not isinstance(result, dict):
+                continue
+            service = self.registry.get_service(service_name)
+            if not service:
+                continue
+            money_fields, _ = self._get_field_types(service.service_type, service.law_path)
+            result_data = result.get("result") or {}
+            for key, value in result_data.items():
+                if key in money_fields and isinstance(value, (int, float)) and value > 0:
+                    expected[key] = value / 100
+
+        if not expected:
+            return text
+
+        # Remove stray euro signs before digits (models sometimes emit € before a plain integer)
+        fixed = re.sub(r"[€\ufffd](?=\s*\d)", "", text)
+
+        for exact_value in expected.values():
+            if exact_value < 1:
+                continue
+            exact_dutch = _to_dutch_format(exact_value)
+            if exact_dutch in fixed:
+                continue
+            exact_int = int(exact_value)
+            cents = round((exact_value - exact_int) * 100)
+            cents_str = f"{cents:02d}"
+            dutch_thousands = f"{exact_int:,}".replace(",", ".")
+            american_thousands = f"{exact_int:,}"
+            plain = str(exact_int)
+
+            patterns: list[tuple[str, str]] = []
+            if cents > 0:
+                patterns += [
+                    (r"(?<!\d)" + re.escape(plain) + r"," + re.escape(cents_str) + r"(?!\d)", exact_dutch),
+                    (r"(?<!\d)" + re.escape(plain) + r"\." + re.escape(cents_str) + r"(?!\d)", exact_dutch),
+                    (re.escape(american_thousands) + r"," + re.escape(cents_str) + r"(?!\d)", exact_dutch),
+                ]
+            patterns += [
+                (re.escape(dutch_thousands) + r",00\b", exact_dutch),
+                (re.escape(american_thousands) + r"\.00\b", exact_dutch),
+                (r"(?<![,.\d])" + re.escape(dutch_thousands) + r"(?![,.\d])", exact_dutch),
+                (r"(?<![,.\d])" + re.escape(american_thousands) + r"(?![,.\d])", exact_dutch),
+                (r"(?<!\d)" + re.escape(plain) + r"(?![,.\d])", exact_dutch),
+            ]
+            # Also catch "doubly divided" form: LLM receives euro value but divides by 100 again
+            # e.g. expected 2112 euro → LLM writes "21,12" (2112 / 100 = 21.12)
+            divided = exact_value / 100
+            if divided >= 1:
+                div_int = int(divided)
+                div_cents = round((divided - div_int) * 100)
+                div_cents_str = f"{div_cents:02d}"
+                div_plain = str(div_int)
+                if div_cents > 0:
+                    patterns += [
+                        (r"(?<!\d)" + re.escape(div_plain) + r"," + re.escape(div_cents_str) + r"(?!\d)", exact_dutch),
+                        (r"(?<!\d)" + re.escape(div_plain) + r"\." + re.escape(div_cents_str) + r"(?!\d)", exact_dutch),
+                    ]
+
+            for pattern, replacement in patterns:
+                new_fixed = re.sub(pattern, replacement, fixed)
+                if new_fixed != fixed:
+                    fixed = new_fixed
+                    break
+
+        return fixed

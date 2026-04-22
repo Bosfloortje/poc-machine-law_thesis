@@ -596,6 +596,148 @@ async def explanation(
         )
 
 
+@router.get("/explanation-text")
+async def explanation_text(
+    request: Request,
+    service: str,
+    law: str,
+    bsn: str,
+    provider: str = None,
+    approved: bool = False,
+    lang: str = "nl",
+    claim_manager: ClaimManagerInterface = Depends(get_claim_manager),
+    machine_service: EngineInterface = Depends(get_machine_service),
+):
+    """Return explanation as JSON for use in the chat popup."""
+    try:
+        law = unquote(law)
+        law, result, _ = evaluate_law(
+            bsn, law, service, machine_service,
+            approved=approved,
+            claim_manager=claim_manager,
+            effective_date=request.query_params.get("date"),
+        )
+        path_dict_full = node_to_dict(result.path, skip_services=False)
+        path_json = json.dumps(node_to_dict(result.path, skip_services=True), ensure_ascii=False, indent=2)
+        rule_spec = machine_service.get_rule_spec(law, TODAY, service)
+        relevant_spec = {
+            "name": rule_spec.get("name"),
+            "description": rule_spec.get("description"),
+            "properties": rule_spec.get("properties", {}),
+            "requirements": rule_spec.get("requirements"),
+        }
+        rule_spec_json = json.dumps(relevant_spec, ensure_ascii=False, indent=2)
+
+        configured_providers = llm_factory.get_configured_providers(request)
+        current_provider = (
+            provider if provider and provider in configured_providers
+            else request.session.get("preferred_llm_provider") if request.session.get("preferred_llm_provider") in configured_providers
+            else llm_factory.get_provider(request)
+        )
+        llm_service = llm_factory.get_service(current_provider)
+        explanation = llm_service.generate_explanation(path_json, rule_spec_json, lang=lang)
+        law_name = rule_spec.get("name", law)
+        return JSONResponse({
+            "explanation": explanation,
+            "provider": current_provider,
+            "law_name": law_name,
+            "path": path_dict_full,
+        })
+    except Exception as e:
+        logger.error(f"Error in explanation_text: {e}")
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+
+@router.get("/knowledge-graph")
+async def knowledge_graph(
+    request: Request,
+    service: str,
+    law: str,
+    bsn: str,
+    approved: bool = False,
+    claim_manager: ClaimManagerInterface = Depends(get_claim_manager),
+    machine_service: EngineInterface = Depends(get_machine_service),
+):
+    """Return a Cytoscape.js-compatible knowledge graph for interactive visualization."""
+    try:
+        import sys
+        from pathlib import Path
+
+        law = unquote(law)
+        law_str, result, _ = evaluate_law(
+            bsn, law, service, machine_service,
+            approved=approved,
+            claim_manager=claim_manager,
+            effective_date=request.query_params.get("date"),
+        )
+        rule_spec = machine_service.get_rule_spec(law_str, TODAY, service)
+
+        # Build calc_result in the format DecisionGraphExtractor expects
+        calc_result = {
+            "requirements_met": result.requirements_met,
+            "result": result.output,
+            "input_data": result.input,
+        }
+
+        # Profile: just need the display name for the PERSON node
+        from machine.profile_loader import get_project_root, load_profiles_from_yaml
+        try:
+            profiles = load_profiles_from_yaml(get_project_root() / "data" / "profiles.yaml")
+            person = next((p for p in profiles if p.get("bsn") == bsn), None)
+            profile = {"name": person.get("name", f"BSN {bsn}")} if person else {"name": f"BSN {bsn}"}
+        except Exception:
+            profile = {"name": f"BSN {bsn}"}
+
+        # Import the extractor from the analysis scripts
+        scripts_dir = str(Path("analysis/llm_explanations/scripts").resolve())
+        if scripts_dir not in sys.path:
+            sys.path.insert(0, scripts_dir)
+        from extraction_generic import DecisionGraphExtractor
+
+        extractor = DecisionGraphExtractor(rule_spec, profile, bsn, calc_result)
+        kg = extractor.extract()
+
+        # Color palette matching the Python visualization
+        node_colors = {
+            "DECISION": "#2ECC71",
+            "RULE": "#E74C3C",
+            "FACT": "#3498DB",
+            "THRESHOLD": "#9B59B6",
+            "CALCULATION": "#F39C12",
+            "PERSON": "#1ABC9C",
+            "OUTPUT": "#F39C12",
+            "DEFINITION": "#9B59B6",
+        }
+
+        # Convert to Cytoscape.js elements
+        elements = []
+        for node in kg.nodes:
+            color = node_colors.get(node.type, "#AAAAAA")
+            elements.append({
+                "data": {
+                    "id": node.id,
+                    "label": node.label,
+                    "node_type": node.type,
+                    "color": color,
+                    **{k: str(v) for k, v in node.properties.items() if k not in ("law", "output")},
+                }
+            })
+        for edge in kg.edges:
+            elements.append({
+                "data": {
+                    "id": f"e__{edge.source}__{edge.target}",
+                    "source": edge.source,
+                    "target": edge.target,
+                    "label": edge.relation,
+                }
+            })
+
+        return JSONResponse({"elements": elements, "law_name": rule_spec.get("name", law_str)})
+    except Exception as e:
+        logger.error(f"Error in knowledge_graph: {e}", exc_info=True)
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+
 @router.get("/application-panel")
 async def application_panel(
     request: Request,

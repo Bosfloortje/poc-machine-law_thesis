@@ -1,11 +1,21 @@
 import asyncio
 import json
 import re
+import sys
+from pathlib import Path
 
 from fastapi import APIRouter, Depends, Form, Query, Request, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response
 
+from explain.graphrag_context import GRAPHRAG_SYSTEM_PROMPT, build_graph_context, build_graph_html
+
+# Lazy-load contestability from analysis scripts (same pattern as graphrag_context.py)
+_EVALUATION_DIR = Path(__file__).parent.parent.parent / "analysis" / "llm_explanations" / "scripts" / "evaluation"
+if str(_EVALUATION_DIR) not in sys.path:
+    sys.path.insert(0, str(_EVALUATION_DIR))
+from explain.contestability import contestability_score
 from explain.llm_factory import LLMFactory
+from explain.llm_guard import REDIRECT_MESSAGE, validate_response
 from explain.mcp_connector import MCPLawConnector
 from web.demo_profiles import get_demo_bsn
 from web.dependencies import (
@@ -340,6 +350,53 @@ async def set_chat_provider(request: Request, provider: str = Form(...)):
     )
 
 
+@router.get("/graph/{bsn}/{service_name}")
+async def get_decision_graph(
+    bsn: str,
+    service_name: str,
+    services: EngineInterface = Depends(get_machine_service),
+):
+    """Render and return the decision graph for a profile + service as a PNG image."""
+    import io
+
+    _scripts_dir = Path(__file__).parent.parent.parent / "analysis" / "llm_explanations" / "scripts"
+    if str(_scripts_dir) not in sys.path:
+        sys.path.insert(0, str(_scripts_dir))
+
+    try:
+        from extraction_generic import DecisionGraphExtractor, load_law_yaml, run_calculation  # noqa: E402
+    except ImportError as e:
+        return HTMLResponse(f"Graph dependencies not available: {e}", status_code=500)
+
+    try:
+        profile = services.get_profile_data(bsn)
+        if not profile:
+            return HTMLResponse("Profile not found", status_code=404)
+
+        law = load_law_yaml(service_name)
+        if not law:
+            return HTMLResponse(f"Law YAML for '{service_name}' not found", status_code=404)
+
+        calc_result = run_calculation(service_name, bsn, law, profile)
+        if not calc_result:
+            return HTMLResponse("Calculation failed", status_code=500)
+
+        extractor = DecisionGraphExtractor(law=law, profile=profile, bsn=bsn, calc_result=calc_result)
+        graph = extractor.extract()
+
+        buf = io.BytesIO()
+        person_name = profile.get("name", bsn)
+        law_name = law.get("name", service_name)
+        graph.visualize(output_path=buf, title=f"{law_name} — {person_name}")
+        buf.seek(0)
+        return Response(content=buf.read(), media_type="image/png")
+
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return HTMLResponse(f"Error generating graph: {e}", status_code=500)
+
+
 @router.websocket("/ws/{client_id}")
 async def websocket_endpoint(
     websocket: WebSocket,
@@ -348,8 +405,8 @@ async def websocket_endpoint(
     case_manager: CaseManagerInterface = Depends(get_case_manager),
     claim_manager: ClaimManagerInterface = Depends(get_claim_manager),
 ):
-    # Check if chat feature is enabled
-    if not is_chat_enabled():
+    # Check if chat feature is enabled — popup connections (client_id starts with "popup_") always allowed
+    if not is_chat_enabled() and not client_id.startswith("popup_"):
         await websocket.accept()
         await websocket.send_text(json.dumps({"error": "Chat feature is currently disabled", "feature_disabled": True}))
         await websocket.close()
@@ -365,6 +422,12 @@ async def websocket_endpoint(
         bsn = connection_data.get("bsn") or (client_id.split("_")[1] if "_" in client_id else get_demo_bsn())
         # Get LLM provider from request or use default
         selected_provider = connection_data.get("provider") or LLMFactory.get_provider()
+        # Guard can be disabled per-connection (e.g. for testing/comparison)
+        guard_enabled = not connection_data.get("no_guard", False)
+        # GraphRAG mode: use knowledge graph as LLM context instead of raw service output
+        graphrag_enabled = connection_data.get("graphrag", False)
+        # Language preference for LLM responses
+        lang = connection_data.get("lang", "nl")
 
         try:
             profile = services.get_profile_data(bsn)
@@ -403,8 +466,8 @@ async def websocket_endpoint(
 
         mcp_connector = MCPLawConnector(services, case_manager, claim_manager)
 
-        # Initial empty system prompt placeholder - we'll update it with fresh claims data each time
-        system_prompt = ""
+        # Cache the static service-tools section — never changes during a session
+        _cached_mcp_system_prompt = mcp_connector.get_system_prompt()
 
         # Function to get fresh system prompt with up-to-date cases data
         def get_updated_system_prompt():
@@ -413,7 +476,8 @@ async def websocket_endpoint(
                 profile=profile,
                 bsn=bsn,
                 cases_context=cases_context,
-                mcp_system_prompt=mcp_connector.get_system_prompt(),
+                mcp_system_prompt=_cached_mcp_system_prompt,
+                lang=lang,
             )
 
         # Initialize system prompt with initial data
@@ -421,6 +485,12 @@ async def websocket_endpoint(
 
         # Initialize the conversation with just a list for user/assistant messages
         messages = []
+
+        # If an initial assistant message is provided (e.g. from the explanation popup),
+        # seed the conversation so follow-up questions have context
+        initial_message = connection_data.get("initial_message")
+        if initial_message:
+            messages.append({"role": "assistant", "content": initial_message})
 
         # Initialize variable to track service results
         service_results = {}
@@ -451,11 +521,16 @@ async def websocket_endpoint(
             system_prompt = get_updated_system_prompt()
 
             # Send message to get initial response using the LLM service
-            response = llm_service.chat_completion(
-                messages=messages,
-                max_tokens=2000,
-                system=system_prompt,
-                temperature=0.7,
+            # Run in executor so slow local models (Ollama) don't block the event loop
+            loop = asyncio.get_running_loop()
+            response = await loop.run_in_executor(
+                None,
+                lambda: llm_service.chat_completion(
+                    messages=messages,
+                    max_tokens=2000,
+                    system=system_prompt,
+                    temperature=0.7,
+                ),
             )
 
             # Extract the message text using the service's standard method
@@ -540,6 +615,7 @@ async def websocket_endpoint(
 
             # If there are service results, add them to the context and generate a new response
             final_message = assistant_message
+            rac_traces: dict = {}
 
             # Store the application form reference for later
             app_form_request = None
@@ -562,8 +638,35 @@ async def websocket_endpoint(
                     json.dumps({"message": processing_msg, "html": str(html_message), "isProcessing": True})
                 )
 
-                # Format the service results
-                service_context = mcp_connector.format_results_for_llm(service_results)
+                # Format the service results — use graph context in graphrag mode
+                if graphrag_enabled:
+                    graph_result = build_graph_context(
+                        service_results=service_results,
+                        services=services,
+                        registry=mcp_connector.registry,
+                        profile=profile,
+                        bsn=bsn,
+                        person_name=profile.get("name", bsn),
+                        reference_date=TODAY,
+                        return_traces=True,
+                    )
+                    service_context, rac_traces = graph_result if isinstance(graph_result, tuple) else (graph_result, {})
+                    service_context = service_context or mcp_connector.format_results_for_llm(service_results)
+
+                    # Send the decision graph as a visual panel to the chat
+                    graph_html = build_graph_html(
+                        service_results=service_results,
+                        services=services,
+                        registry=mcp_connector.registry,
+                        profile=profile,
+                        bsn=bsn,
+                        person_name=profile.get("name", bsn),
+                        reference_date=TODAY,
+                    )
+                    if graph_html:
+                        await websocket.send_text(json.dumps({"graphPanel": True, "html": graph_html}))
+                else:
+                    service_context = mcp_connector.format_results_for_llm(service_results)
 
                 # Create a temporary message from Claude that includes the tool call
                 tool_message = {"role": "assistant", "content": assistant_message}
@@ -594,11 +697,14 @@ async def websocket_endpoint(
                 system_prompt = get_updated_system_prompt()
 
                 # Get a new response with the tool results
-                final_response = llm_service.chat_completion(
-                    messages=tool_conversation,
-                    max_tokens=2000,
-                    system=system_prompt,
-                    temperature=0.7,
+                final_response = await loop.run_in_executor(
+                    None,
+                    lambda: llm_service.chat_completion(
+                        messages=tool_conversation,
+                        max_tokens=2000,
+                        system=system_prompt,
+                        temperature=0.7,
+                    ),
                 )
 
                 # Get the final message with tool results incorporated
@@ -615,6 +721,19 @@ async def websocket_endpoint(
             def clean_message(message_text):
                 # Remove tool_use blocks
                 cleaned = re.sub(r"<tool_use>[\s\S]*?<\/tool_use>", "", message_text)
+                # Remove meta-instruction lines that small models sometimes output
+                # e.g. "Leg uit dat je de volgende stappen wilt uitvoeren:"
+                meta_patterns = [
+                    r"(?m)^Leg uit dat\b[^\n]*\n?",
+                    r"(?m)^Geef de burger\b[^\n]*\n?",
+                    r"(?m)^Als hij\b[^\n]*(?:zeg dan|antwoordt)[^\n]*\n?",
+                    r"(?m)^Als zij\b[^\n]*(?:zeg dan|antwoordt)[^\n]*\n?",
+                    r"(?m)^En voer de volgende stap uit[^\n]*\n?",
+                    r"(?m)^Voer de volgende stap uit[^\n]*\n?",
+                    r"(?m)^Bevestig dan dat[^\n]*\n?",
+                ]
+                for pattern in meta_patterns:
+                    cleaned = re.sub(pattern, "", cleaned)
                 # Remove any empty lines that might be left
                 cleaned = re.sub(r"\n\s*\n+", "\n\n", cleaned)
                 return cleaned.strip()
@@ -622,11 +741,40 @@ async def websocket_endpoint(
             # Clean the message
             cleaned_message = clean_message(final_message)
 
+            # Fix eurocent/euro formatting errors in LLM output (e.g. "21,12" → "2.112,00")
+            if service_results:
+                cleaned_message = mcp_connector.formatter.fix_amounts_in_text(cleaned_message, service_results)
+
+            # Guard: validate response is in-scope (Dutch government topics only)
+            # Run in executor so blocking HTTP call doesn't stall the event loop
+            if guard_enabled:
+                valid, guard_explanation = await asyncio.get_running_loop().run_in_executor(
+                    None, validate_response, user_msg_content, cleaned_message
+                )
+                if not valid:
+                    cleaned_message = REDIRECT_MESSAGE
+                    # Reset conversation history so a bad exchange doesn't poison future messages
+                    messages.clear()
+            else:
+                valid, guard_explanation = True, "guard disabled"
+
+            # Contestability score — on every assistant turn when graphrag is active
+            # rac_traces may be empty for follow-up turns (no service call); decisive_condition falls back to ""
+            c_score = None
+            if graphrag_enabled:
+                primary_trace = next(iter(rac_traces.values()), {}) if rac_traces else {}
+                c_score = contestability_score(cleaned_message, primary_trace)
+
             # Server-side markdown rendering
             html_message = format_message(cleaned_message)
 
             # Send Claude's response back to the client with pre-rendered HTML
-            await websocket.send_text(json.dumps({"message": cleaned_message, "html": str(html_message)}))
+            await websocket.send_text(json.dumps({
+                "message": cleaned_message,
+                "html": str(html_message),
+                "guard": {"valid": valid, "explanation": guard_explanation},
+                "contestability": c_score,
+            }))
 
             # Now, if we have a pending application form request, display it AFTER the LLM response
             if app_form_request:
@@ -738,11 +886,14 @@ async def websocket_endpoint(
                         next_conversation.append({"role": "user", "content": content})
 
                         # Get a new response using the LLM service
-                        next_response = llm_service.chat_completion(
-                            messages=next_conversation,
-                            max_tokens=2000,
-                            system=system_prompt,
-                            temperature=0.7,
+                        next_response = await loop.run_in_executor(
+                            None,
+                            lambda: llm_service.chat_completion(
+                                messages=next_conversation,
+                                max_tokens=2000,
+                                system=system_prompt,
+                                temperature=0.7,
+                            ),
                         )
 
                         # Get the response message
@@ -754,6 +905,9 @@ async def websocket_endpoint(
 
                         # Clean message before sending to client
                         cleaned_next_message = clean_message(next_message)
+                        cleaned_next_message = mcp_connector.formatter.fix_amounts_in_text(
+                            cleaned_next_message, service_results
+                        )
 
                         # Server-side markdown rendering
                         html_message = format_message(cleaned_next_message)

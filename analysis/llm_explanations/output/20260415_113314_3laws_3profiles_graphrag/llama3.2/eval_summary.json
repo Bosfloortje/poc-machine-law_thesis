@@ -1,0 +1,39 @@
+{
+  "n": 9,
+  "d1": {
+    "article_coverage_avg": 0.344,
+    "n": 9,
+    "full_coverage_n": 1,
+    "full_coverage_pct": 0.111
+  },
+  "d3": {
+    "flesch_avg": 57.8,
+    "flesch_n": 9,
+    "flesch_readable_n": 4,
+    "jargon_avg": 0.016,
+    "contestability_avg": 0.0,
+    "decisive_condition_n": 0,
+    "decisive_condition_pct": 0.0,
+    "counterfactual_n": 0,
+    "counterfactual_pct": 0.0,
+    "action_mention_n": 0,
+    "action_mention_pct": 0.0
+  },
+  "by_law": {
+    "zorgtoeslag": {
+      "n": 3,
+      "flesch_avg": 71.167,
+      "contestability_avg": 0.0
+    },
+    "bijstand": {
+      "n": 3,
+      "flesch_avg": 55.2,
+      "contestability_avg": 0.0
+    },
+    "alcoholwet": {
+      "n": 3,
+      "flesch_avg": 47.033,
+      "contestability_avg": 0.0
+    }
+  }
+}
