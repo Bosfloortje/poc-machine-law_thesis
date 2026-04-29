@@ -24,6 +24,7 @@ from web.dependencies import (
 from web.engines import CaseManagerInterface, ClaimManagerInterface, EngineInterface
 from web.engines.http_engine.machine_client.regel_recht_engine_api_client.errors import UnexpectedStatus
 from web.feature_flags import (
+    FeatureFlags,
     is_change_wizard_enabled,
     is_chat_enabled,
     is_delegation_enabled,
@@ -312,17 +313,36 @@ async def root(
     except Exception:
         pass
 
+    # Re-apply feature flags for the current mode so citizen laws are always visible
+    # in personal view and business laws are visible in business view, regardless of
+    # which demo profile is the global default (which may be an ondernemer profile).
+    _mode_profile_name = "claudia" if discoverable_by == "BUSINESS" else "merijn"
+    _mode_profile = DemoProfiles.get_all_profiles().get(_mode_profile_name, {})
+    FeatureFlags.reset_law_flags()
+    for _svc, _laws in _mode_profile.get("disabled_laws", {}).items():
+        for _law in _laws:
+            FeatureFlags.disable_law(_svc, _law)
+
     # Municipality-specific laws: only show the one matching the profile's gemeente
     _gemeente_laws = {"participatiewet/bijstand", "alcoholwet/vergunning"}
+
+    # Check if the active business is a horeca/slijterij type (required for alcoholwet)
+    _is_horeca_business = False
+    if business_profile and business_profile.get("activiteit"):
+        _activiteit = business_profile["activiteit"].lower()
+        _is_horeca_business = "horeca" in _activiteit or "slijter" in _activiteit
 
     def _filter_by_gemeente(law_info: dict) -> bool:
         law_name = law_info.get("law", "")
         service = law_info.get("service", "")
+        # Hide alcoholwet for non-horeca/slijterij businesses
+        if law_name == "alcoholwet/vergunning" and not _is_horeca_business:
+            return False
         if law_name in _gemeente_laws:
             if _gemeente_service:
                 return service == _gemeente_service
-            # No gemeente known: show all
-            return True
+            # No gemeente known: hide all gemeente-specific laws
+            return False
         return True
 
     return templates.TemplateResponse(

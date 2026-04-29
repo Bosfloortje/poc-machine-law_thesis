@@ -1,10 +1,19 @@
-<div>
-    {% if result.heeft_haccp_verplichting %}
-        {% if result.voldoet_aan_verplichting %}
-            <h4 class="text-sm font-medium text-green-700 mb-2">Voldoet aan HACCP-verplichting</h4>
+<div x-data>
+    <div class="flex items-center justify-between mb-2">
+        {% if result.heeft_haccp_verplichting %}
+            {% if result.voldoet_aan_verplichting %}
+                <h4 class="text-sm font-medium text-green-700">Voldoet aan HACCP-verplichting</h4>
+            {% else %}
+                <h4 class="text-sm font-medium text-amber-700">HACCP-verplichting: actie vereist</h4>
+            {% endif %}
         {% else %}
-            <h4 class="text-sm font-medium text-amber-700 mb-2">HACCP-verplichting: actie vereist</h4>
+            <h4 class="text-sm font-medium text-gray-500">De HACCP-verplichting is niet van toepassing.</h4>
         {% endif %}
+        <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
+                class="text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer"
+                x-text="$store.lang === 'en' ? 'why?' : 'waarom?'">waarom?</button>
+    </div>
+    {% if result.heeft_haccp_verplichting %}
         <div class="bg-gray-50 p-3 rounded-lg">
             <div class="grid grid-cols-2 gap-1 text-sm">
                 <div class="text-gray-600">NVWA-registratie:</div>
@@ -27,7 +36,5 @@
                 {% endif %}
             </div>
         </div>
-    {% else %}
-        <h4 class="text-sm font-medium text-gray-500 mb-1">De HACCP-verplichting is niet van toepassing.</h4>
     {% endif %}
 </div>

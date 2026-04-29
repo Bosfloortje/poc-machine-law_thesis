@@ -32,7 +32,7 @@
             </div>
             {# Rejection explanation when case was rejected #}
             {% if current_case and current_case.status == 'DECIDED' and current_case.approved == false %}
-                <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+                <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                         class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
                     waarom?
                 </button>

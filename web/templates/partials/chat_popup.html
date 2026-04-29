@@ -25,8 +25,18 @@
                 <span class="text-sm font-semibold truncate" x-text="lawName || 'Uitleg'"></span>
             </div>
             <div class="flex items-center gap-1 shrink-0 ml-2">
+                <!-- Edit details button -->
+                <button x-show="step === 'chat' && inputFields.length > 0"
+                        @click="step = 'confirm'"
+                        :title="$store.lang === 'en' ? 'Edit details' : 'Gegevens aanpassen'"
+                        class="text-white/80 hover:text-white cursor-pointer p-0.5 rounded transition-colors hover:bg-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                    </svg>
+                </button>
                 <!-- Knowledge graph button -->
-                <button x-show="messages.length > 0"
+                <button x-show="step === 'chat' && messages.length > 0"
                         @click="openKnowledgeGraph()"
                         :title="$store.lang === 'en' ? 'View knowledge graph' : 'Bekijk kennisgraaf'"
                         class="text-white/80 hover:text-white cursor-pointer p-0.5 rounded transition-colors hover:bg-white/20">
@@ -39,7 +49,7 @@
                     </svg>
                 </button>
                 <!-- Dependency graph button -->
-                <button x-show="messages.length > 0"
+                <button x-show="step === 'chat' && messages.length > 0"
                         @click="openGraph()"
                         :title="$store.lang === 'en' ? 'View law dependency graph' : 'Bekijk wettengraaf'"
                         class="text-white/80 hover:text-white cursor-pointer p-0.5 rounded transition-colors hover:bg-white/20">
@@ -58,11 +68,88 @@
             </div>
         </div>
 
+        <!-- ── Confirm step ─────────────────────────────────────────── -->
+        <div x-show="step === 'confirm'"
+             class="flex-1 flex flex-col overflow-hidden bg-gray-50"
+             style="min-height: 300px; max-height: 440px;">
+
+            <!-- Loading input fields -->
+            <div x-show="loading" class="flex-1 flex items-center justify-center">
+                <div class="flex flex-col items-center gap-3">
+                    <svg class="w-6 h-6 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                    </svg>
+                    <span class="text-sm text-gray-400"
+                          x-text="$store.lang === 'en' ? 'Loading details…' : 'Gegevens ophalen…'"></span>
+                </div>
+            </div>
+
+            <!-- Fields form -->
+            <div x-show="!loading && inputFields.length > 0"
+                 class="flex-1 overflow-y-auto px-4 pt-3 pb-1 space-y-2">
+                <p class="text-xs text-gray-500 mb-2"
+                   x-text="$store.lang === 'en'
+                       ? 'The following details were used in the calculation. Are they correct?'
+                       : 'De volgende gegevens zijn gebruikt in de berekening. Kloppen ze?'"></p>
+                <template x-for="field in inputFields" :key="field.name">
+                    <div x-show="_isFieldVisible(field)" class="flex items-center gap-2">
+                        <label class="flex-1 min-w-0">
+                            <span class="block text-xs text-gray-500 truncate" x-text="field.description"></span>
+                            <!-- Boolean field -->
+                            <template x-if="field.type === 'boolean'">
+                                <select :name="field.name"
+                                        @change="editedValues[field.name] = $event.target.value === 'true'"
+                                        class="mt-0.5 w-full rounded-lg border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white">
+                                    <option :value="true" :selected="field.value === true || field.value === 'true'"
+                                            x-text="$store.lang === 'en' ? 'Yes' : 'Ja'">Ja</option>
+                                    <option :value="false" :selected="field.value === false || field.value === 'false'"
+                                            x-text="$store.lang === 'en' ? 'No' : 'Nee'">Nee</option>
+                                </select>
+                            </template>
+                            <!-- Amount field (in cents, show as euros) -->
+                            <template x-if="field.type === 'amount'">
+                                <div class="mt-0.5 relative">
+                                    <span class="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 text-sm">€</span>
+                                    <input type="number"
+                                           step="0.01"
+                                           :value="_amountDisplay(field.value)"
+                                           @input="editedValues[field.name] = Math.round(parseFloat($event.target.value) * 100) || 0"
+                                           class="w-full rounded-lg border border-gray-300 pl-6 pr-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                                </div>
+                            </template>
+                            <!-- Number / string field -->
+                            <template x-if="field.type !== 'boolean' && field.type !== 'amount'">
+                                <input :type="field.type === 'number' ? 'number' : 'text'"
+                                       :value="field.value ?? ''"
+                                       @input="editedValues[field.name] = field.type === 'number' ? Number($event.target.value) : $event.target.value"
+                                       class="mt-0.5 w-full rounded-lg border border-gray-300 px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"/>
+                            </template>
+                        </label>
+                    </div>
+                </template>
+            </div>
+
+            <!-- Confirm button -->
+            <div x-show="!loading" class="px-4 py-3 bg-white border-t border-gray-200 shrink-0 flex gap-2">
+                <button x-show="messages.length > 0" @click="step = 'chat'"
+                        class="px-3 py-2 text-sm text-gray-500 hover:text-gray-700 cursor-pointer transition-colors"
+                        x-text="$store.lang === 'en' ? 'Cancel' : 'Annuleren'"></button>
+                <button @click="confirmFields()"
+                        class="flex-1 bg-blue-600 text-white rounded-xl py-2 text-sm font-medium hover:bg-blue-700 cursor-pointer transition-colors"
+                        x-text="messages.length > 0
+                            ? ($store.lang === 'en' ? 'Re-explain with these details' : 'Opnieuw uitleggen')
+                            : ($store.lang === 'en' ? 'Confirm and explain' : 'Klopt, leg uit')"></button>
+            </div>
+        </div>
+
+        <!-- ── Chat step ──────────────────────────────────────────────── -->
         <!-- Messages -->
         <div id="chat-popup-messages"
+             x-show="step === 'chat'"
              class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50"
              style="min-height: 300px; max-height: 380px;">
-            <template x-if="loading">
+            <template x-if="loading && step === 'chat'">
                 <div class="flex gap-2">
                     <div class="w-7 h-7 rounded-full bg-blue-100 shrink-0 flex items-center justify-center">
                         <svg class="w-4 h-4 text-blue-500 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
@@ -110,8 +197,8 @@
             </template>
         </div>
 
-        <!-- Input -->
-        <div class="border-t border-gray-200 bg-white px-3 py-2 flex gap-2 items-end">
+        <!-- Input (only in chat step) -->
+        <div x-show="step === 'chat'" class="border-t border-gray-200 bg-white px-3 py-2 flex gap-2 items-end">
             <textarea x-model="inputText"
                       @keydown.enter.prevent="!$event.shiftKey && send()"
                       :disabled="!connected || thinking"
@@ -127,7 +214,7 @@
                 </svg>
             </button>
         </div>
-        <div class="px-3 pb-2 bg-white" x-show="provider">
+        <div class="px-3 pb-2 bg-white" x-show="step === 'chat' && provider">
             <span class="text-xs text-gray-400"
                   x-text="($store.lang === 'en' ? 'Generated by ' : 'Gegenereerd door ') + provider"></span>
         </div>
@@ -346,6 +433,9 @@ function chatPopup() {
         clientId: '',
         _pendingService: '',
         _pendingLaw: '',
+        step: 'idle',        // 'idle' | 'confirm' | 'chat'
+        inputFields: [],
+        editedValues: {},
 
         // Knowledge graph modal
         showKnowledgeGraph: false,
@@ -360,8 +450,9 @@ function chatPopup() {
         graphAvailable: null,
         graphUrl: '/analysis/graph/?demo=true',
 
-        async openWithExplanation(service, law, bsn, lawDisplayName) {
+        async openWithExplanation(service, law, bsn, lawDisplayName, kvk) {
             this.bsn = bsn;
+            this._kvk = kvk || null;
             this.lawName = lawDisplayName || law;
             this._pendingService = service;
             this._pendingLaw = law;
@@ -376,6 +467,9 @@ function chatPopup() {
             this.showKnowledgeGraph = false;
             this.pathTree = null;
             this.kgError = null;
+            this.inputFields = [];
+            this.editedValues = {};
+            this.step = 'confirm';
 
             if (this.graphAvailable === null) {
                 fetch('/analysis/graph/', { method: 'HEAD' })
@@ -383,10 +477,53 @@ function chatPopup() {
                     .catch(() => { this.graphAvailable = false; });
             }
 
+            // Fetch input fields for the confirmation step (no LLM yet)
+            try {
+                let url = `/laws/input-fields?service=${encodeURIComponent(service)}&law=${encodeURIComponent(law)}&bsn=${encodeURIComponent(bsn)}`;
+                if (kvk) url += `&kvk=${encodeURIComponent(kvk)}`;
+                const resp = await fetch(url);
+                const data = await resp.json();
+                if (data.error) throw new Error(data.error);
+                this.inputFields = data.fields || [];
+                // Ensure partner-dependent fields (PARTNER_*, GEZAMENLIJK_VERMOGEN) are
+                // ordered directly below HEEFT_PARTNER, regardless of spec order.
+                const _pf = this.inputFields.filter(f => this._isPartnerField(f));
+                if (_pf.length > 0) {
+                    const _npf = this.inputFields.filter(f => !this._isPartnerField(f));
+                    const _pi = _npf.findIndex(f => f.name === 'HEEFT_PARTNER');
+                    if (_pi !== -1) { _npf.splice(_pi + 1, 0, ..._pf); } else { _npf.push(..._pf); }
+                    this.inputFields = _npf;
+                }
+                if (data.law_name) this.lawName = data.law_name;
+            } catch (e) {
+                this.inputFields = [];
+            }
+
+            this.loading = false;
+
+            // If no fields to confirm, skip straight to explanation
+            if (this.inputFields.length === 0) {
+                this.step = 'chat';
+                this._fetchExplanation({});
+            }
+        },
+
+        async confirmFields() {
+            const isReconfirm = this.messages.length > 0;
+            this.step = 'chat';
+            await this._fetchExplanation(this.editedValues, isReconfirm);
+        },
+
+        async _fetchExplanation(overrides, reconfirm = false) {
+            this.loading = true;
+            const currentLang = localStorage.getItem('regelrecht-lang') || 'nl';
             let explanation = null;
             try {
-                const currentLang = localStorage.getItem('regelrecht-lang') || 'nl';
-                const url = `/laws/explanation-text?service=${encodeURIComponent(service)}&law=${encodeURIComponent(law)}&bsn=${encodeURIComponent(bsn)}&lang=${currentLang}`;
+                let url = `/laws/explanation-text?service=${encodeURIComponent(this._pendingService)}&law=${encodeURIComponent(this._pendingLaw)}&bsn=${encodeURIComponent(this.bsn)}&lang=${currentLang}`;
+                if (this._kvk) url += `&kvk=${encodeURIComponent(this._kvk)}`;
+                if (overrides && Object.keys(overrides).length > 0) {
+                    url += `&overrides=${encodeURIComponent(JSON.stringify(overrides))}`;
+                }
                 const resp = await fetch(url);
                 const data = await resp.json();
                 if (data.error) throw new Error(data.error);
@@ -395,13 +532,48 @@ function chatPopup() {
                 if (data.law_name) this.lawName = data.law_name;
                 if (data.path) this.pathTree = data.path;
             } catch (e) {
-                explanation = 'Er is een fout opgetreden bij het ophalen van de uitleg.';
+                explanation = (localStorage.getItem('regelrecht-lang') === 'en')
+                    ? 'An error occurred while fetching the explanation.'
+                    : 'Er is een fout opgetreden bij het ophalen van de uitleg.';
             }
-
             this.loading = false;
+            if (reconfirm) {
+                // Add a separator message so it's clear this is a recalculation
+                const sep = currentLang === 'en' ? '↩ Recalculated with updated details' : '↩ Herberekend met aangepaste gegevens';
+                this.messages.push({ role: 'user', text: sep, html: `<span class="italic text-xs opacity-75">${this._esc(sep)}</span>` });
+            }
             this.messages.push({ role: 'assistant', text: '', html: this._md(explanation) });
             this._scrollToBottom();
             this._connectWS(explanation);
+        },
+
+        _amountDisplay(val) {
+            if (val === null || val === undefined || val === '') return '0.00';
+            return (Number(val) / 100).toFixed(2);
+        },
+
+        // Returns the effective current value for a boolean flag field (e.g. HEEFT_PARTNER),
+        // preferring user-edited values over the original fetched value.
+        _currentBoolValue(fieldName) {
+            const edited = this.editedValues[fieldName];
+            if (edited !== undefined) return edited === true;
+            const f = this.inputFields.find(f => f.name === fieldName);
+            return f ? f.value === true : false;
+        },
+
+        // Whether a field requires an active partner to be visible.
+        _isPartnerField(field) {
+            const n = field.name.toUpperCase();
+            return n.startsWith('PARTNER_') || n === 'GEZAMENLIJK_VERMOGEN';
+        },
+
+        // Whether a field should be visible.  Partner-related fields are only shown
+        // when HEEFT_PARTNER is currently true.
+        _isFieldVisible(field) {
+            if (this._isPartnerField(field)) {
+                return this._currentBoolValue('HEEFT_PARTNER');
+            }
+            return true;
         },
 
         openGraph() { this.showGraph = true; },
@@ -559,8 +731,11 @@ function chatPopup() {
 
         close() {
             this.open = false;
+            this.step = 'idle';
             this.showGraph = false;
             this.showKnowledgeGraph = false;
+            this.inputFields = [];
+            this.editedValues = {};
             if (this.ws) { try { this.ws.close(); } catch(e) {} this.ws = null; }
             this.connected = false;
         },
@@ -624,9 +799,9 @@ function chatPopup() {
     };
 }
 
-window.openExplanationChat = function(service, law, bsn, lawName) {
+window.openExplanationChat = function(service, law, bsn, lawName, kvk) {
     const root = document.querySelector('#chat-popup-root');
     const popup = root?.__x?.$data || (root ? Alpine.$data(root) : null);
-    if (popup) popup.openWithExplanation(service, law, bsn, lawName);
+    if (popup) popup.openWithExplanation(service, law, bsn, lawName, kvk);
 };
 </script>

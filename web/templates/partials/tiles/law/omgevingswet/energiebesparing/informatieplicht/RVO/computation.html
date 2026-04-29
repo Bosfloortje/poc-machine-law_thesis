@@ -1,6 +1,15 @@
-<div>
+<div x-data>
+    <div class="flex items-center justify-between mb-3">
+        {% if result.heeft_informatieplicht %}
+            <h4 class="text-sm font-medium text-green-700">Informatieplicht van toepassing</h4>
+        {% else %}
+            <h4 class="text-sm font-medium text-gray-500">De informatieplicht is niet van toepassing.</h4>
+        {% endif %}
+        <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
+                class="text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer"
+                x-text="$store.lang === 'en' ? 'why?' : 'waarom?'">waarom?</button>
+    </div>
     {% if result.heeft_informatieplicht %}
-        <h4 class="text-sm font-medium text-green-700 mb-3">Informatieplicht van toepassing</h4>
         {# Previous rapportage #}
         {% if profile_data and profile_data.rvo_rapportages %}
             {% set rns = namespace(rapportage=none) %}
@@ -247,7 +256,5 @@
                 {% endif %}
             </div>
         </div>
-    {% else %}
-        <h4 class="text-sm font-medium text-gray-500 mb-1">De informatieplicht is niet van toepassing.</h4>
     {% endif %}
 </div>

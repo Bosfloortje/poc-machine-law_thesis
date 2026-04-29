@@ -63,19 +63,17 @@ def _get_extractor(law: str):
     return importlib.import_module(_DEFAULT_EXTRACTOR)
 
 
+# ---------------------------------------------------------------------------
+# Open-approach helpers (inlined from extract_explanations.py)
+# ---------------------------------------------------------------------------
+import json as _json
+import os as _os
+
 from extraction_generic import (  # noqa: E402
     AVAILABLE_MODELS,
     get_git_info,
     load_profiles,
 )
-
-
-# ---------------------------------------------------------------------------
-# Open-approach helpers (inlined from extract_explanations.py)
-# ---------------------------------------------------------------------------
-
-import json as _json
-import os as _os
 
 SYSTEM_PROMPT = "Je bent een behulpzame assistent die Nederlandse burgers helpt met vragen over overheidsregelingen. Geef duidelijke, begrijpelijke uitleg in eenvoudig Nederlands (B1-niveau)."
 DEFAULT_MODEL = "haiku"
@@ -88,7 +86,7 @@ def _call_llm(
     user_prompt: str,
     api_key: str | None = None,
 ) -> tuple[str, dict]:
-    """Call LLM (Ollama or Anthropic) and return (text, usage_dict)."""
+    """Call LLM (Ollama, Anthropic, or OpenAI) and return (text, usage_dict)."""
     if provider == "ollama":
         import ollama
         response = ollama.chat(
@@ -101,8 +99,23 @@ def _call_llm(
             "input_tokens": response.get("prompt_eval_count", 0),
             "output_tokens": response.get("eval_count", 0),
         }
+    if provider == "openai":
+        import openai as _openai
+        _oai_key = api_key or _os.environ.get("OPENAI_API_KEY")
+        oai_client = _openai.OpenAI(api_key=_oai_key)
+        oai_resp = oai_client.chat.completions.create(
+            model=model_id, max_tokens=1500, temperature=0.3,
+            messages=[{"role": "system", "content": system_prompt},
+                      {"role": "user", "content": user_prompt}],
+        )
+        text = oai_resp.choices[0].message.content or ""
+        return text, {
+            "input_tokens": oai_resp.usage.prompt_tokens if oai_resp.usage else 0,
+            "output_tokens": oai_resp.usage.completion_tokens if oai_resp.usage else 0,
+        }
+    actual_key = api_key or _os.environ.get("ANTHROPIC_API_KEY")
     import anthropic
-    client = anthropic.Anthropic(api_key=api_key)
+    client = anthropic.Anthropic(api_key=actual_key)
     response = client.messages.create(
         model=model_id, max_tokens=1500, temperature=0.3,
         system=system_prompt, messages=[{"role": "user", "content": user_prompt}],

@@ -161,7 +161,7 @@ DEMO_PROFILES: dict[str, dict] = {
     },
 }
 
-DEFAULT_PROFILE = "merijn"
+DEFAULT_PROFILE = "claudia"
 
 
 class DemoProfiles:

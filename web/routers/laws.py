@@ -140,6 +140,7 @@ def evaluate_law(
     claim_manager: ClaimManagerInterface | None = None,
     effective_date: str | None = None,
     kvk_nummer: str | None = None,
+    overwrite_input: dict[str, Any] | None = None,
 ) -> tuple[str, RuleResult, dict[str, Any]]:
     """Evaluate a law for a given BSN or KVK_NUMMER"""
 
@@ -150,6 +151,7 @@ def evaluate_law(
     parameters = {"BSN": bsn}
     if kvk_nummer:
         parameters["KVK_NUMMER"] = kvk_nummer
+    _caller_overwrite = overwrite_input  # preserve caller-supplied overrides
     overwrite_input = None
 
     # If not approved (i.e., showing pending changes), get claims and apply them as overwrites
@@ -177,6 +179,10 @@ def evaluate_law(
 
             if not overwrite_input:
                 overwrite_input = None
+
+    # Caller-supplied overrides take precedence when no claims-based override is set
+    if overwrite_input is None and _caller_overwrite:
+        overwrite_input = _caller_overwrite
 
     # Execute the law using EngineInterface
     result = machine_service.evaluate(
@@ -596,19 +602,18 @@ async def explanation(
         )
 
 
-@router.get("/explanation-text")
-async def explanation_text(
+@router.get("/input-fields")
+async def input_fields(
     request: Request,
     service: str,
     law: str,
     bsn: str,
-    provider: str = None,
+    kvk: str | None = None,
     approved: bool = False,
-    lang: str = "nl",
     claim_manager: ClaimManagerInterface = Depends(get_claim_manager),
     machine_service: EngineInterface = Depends(get_machine_service),
 ):
-    """Return explanation as JSON for use in the chat popup."""
+    """Return editable input fields and their current values for the confirmation step."""
     try:
         law = unquote(law)
         law, result, _ = evaluate_law(
@@ -616,6 +621,143 @@ async def explanation_text(
             approved=approved,
             claim_manager=claim_manager,
             effective_date=request.query_params.get("date"),
+            kvk_nummer=kvk,
+        )
+        rule_spec = machine_service.get_rule_spec(law, TODAY, service)
+        # result.input keys may have a $ prefix (e.g. $INKOMEN); try both forms
+        raw_input = result.input or {}
+        fields = []
+        for field_spec in rule_spec.get("properties", {}).get("input", []):
+            name = field_spec.get("name")
+            if not name:
+                continue
+            value = raw_input.get(f"${name}", raw_input.get(name))
+            fields.append({
+                "name": name,
+                "description": field_spec.get("description", name),
+                "type": field_spec.get("type", "string"),
+                "value": value,
+                "service_reference": field_spec.get("service_reference", {}),
+            })
+
+        # For fields that weren't evaluated (short-circuit), run sub-evaluations grouped
+        # by (service, law) so we only evaluate each source law once.
+        missing = [f for f in fields if f["value"] is None and f["service_reference"].get("service") and f["service_reference"].get("law")]
+        if missing:
+            sub_groups: dict[tuple[str, str], list[dict]] = {}
+            for f in missing:
+                key = (f["service_reference"]["service"], f["service_reference"]["law"])
+                sub_groups.setdefault(key, []).append(f)
+
+            _sub_params: dict[str, str] = {"BSN": bsn}
+            if kvk:
+                _sub_params["KVK_NUMMER"] = kvk
+
+            for (sub_svc, sub_law), group_fields in sub_groups.items():
+                try:
+                    sub_result = machine_service.evaluate(
+                        service=sub_svc,
+                        law=sub_law,
+                        parameters=_sub_params,
+                        reference_date=TODAY,
+                        approved=True,
+                    )
+                    sub_output = sub_result.output or {}
+                    sub_input = sub_result.input or {}
+
+                    # If requirements failed and output is empty, retry with all eurocent-amount inputs
+                    # zeroed out.  This allows norm-value laws (e.g. SZW bijstand) to compute outputs
+                    # like basisbedrag and kostendelersnorm even when the person doesn't financially qualify.
+                    if not sub_output:
+                        try:
+                            sub_rule_spec = machine_service.get_rule_spec(sub_law, TODAY, sub_svc) or {}
+                            _fin_zero: dict[str, dict[str, int]] = {}
+                            for _spec in sub_rule_spec.get("properties", {}).get("input", []):
+                                if _spec.get("type_spec", {}).get("unit") == "eurocent":
+                                    _svc_ref = _spec.get("service_reference", {})
+                                    _svc = _svc_ref.get("service")
+                                    _fld = _svc_ref.get("field")
+                                    if _svc and _fld:
+                                        _fin_zero.setdefault(_svc, {})[_fld] = 0
+                            if _fin_zero:
+                                retry_result = machine_service.evaluate(
+                                    service=sub_svc,
+                                    law=sub_law,
+                                    parameters=_sub_params,
+                                    reference_date=TODAY,
+                                    approved=True,
+                                    overwrite_input=_fin_zero,
+                                )
+                                if retry_result.output:
+                                    sub_output = retry_result.output
+                                    sub_input = retry_result.input or sub_input
+                        except Exception as retry_e:
+                            logger.debug(f"Retry sub-evaluation {sub_svc}/{sub_law} failed: {retry_e}")
+
+                    for f in group_fields:
+                        out_field = f["service_reference"].get("field", "")
+                        val = sub_output.get(out_field)
+                        if val is None:
+                            val = sub_input.get(f"${f['name']}", sub_input.get(f['name']))
+                        if val is not None:
+                            f["value"] = val
+                except Exception as sub_e:
+                    logger.debug(f"Sub-evaluation {sub_svc}/{sub_law} failed: {sub_e}")
+
+        return JSONResponse({
+            "fields": fields,
+            "law_name": rule_spec.get("name", law),
+        })
+    except Exception as e:
+        logger.error(f"Error in input_fields: {e}")
+        return JSONResponse({"error": str(e)}, status_code=500)
+
+
+@router.get("/explanation-text")
+async def explanation_text(
+    request: Request,
+    service: str,
+    law: str,
+    bsn: str,
+    kvk: str | None = None,
+    provider: str = None,
+    approved: bool = False,
+    lang: str = "nl",
+    overrides: str = None,
+    claim_manager: ClaimManagerInterface = Depends(get_claim_manager),
+    machine_service: EngineInterface = Depends(get_machine_service),
+):
+    """Return explanation as JSON for use in the chat popup."""
+    try:
+        law = unquote(law)
+
+        # Parse overrides and build overwrite_input if provided
+        overwrite_input = None
+        if overrides:
+            try:
+                overrides_dict = json.loads(overrides)
+                rule_spec_for_overrides = machine_service.get_rule_spec(law, TODAY, service)
+                overwrite_input = {}
+                for field_spec in rule_spec_for_overrides.get("properties", {}).get("input", []):
+                    name = field_spec.get("name")
+                    if name and name in overrides_dict:
+                        svc_ref = field_spec.get("service_reference", {})
+                        svc = svc_ref.get("service")
+                        src_field = svc_ref.get("field", name.lower())
+                        if svc:
+                            overwrite_input.setdefault(svc, {})[src_field] = overrides_dict[name]
+                if not overwrite_input:
+                    overwrite_input = None
+            except Exception as e:
+                logger.warning(f"Failed to parse overrides: {e}")
+
+        law, result, _ = evaluate_law(
+            bsn, law, service, machine_service,
+            approved=approved,
+            claim_manager=claim_manager,
+            effective_date=request.query_params.get("date"),
+            overwrite_input=overwrite_input,
+            kvk_nummer=kvk,
         )
         path_dict_full = node_to_dict(result.path, skip_services=False)
         path_json = json.dumps(node_to_dict(result.path, skip_services=True), ensure_ascii=False, indent=2)

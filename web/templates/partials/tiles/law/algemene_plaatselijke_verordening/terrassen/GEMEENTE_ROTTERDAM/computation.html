@@ -19,7 +19,7 @@
         <div class="flex items-baseline">
             <span class="text-4xl font-bold text-green-600">{{ current_case.claimed_result.vergunde_oppervlakte|default(result.vergunde_oppervlakte|default('') ) }}</span>
             <span class="ml-1 text-lg text-gray-600">m&sup2;</span>
-            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                     class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
                 waarom?
             </button>
@@ -35,7 +35,7 @@
         <div class="flex items-baseline">
             <span class="text-4xl font-bold text-green-600">{{ result.vergunde_oppervlakte|default(path.TERRAS_OPPERVLAKTE.result|default('') ) }}</span>
             <span class="ml-1 text-lg text-gray-600">m&sup2;</span>
-            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                     class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
                 waarom?
             </button>
@@ -44,7 +44,7 @@
         {# Not eligible #}
         <h4 class="text-sm font-medium text-gray-500 mb-1">
             U komt waarschijnlijk niet in aanmerking voor een terrasvergunning.
-            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                     class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
                 waarom?
             </button>

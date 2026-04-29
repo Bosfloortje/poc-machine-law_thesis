@@ -4,7 +4,7 @@
         <div class="flex items-baseline">
             <span class="text-4xl font-bold text-green-600">{{ (result.hoogte_toeslag / 100) | format_currency }}</span>
             <span class="ml-2 text-gray-600" x-text="$store.lang === 'en' ? 'this year' : 'dit jaar'">dit jaar</span>
-            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                     class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer"
                     x-text="$store.lang === 'en' ? 'why?' : 'waarom?'">
                 waarom?

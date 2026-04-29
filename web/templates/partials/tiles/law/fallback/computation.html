@@ -1,5 +1,11 @@
 <div class="bg-blue-50 rounded-lg p-4">
-    <h4 class="font-medium text-blue-900 mb-2">Berekend resultaat</h4>
+    <div class="flex items-center justify-between mb-2">
+        <h4 class="font-medium text-blue-900" x-data
+            x-text="$store.lang === 'en' ? 'Calculated result' : 'Berekend resultaat'">Berekend resultaat</h4>
+        <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
+                class="text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer"
+                x-data x-text="$store.lang === 'en' ? 'why?' : 'waarom?'">waarom?</button>
+    </div>
     {% if result %}
         {% for key, value in result.items() %}
             <div class="text-sm mb-2">

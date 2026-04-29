@@ -12,9 +12,14 @@
     {% endif %}
     {% set remaining = max_count - used %}
     {% set percentage = (used / max_count * 100)|int %}
-    <div class="flex items-center justify-between mb-2">
+    <div class="flex items-center justify-between mb-2" x-data>
         <h4 class="text-sm font-medium text-gray-600">Geluidjes gebruikt dit jaar</h4>
-        <span class="text-lg font-semibold text-gray-900">{{ used }} / {{ max_count }}</span>
+        <div class="flex items-center gap-3">
+            <span class="text-lg font-semibold text-gray-900">{{ used }} / {{ max_count }}</span>
+            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
+                    class="text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer"
+                    x-text="$store.lang === 'en' ? 'why?' : 'waarom?'">waarom?</button>
+        </div>
     </div>
     {# Progress bar #}
     <div class="w-full bg-gray-200 rounded-full h-4 mb-4 overflow-hidden">

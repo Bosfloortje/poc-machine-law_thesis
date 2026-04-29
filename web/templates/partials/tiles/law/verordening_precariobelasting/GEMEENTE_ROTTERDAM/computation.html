@@ -5,7 +5,7 @@
             <div class="flex items-baseline">
                 <span class="text-4xl font-bold text-green-600">{{ (result.belasting_per_jaar / 100) | format_currency }}</span>
                 <span class="ml-2 text-gray-600">per jaar</span>
-                <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+                <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                         class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
                     waarom?
                 </button>
@@ -18,7 +18,7 @@
             <div class="flex items-baseline">
                 <span class="text-4xl font-bold text-orange-600">{{ (result.belasting_per_jaar / 100) | format_currency }}</span>
                 <span class="ml-2 text-gray-600">per jaar</span>
-                <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+                <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                         class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
                     waarom?
                 </button>
@@ -45,7 +45,7 @@
         <p class="text-sm text-gray-600 mb-2">U bent precariobelasting verschuldigd voor uw terras</p>
         <div class="flex items-baseline">
             <span class="text-lg font-medium text-orange-600">Bedrag wordt berekend</span>
-            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                     class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
                 waarom?
             </button>
@@ -56,7 +56,7 @@
     {% else %}
         <h4 class="text-sm font-medium text-gray-500 mb-1">
             Nog geen precariobelasting verschuldigd
-            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}')"
+            <button onclick="openExplanationChat('{{ service }}', '{{ law }}', '{{ effective_bsn|default(bsn) }}', '{{ rule_spec.name|default(law)|e }}')"
                     class="ml-4 text-sm text-gray-400 hover:text-gray-900 border-b border-dotted border-gray-300 hover:border-gray-600 cursor-pointer">
                 waarom?
             </button>

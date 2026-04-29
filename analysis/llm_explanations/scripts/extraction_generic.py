@@ -131,6 +131,7 @@ AVAILABLE_MODELS: dict[str, dict] = {
     "haiku":    {"id": "claude-haiku-4-5-20251001",  "provider": "anthropic", "description": "Fast and cheap, good for batch processing"},
     "sonnet":   {"id": "claude-sonnet-4-5-20250929", "provider": "anthropic", "description": "Balanced performance and cost"},
     "opus":     {"id": "claude-opus-4-6",             "provider": "anthropic", "description": "Most capable, highest quality output"},
+    "gpt4":     {"id": "gpt-4o",        "provider": "openai",     "description": "GPT-4o via OpenAI API"},
     "llama3.2": {"id": "llama3.2:3b",   "provider": "ollama", "description": "Llama 3.2 3B via local Ollama (~2GB RAM)"},
     "llama3.1": {"id": "llama3.1:8b",   "provider": "ollama", "description": "Llama 3.1 8B via local Ollama (~5GB RAM)"},
     "llama3.3": {"id": "llama3.3:70b",  "provider": "ollama", "description": "Llama 3.3 70B via local Ollama (~38GB RAM)"},
@@ -1151,9 +1152,7 @@ class DecisionGraphExtractor:
             unit = info.get("unit", "")
             label = info.get("description", field_name)
             entry: dict = {"label": label, "raw": value}
-            if unit == "eurocent" and isinstance(value, (int, float)):
-                entry["value_euro"] = round(value / 100, 2)
-            elif isinstance(value, (int, float)) and value > 10000 and unit == "":
+            if unit == "eurocent" and isinstance(value, (int, float)) or isinstance(value, (int, float)) and value > 10000 and unit == "":
                 entry["value_euro"] = round(value / 100, 2)
             else:
                 entry["value"] = value
@@ -1394,6 +1393,35 @@ def generate_decision_explanation(
             "usage": {
                 "input_tokens": response.get("prompt_eval_count", 0),
                 "output_tokens": response.get("eval_count", 0),
+            },
+        }
+
+    if provider == "openai":
+        import openai as _openai
+        _oai_key = api_key or os.environ.get("OPENAI_API_KEY")
+        if not _oai_key:
+            raise ValueError("No OPENAI_API_KEY provided for gpt4 model")
+        oai_client = _openai.OpenAI(api_key=_oai_key)
+        oai_resp = oai_client.chat.completions.create(
+            model=model_id,
+            max_tokens=1000,
+            temperature=0.2,
+            messages=[
+                {"role": "system", "content": DECISION_SYSTEM_PROMPT},
+                {"role": "user", "content": prompt},
+            ],
+        )
+        raw = oai_resp.choices[0].message.content or ""
+        explanation = _fix_rounded_amounts(raw, expected_values)
+        return {
+            "explanation": explanation,
+            "skeleton_used": skeleton,
+            "prompt_used": prompt,
+            "model": model_id,
+            "provider": provider,
+            "usage": {
+                "input_tokens": oai_resp.usage.prompt_tokens if oai_resp.usage else 0,
+                "output_tokens": oai_resp.usage.completion_tokens if oai_resp.usage else 0,
             },
         }
 
