@@ -39,6 +39,7 @@ globalServices:
     - gemeente: Arnhem
       arrondissement: GELDERLAND
       rechtbank: RECHTBANK_GELDERLAND
+
 profiles:
   '140592532':
     name: Anna van Leeuwen
