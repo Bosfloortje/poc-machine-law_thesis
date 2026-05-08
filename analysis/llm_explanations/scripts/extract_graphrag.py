@@ -55,13 +55,11 @@ OUTPUT_DIR = Path(__file__).parent.parent / "output"
 from extraction_generic import (  # noqa: E402
     DecisionGraphExtractor,
     KnowledgeGraph,
+    get_git_info,
     load_law_yaml,
     load_profiles,
     run_calculation,
-    get_git_info,
-    _to_dutch_format,
 )
-
 
 # ---------------------------------------------------------------------------
 # Graph serialisation
@@ -225,7 +223,6 @@ Jouw taak: schrijf een korte uitleg voor de burger op basis van UITSLUITEND de i
 
 ABSOLUTE REGELS:
 - Gebruik UITSLUITEND `feiten_gebruikt` voor concrete waarden — noem NOOIT iets uit `feiten_context`
-- Noem minimaal één artikel uit `wettelijke_grondslag` als dat aanwezig is, in de vorm "op grond van artikel X [wetnaam]"
 - Schrijf ALTIJD in de u-vorm — gebruik NOOIT "hij/zij/men" of de naam als onderwerp
 - Als `requirements_voldaan` true is maar `berekend_bedrag` 0 euro: schrijf dat u aan de basisvoorwaarden voldoet (noem welke), maar dat het berekende bedrag uitkomt op 0 euro. Leg de reden uit op basis van de feiten in `feiten_gebruikt` (bijv. inkomen boven drempel, vermogen boven grens). Schrijf NOOIT "U heeft recht op X" en zaai NOOIT twijfel over de voldane voorwaarden.
 - Voorwaarden in `voldaan` zijn bevestigd — zaai NOOIT twijfel over een voldane voorwaarde
@@ -425,7 +422,7 @@ def run_graphrag_for_law(
             if bsn in cached:
                 calc_result = cached[bsn]
                 if verbose:
-                    print(f"    Calculation: from cache (skipping engine)", file=sys.stderr)
+                    print("    Calculation: from cache (skipping engine)", file=sys.stderr)
             else:
                 calc_result = run_calculation(law, bsn, law_yaml, profile_data)
                 if calc_result is not None:
@@ -435,7 +432,7 @@ def run_graphrag_for_law(
 
             if calc_result is None:
                 if verbose:
-                    print(f"    Calculation failed, skipping", file=sys.stderr)
+                    print("    Calculation failed, skipping", file=sys.stderr)
                 continue
 
             req_met = calc_result.get("requirements_met")

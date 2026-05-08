@@ -385,7 +385,6 @@ WAT JE MOET DOEN:
 - Begin direct met de uitkomst uit "## Uitkomst" (recht of geen recht)
 - Bespreek elke voorwaarde: voor [JA] beschrijf je dat de burger eraan voldoet, voor [NEE] dat dit de reden is voor afwijzing, voor "gegevens ontbreken" dat er onvoldoende informatie was
 - Noem het berekende bedrag als dat in "## Berekend bedrag" staat, in de vorm "X euro per jaar"
-- Noem minimaal één artikel uit "## Wettelijke grondslag" als dat aanwezig is, in de vorm "op grond van artikel X [wetsnaam]"
 - Praat in de u-vorm
 - Gebruik het woord "euro", nooit het €-teken
 - {ending}

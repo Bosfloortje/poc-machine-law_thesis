@@ -41,7 +41,6 @@ EVAL_DIR = Path(__file__).parent
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(EVAL_DIR))
 
-from dim1_legal import score_legal  # noqa: E402
 from dim3_citizen import score_citizen  # noqa: E402
 
 # ---------------------------------------------------------------------------
@@ -105,9 +104,6 @@ def evaluate_record(
     trace = record.get("evaluation_trace") or {}
     decisive = trace.get("decisive_condition", {}).get("label", "")
 
-    # --- Dim 1: legal grounding ---
-    dim1 = score_legal(explanation, trace)
-
     # --- Dim 3: citizen ---
     dim3 = score_citizen(explanation, decisive, gold)
 
@@ -123,11 +119,6 @@ def evaluate_record(
         "outcome": trace.get("outcome", ""),
         "amount_euro": trace.get("amount_euro"),
         "decisive_condition": decisive,
-
-        # Dim1
-        "d1_article_coverage": dim1.get("article_coverage"),
-        "d1_n_available": dim1.get("n_available"),
-        "d1_n_cited": dim1.get("n_cited"),
 
         # Dim3
         "d3_flesch": dim3.get("flesch"),
@@ -182,17 +173,8 @@ def summarize(results: list[dict]) -> dict:
     counter_n = sum(1 for r in results if r.get("d3_has_counterfactual"))
     action_n = sum(1 for r in results if r.get("d3_has_action"))
 
-    cov_vals = [r["d1_article_coverage"] for r in results if r.get("d1_article_coverage") is not None]
-    full_cov_n = sum(1 for v in cov_vals if v >= 1.0)
-
     summary: dict[str, Any] = {
         "n": n,
-        "d1": {
-            "article_coverage_avg": _avg(cov_vals),
-            "n": len(cov_vals),
-            "full_coverage_n": full_cov_n,
-            "full_coverage_pct": round(full_cov_n / len(cov_vals), 3) if cov_vals else None,
-        },
         "d3": {
             "flesch_avg": _avg(flesch_vals),
             "flesch_n": len(flesch_vals),
@@ -284,18 +266,9 @@ def print_summary(summary: dict) -> None:
     print(f"\n{'='*65}")
     print(f"Total explanations evaluated: {n}")
 
-    d1 = summary.get("d1", {})
-    if d1 and d1.get("n", 0) > 0:
-        print(f"\nDimension 1 — Legal grounding")
-        cov_avg = d1.get("article_coverage_avg")
-        if cov_avg is not None:
-            print(f"  Article coverage (avg): {cov_avg:.2f}  (0–1, higher = better)")
-        full_n = d1.get("full_coverage_n", 0)
-        print(f"  Full coverage (1.0):    {full_n}/{d1['n']}")
-
     d3 = summary.get("d3", {})
     if d3:
-        print(f"\nDimension 3 — Citizen-focused")
+        print("\nDimension 3 — Citizen-focused")
         flesch_avg = d3.get("flesch_avg")
         if flesch_avg is not None:
             readable_n = d3.get("flesch_readable_n", 0)
@@ -320,19 +293,19 @@ def print_summary(summary: dict) -> None:
 
     d2 = summary.get("d2")
     if d2:
-        print(f"\nDimension 2 — Faithfulness (NLI)")
+        print("\nDimension 2 — Faithfulness (NLI)")
         print(f"  Faithfulness (avg):    {d2['faithfulness_avg']:.2f}  (0–1, higher = better)")
         print(f"  Records scored:        {d2['n']}/{n}")
 
     gold = summary.get("gold_agreement")
     if gold:
-        print(f"\nGold annotation agreement:")
+        print("\nGold annotation agreement:")
         for field, stats in gold.items():
             print(f"  {field:<28} {stats['match_n']}/{stats['n']} ({stats['match_pct']:.0%})")
 
     by_model = summary.get("by_model")
     if by_model:
-        print(f"\nPer-model breakdown:")
+        print("\nPer-model breakdown:")
         for model, stats in by_model.items():
             f = f"{stats['flesch_avg']:.1f}" if stats.get("flesch_avg") is not None else "n/a"
             c = f"{stats['contestability_avg']:.2f}" if stats.get("contestability_avg") is not None else "n/a"
@@ -341,7 +314,7 @@ def print_summary(summary: dict) -> None:
 
     by_law = summary.get("by_law")
     if by_law:
-        print(f"\nPer-law breakdown:")
+        print("\nPer-law breakdown:")
         for law, stats in by_law.items():
             f = f"{stats['flesch_avg']:.1f}" if stats.get("flesch_avg") is not None else "n/a"
             c = f"{stats['contestability_avg']:.2f}" if stats.get("contestability_avg") is not None else "n/a"
