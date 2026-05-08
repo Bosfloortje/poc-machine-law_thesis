@@ -23,7 +23,6 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
-from typing import Any
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -86,20 +85,24 @@ def extract_claims(trace: dict) -> list[dict]:
     claims: list[dict] = []
 
     outcome = trace.get("outcome", "")
-    if outcome == "RECHT":
-        claims.append({
-            "id": "outcome",
-            "type": "outcome",
-            "premise": "De burger heeft recht op de toeslag.",
-            "required": True,
-        })
-    elif outcome == "GEEN_RECHT":
-        claims.append({
-            "id": "outcome",
-            "type": "outcome",
-            "premise": "De burger heeft geen recht op de toeslag.",
-            "required": True,
-        })
+    if outcome:
+        up = outcome.upper()
+        is_positive = ("RECHT" in up or "VERLEEND" in up or "TOEGEKEND" in up) and "GEEN" not in up
+        is_negative = "GEEN" in up or "WEIGER" in up or "AFGEWEZEN" in up
+        if is_positive:
+            claims.append({
+                "id": "outcome",
+                "type": "outcome",
+                "premise": "De aanvraag is gehonoreerd.",
+                "required": True,
+            })
+        elif is_negative:
+            claims.append({
+                "id": "outcome",
+                "type": "outcome",
+                "premise": "De aanvraag is afgewezen.",
+                "required": True,
+            })
 
     amount = trace.get("amount_euro")
     if amount is not None and amount > 0:

@@ -2,30 +2,34 @@
 """
 evaluate.py — Main evaluation orchestrator.
 
-Reads JSONL output from extract.py / extract_graphrag.py and runs all
-evaluation dimensions:
+Reads JSONL output from extract.py / extract_graphrag.py and runs:
 
   Dim 3: Citizen-focused  (readability, jargon, contestability)
+          — always computed; maps to "makkelijkheid burgers" in annotation
   Dim 2: Faithfulness     (NLI-based sentence-level fact matching vs trace)
-                          — requires 'transformers' + mDeBERTa model
+          — only for records with evaluation_trace (graphrag approach)
+          — maps to "juridische aantoonbaarheid" in annotation
+          — requires 'transformers' + mDeBERTa model
 
-Optionally compares against human gold annotations (YAML templates generated
-by generate_gold_templates.py).
+Each output record includes a `record_id` ({law}__{profile}__{model}__{approach})
+for joining with external annotation results via correlate.py.
+
+Open approach records (no evaluation_trace) are included and scored on Dim3;
+Dim2 fields will be None for those records.
 
 Usage:
-    # Quick run — Dim3 only, no gold:
+    # Dim3 only (fast):
     uv run python analysis/llm_explanations/scripts/evaluation/evaluate.py \
-        --input analysis/llm_explanations/output/20260408_.../*.jsonl
+        --input analysis/llm_explanations/output/thesis_.../*.jsonl
 
-    # Full run with gold annotations:
+    # Include Dim2 NLI faithfulness (slow, requires transformers):
     uv run python analysis/llm_explanations/scripts/evaluation/evaluate.py \
-        --input analysis/llm_explanations/output/20260408_.../*.jsonl \
-        --gold-dir analysis/llm_explanations/scripts/evaluation/gold \
+        --input analysis/llm_explanations/output/thesis_.../*.jsonl \
         --dim2 \
         --output analysis/llm_explanations/output/eval_results.jsonl
 
-    # Filter:
-    uv run ... --law zorgtoeslag --model gpt-4o
+    # Filter by law/model/approach:
+    uv run ... --law zorgtoeslag --model gpt-4o --approach graphrag
 """
 from __future__ import annotations
 
@@ -99,28 +103,35 @@ def evaluate_record(
     Evaluate a single explanation record.
 
     Returns a flat result dict containing all scores.
+    record_id = {law}__{profile}__{model}__{approach} — use to join with annotation data.
     """
     explanation = record.get("explanation") or ""
     trace = record.get("evaluation_trace") or {}
-    decisive = trace.get("decisive_condition", {}).get("label", "")
+    decisive = (trace.get("decisive_condition") or {}).get("label", "")
 
-    # --- Dim 3: citizen ---
+    law = record.get("law", "")
+    profile = str(record.get("profile", ""))
+    model = record.get("model", "")
+    approach = record.get("approach", "")
+
+    # --- Dim 3: citizen (always) ---
     dim3 = score_citizen(explanation, decisive, gold)
 
     result: dict[str, Any] = {
-        # Identity
-        "law": record.get("law", ""),
-        "profile": str(record.get("profile", "")),
+        # Identity + join key for annotation
+        "record_id": f"{law}__{profile}__{model}__{approach}",
+        "law": law,
+        "profile": profile,
         "profile_name": record.get("profile_name", ""),
-        "model": record.get("model", ""),
-        "approach": record.get("approach", ""),
+        "model": model,
+        "approach": approach,
 
-        # Engine ground truth (from trace)
+        # Engine ground truth (from trace; None for open approach)
         "outcome": trace.get("outcome", ""),
         "amount_euro": trace.get("amount_euro"),
         "decisive_condition": decisive,
 
-        # Dim3
+        # Dim3 — makkelijkheid burgers
         "d3_flesch": dim3.get("flesch"),
         "d3_avg_sentence_length": dim3.get("avg_sentence_length"),
         "d3_jargon_density": dim3.get("jargon_density"),
@@ -138,8 +149,8 @@ def evaluate_record(
             result[f"d3_gold_{field}_gold"] = comp.get("gold")
             result[f"d3_gold_{field}_match"] = comp.get("match")
 
-    # --- Dim 2: faithfulness (optional) ---
-    if score_faithfulness is not None and explanation:
+    # --- Dim 2: faithfulness (optional; skipped when no trace, e.g. open approach) ---
+    if score_faithfulness is not None and explanation and trace:
         try:
             dim2 = score_faithfulness(explanation, trace)
             result["d2_faithfulness"] = dim2.get("faithfulness_score")
@@ -148,6 +159,10 @@ def evaluate_record(
         except Exception as e:
             result["d2_faithfulness"] = None
             result["d2_error"] = str(e)
+    else:
+        result["d2_faithfulness"] = None
+        result["d2_n_claims"] = None
+        result["d2_n_supported"] = None
 
     return result
 
@@ -190,18 +205,21 @@ def summarize(results: list[dict]) -> dict:
         },
     }
 
-    # Dim2 if available
+    # Dim2 faithfulness (graphrag only — open approach has no trace)
     d2_vals = [r["d2_faithfulness"] for r in results if r.get("d2_faithfulness") is not None]
     if d2_vals:
-        summary["d2"] = {"faithfulness_avg": _avg(d2_vals), "n": len(d2_vals)}
+        summary["d2"] = {
+            "faithfulness_avg": _avg(d2_vals),
+            "n": len(d2_vals),
+            "note": "graphrag approach only (open approach has no evaluation_trace)",
+        }
 
-    # Gold agreement
+    # Gold agreement (kept for backwards compatibility)
     gold_fields = set()
     for r in results:
         for k in r:
             if k.startswith("d3_gold_") and k.endswith("_match"):
                 gold_fields.add(k[len("d3_gold_"):-len("_match")])
-
     if gold_fields:
         gold_agreement: dict[str, Any] = {}
         for field in sorted(gold_fields):
@@ -214,41 +232,31 @@ def summarize(results: list[dict]) -> dict:
                 }
         summary["gold_agreement"] = gold_agreement
 
-    # Per-model breakdown
-    by_model: dict[str, list[dict]] = defaultdict(list)
-    for r in results:
-        by_model[r.get("model", "unknown")].append(r)
-
-    if len(by_model) > 1:
-        model_summary: dict[str, Any] = {}
-        for model, recs in by_model.items():
+    def _breakdown(group_key: str) -> dict[str, Any]:
+        by_group: dict[str, list[dict]] = defaultdict(list)
+        for r in results:
+            by_group[r.get(group_key, "unknown")].append(r)
+        out: dict[str, Any] = {}
+        for key, recs in by_group.items():
             f_vals = [r["d3_flesch"] for r in recs if r.get("d3_flesch") is not None]
             c_vals = [r["d3_contestability"] for r in recs if r.get("d3_contestability") is not None]
             j_vals = [r["d3_jargon_density"] for r in recs if r.get("d3_jargon_density") is not None]
-            model_summary[model] = {
+            faith_vals = [r["d2_faithfulness"] for r in recs if r.get("d2_faithfulness") is not None]
+            out[key] = {
                 "n": len(recs),
                 "flesch_avg": _avg(f_vals),
                 "contestability_avg": _avg(c_vals),
                 "jargon_avg": _avg(j_vals),
+                "faithfulness_avg": _avg(faith_vals),
             }
-        summary["by_model"] = model_summary
+        return out
 
-    # Per-law breakdown
-    by_law: dict[str, list[dict]] = defaultdict(list)
-    for r in results:
-        by_law[r.get("law", "unknown")].append(r)
-
-    if len(by_law) > 1:
-        law_summary: dict[str, Any] = {}
-        for law, recs in by_law.items():
-            f_vals = [r["d3_flesch"] for r in recs if r.get("d3_flesch") is not None]
-            c_vals = [r["d3_contestability"] for r in recs if r.get("d3_contestability") is not None]
-            law_summary[law] = {
-                "n": len(recs),
-                "flesch_avg": _avg(f_vals),
-                "contestability_avg": _avg(c_vals),
-            }
-        summary["by_law"] = law_summary
+    if len({r.get("model") for r in results}) > 1:
+        summary["by_model"] = _breakdown("model")
+    if len({r.get("law") for r in results}) > 1:
+        summary["by_law"] = _breakdown("law")
+    if len({r.get("approach") for r in results}) > 1:
+        summary["by_approach"] = _breakdown("approach")
 
     return summary
 
@@ -303,22 +311,26 @@ def print_summary(summary: dict) -> None:
         for field, stats in gold.items():
             print(f"  {field:<28} {stats['match_n']}/{stats['n']} ({stats['match_pct']:.0%})")
 
-    by_model = summary.get("by_model")
-    if by_model:
-        print("\nPer-model breakdown:")
-        for model, stats in by_model.items():
+    def _print_breakdown(title: str, breakdown: dict) -> None:
+        print(f"\n{title}")
+        for key, stats in breakdown.items():
             f = f"{stats['flesch_avg']:.1f}" if stats.get("flesch_avg") is not None else "n/a"
             c = f"{stats['contestability_avg']:.2f}" if stats.get("contestability_avg") is not None else "n/a"
             j = f"{stats['jargon_avg']:.4f}" if stats.get("jargon_avg") is not None else "n/a"
-            print(f"  {model:<20} n={stats['n']:<4}  flesch={f:<6}  contest={c}  jargon={j}")
+            faith = f"{stats['faithfulness_avg']:.2f}" if stats.get("faithfulness_avg") is not None else "n/a"
+            print(f"  {key:<22} n={stats['n']:<5} flesch={f:<6} contest={c} jargon={j} faith={faith}")
+
+    by_approach = summary.get("by_approach")
+    if by_approach:
+        _print_breakdown("Per-approach breakdown (open=no trace → faith=n/a):", by_approach)
+
+    by_model = summary.get("by_model")
+    if by_model:
+        _print_breakdown("Per-model breakdown:", by_model)
 
     by_law = summary.get("by_law")
     if by_law:
-        print("\nPer-law breakdown:")
-        for law, stats in by_law.items():
-            f = f"{stats['flesch_avg']:.1f}" if stats.get("flesch_avg") is not None else "n/a"
-            c = f"{stats['contestability_avg']:.2f}" if stats.get("contestability_avg") is not None else "n/a"
-            print(f"  {law:<28} n={stats['n']:<4}  flesch={f:<6}  contest={c}")
+        _print_breakdown("Per-law breakdown:", by_law)
 
     print(f"{'='*65}")
 
@@ -349,8 +361,8 @@ def main() -> None:
                         help="Filter to specific model(s)")
     parser.add_argument("--approach", nargs="+", default=None,
                         help="Filter to specific approach(es)")
-    parser.add_argument("--no-trace-skip", action="store_true",
-                        help="Include records without evaluation_trace (limited scoring)")
+    # --no-trace-skip is no longer needed: records without trace (open approach)
+    # are always included and scored on Dim3; Dim2 will be None for them.
     args = parser.parse_args()
 
     # Default output paths: next to the first input file
@@ -388,7 +400,7 @@ def main() -> None:
     if args.output:
         output_path = Path(args.output)
         output_path.parent.mkdir(parents=True, exist_ok=True)
-        output_fh = open(output_path, "w", encoding="utf-8")
+        output_fh = open(output_path, "w", encoding="utf-8")  # noqa: SIM115
 
     try:
         for input_path_str in args.input:
@@ -414,10 +426,10 @@ def main() -> None:
                         n_skipped_error += 1
                         continue
 
-                    # Skip records without trace (unless --no-trace-skip)
-                    if not record.get("evaluation_trace") and not args.no_trace_skip:
-                        n_skipped_no_trace += 1
-                        continue
+                    # Records without trace (open approach) are kept — Dim3 still scores,
+                    # Dim2 faithfulness will be None for those records.
+                    if not record.get("evaluation_trace"):
+                        n_skipped_no_trace += 1  # counted but not skipped
 
                     # Apply filters
                     law = record.get("law", "")
@@ -466,8 +478,7 @@ def main() -> None:
 
     # Diagnostics
     if n_skipped_no_trace > 0:
-        print(f"\nNote: skipped {n_skipped_no_trace} records without evaluation_trace")
-        print("  (re-run extract.py to add traces, or use --no-trace-skip)")
+        print(f"\nNote: {n_skipped_no_trace} records without evaluation_trace (open approach) — Dim2 is None for these")
     if n_skipped_error > 0:
         print(f"Note: skipped {n_skipped_error} error/empty records")
     if n_skipped_filter > 0:
