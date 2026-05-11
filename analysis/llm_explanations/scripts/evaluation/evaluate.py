@@ -322,7 +322,7 @@ def print_summary(summary: dict) -> None:
 
     by_approach = summary.get("by_approach")
     if by_approach:
-        _print_breakdown("Per-approach breakdown (open=no trace → faith=n/a):", by_approach)
+        _print_breakdown("Per-approach breakdown (open=no trace, faith=n/a):", by_approach)
 
     by_model = summary.get("by_model")
     if by_model:

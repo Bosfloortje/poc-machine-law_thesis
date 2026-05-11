@@ -94,6 +94,7 @@ def extract_claims(trace: dict) -> list[dict]:
                 "id": "outcome",
                 "type": "outcome",
                 "premise": "De aanvraag is gehonoreerd.",
+                "outcome_positive": True,
                 "required": True,
             })
         elif is_negative:
@@ -101,6 +102,7 @@ def extract_claims(trace: dict) -> list[dict]:
                 "id": "outcome",
                 "type": "outcome",
                 "premise": "De aanvraag is afgewezen.",
+                "outcome_positive": False,
                 "required": True,
             })
 
@@ -176,20 +178,30 @@ def _claim_supported_nli(
     """
     premise = claim["premise"]
 
-    # Fast path for amount claims: check string presence
-    if claim["type"] == "amount" and claim.get("amount_variants"):
-        if not _amount_present(explanation, claim["amount_variants"]):
-            return {"supported": False, "method": "string", "score": 0.0}
-        # Amount string found — mark as supported without NLI
-        return {"supported": True, "method": "string", "score": 1.0}
+    # Fast path for amount/fact claims: string match on euro value
+    if claim["type"] in ("amount", "fact") and claim.get("amount_variants"):
+        supported = _amount_present(explanation, claim["amount_variants"])
+        return {"supported": supported, "method": "string", "score": 1.0 if supported else 0.0}
 
-    # Fast path for fact claims: check string presence first
-    if claim["type"] == "fact" and claim.get("amount_variants"):
-        if _amount_present(explanation, claim["amount_variants"]):
-            return {"supported": True, "method": "string", "score": 1.0}
-        return {"supported": False, "method": "string", "score": 0.0}
+    # Fast path for outcome claims: keyword-based string match
+    # NLI is too sensitive to phrasing ("U heeft recht op" ≠ "De aanvraag is gehonoreerd")
+    if claim["type"] == "outcome":
+        text_lower = explanation.lower()
+        is_positive = claim.get("outcome_positive", False)
+        if is_positive:
+            positive_signals = ["recht op", "heeft recht", "aanvraag is gehonoreerd",
+                                "toegekend", "u ontvangt", "u krijgt"]
+            supported = any(s in text_lower for s in positive_signals)
+        else:
+            negative_signals = ["geen recht", "afgewezen", "niet in aanmerking",
+                                "aanvraag is afgewezen", "niet gehonoreerd",
+                                "niet beoordeeld", "ontbrekende gegevens",
+                                "kan niet worden beoordeeld", "kunnen we niet bepalen",
+                                "helaas niet"]
+            supported = any(s in text_lower for s in negative_signals)
+        return {"supported": supported, "method": "string", "score": 1.0 if supported else 0.0}
 
-    # NLI path for outcome / condition claims
+    # NLI path for condition claims
     sentences = _split_sentences(explanation)
     if not sentences:
         return {"supported": False, "method": "nli", "score": 0.0}
@@ -361,7 +373,7 @@ def main() -> None:
                 )
                 if args.verbose:
                     for claim in scores["claims"]:
-                        mark = "✓" if claim["supported"] else "✗"
+                        mark = "Y" if claim["supported"] else "N"
                         req = "*" if claim["required"] else " "
                         print(f"    {mark}{req} [{claim['type']:<10}] {claim['premise'][:70]}")
 
