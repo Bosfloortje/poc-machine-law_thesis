@@ -162,6 +162,13 @@ def serialize_graph(
             "is_or_groep": props.get("is_or_group", False),
         }
 
+    # --- Determine which unknown conditions to surface ---
+    # Only show onbekend_gegevens_ontbreken when it is the sole reason for a
+    # negative outcome (requirements_voldaan=False AND niet_voldaan is empty).
+    # When the decision is positive, or when there are clear failed conditions,
+    # missing data is irrelevant and would mislead the LLM into mentioning it.
+    show_unknown = bool(unknown) and not requirements_met and not failed
+
     # --- Assemble final structure ---
     return {
         "regeling": law_name,
@@ -173,7 +180,7 @@ def serialize_graph(
         "voorwaarden": {
             "voldaan": [_serialize_rule(n) for n in satisfied],
             "niet_voldaan": [_serialize_rule(n) for n in failed],
-            "onbekend_gegevens_ontbreken": [_serialize_rule(n) for n in unknown],
+            "onbekend_gegevens_ontbreken": [_serialize_rule(n) for n in unknown] if show_unknown else [],
         },
         "feiten_gebruikt": {
             n.properties.get("description", n.id): n.label.split(": ", 1)[-1]
