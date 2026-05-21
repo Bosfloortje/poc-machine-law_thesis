@@ -42,15 +42,15 @@ PROFILES_FILE = str(PROJECT_ROOT / "data" / "profiles.yaml")
 THESIS_LAWS: dict[str, dict] = {
     "zorgtoeslag": {
         "profiles": ["312847291", "591847362"],
-        "labels":   ["✓ laag inkomen verzekerd", "✗ inkomen boven grens"],
+        "labels": ["✓ laag inkomen verzekerd", "✗ inkomen boven grens"],
     },
     "participatiewet/bijstand": {
         "profiles": ["748291634", "914827361"],
-        "labels":   ["✓ geen inkomen arbeidsvermogen", "✗ looninkomen €2200/mnd"],
+        "labels": ["✓ geen inkomen arbeidsvermogen", "✗ looninkomen €2200/mnd"],
     },
     "alcoholwet/vergunning": {
         "profiles": ["263948172", "481927364"],
-        "labels":   ["✓ café SVH-diploma geen curatele", "✗ 19jr + geen SVH"],
+        "labels": ["✓ café SVH-diploma geen curatele", "✗ 19jr + geen SVH"],
     },
 }
 
@@ -66,6 +66,7 @@ SYSTEM_PROMPT = (
 # Custom open-approach precompute using the graph engine (not MCPLawConnector)
 # This ensures the correct gemeente data is used for each profile.
 # ---------------------------------------------------------------------------
+
 
 def _make_open_prompt(law: str, calc_result: dict, profile: dict, bsn: str) -> str:
     requirements_met = calc_result.get("requirements_met", False)
@@ -173,6 +174,7 @@ def _eval_via_engine(law: str, bsn: str, profile: dict) -> dict | None:
 
     try:
         from web.dependencies import TODAY
+
         result = engine.evaluate(
             service=service,
             law=_engine_law,
@@ -187,7 +189,8 @@ def _eval_via_engine(law: str, bsn: str, profile: dict) -> dict | None:
                 "result": result.output or {},
                 "input_data": result.input or {},
                 "explanation": (
-                    "U voldoet aan alle voorwaarden." if result.requirements_met
+                    "U voldoet aan alle voorwaarden."
+                    if result.requirements_met
                     else "U voldoet niet aan alle voorwaarden."
                 ),
             }
@@ -196,29 +199,54 @@ def _eval_via_engine(law: str, bsn: str, profile: dict) -> dict | None:
     return None
 
 
-def thesis_precompute_open(law: str, profiles_filter: list[str], verbose: bool = True) -> list[dict]:
+def thesis_precompute_open(
+    law: str,
+    profiles_filter: list[str] | None = None,
+    verbose: bool = True,
+    cache_file: Path | None = None,
+) -> list[dict]:
     """Compute open-approach entries by evaluating directly via the machine engine.
 
-    Uses _eval_via_engine which auto-detects the right gemeente service from the
-    profile's available data, bypassing MCPLawConnector's Amsterdam default.
+    If cache_file exists, loads calc_results from it instead of calling the engine.
+    profiles_filter=None processes all profiles from profiles.yaml.
     """
     from extraction_generic import load_profiles
 
     all_profiles = load_profiles(PROFILES_FILE)
-    entries: list[dict] = []
+    bsns = profiles_filter if profiles_filter is not None else list(all_profiles.keys())
 
-    for bsn in profiles_filter:
+    # Load existing cache if available (avoids re-running engine on resume)
+    cached: dict[str, dict] = {}
+    if cache_file and cache_file.exists():
+        with open(cache_file, encoding="utf-8") as f:
+            cached = json.load(f)
+        if verbose:
+            print(f"  Open precompute: loaded {len(cached)} cached results from {cache_file.name}", file=sys.stderr)
+
+    entries: list[dict] = []
+    total = len(bsns)
+
+    for i, bsn in enumerate(bsns, 1):
         if bsn not in all_profiles:
             if verbose:
-                print(f"  Warning: profile {bsn} not found, skipping", file=sys.stderr)
+                print(f"  [{i}/{total}] Warning: profile {bsn} not found, skipping", file=sys.stderr)
             continue
 
         profile = all_profiles[bsn]
         name = profile.get("name", bsn)
-        if verbose:
-            print(f"  Open precompute: {bsn} ({name}) / {law}...", file=sys.stderr)
 
-        calc_result = _eval_via_engine(law, bsn, profile)
+        if bsn in cached:
+            calc_result = cached[bsn]
+        else:
+            if verbose:
+                print(f"  [{i}/{total}] Open precompute: {bsn} ({name}) / {law}...", file=sys.stderr)
+            calc_result = _eval_via_engine(law, bsn, profile)
+            if cache_file and calc_result:
+                cached[bsn] = calc_result
+                cache_file.parent.mkdir(parents=True, exist_ok=True)
+                with open(cache_file, "w", encoding="utf-8") as f:
+                    json.dump(cached, f, ensure_ascii=False)
+
         entry: dict = {
             "bsn": bsn,
             "profile": profile,
@@ -232,7 +260,9 @@ def thesis_precompute_open(law: str, profiles_filter: list[str], verbose: bool =
                 "output": calc_result.get("result", {}),
                 "input_data": calc_result.get("input_data", {}),
                 "system_explanation": calc_result.get("explanation", ""),
-            } if calc_result else None,
+            }
+            if calc_result
+            else None,
             "prompt": _make_open_prompt(law, calc_result, profile, bsn) if calc_result else None,
             "error": None if calc_result else f"run_calculation returned None for {bsn}/{law}",
         }
@@ -283,17 +313,23 @@ def run_open_approach(
 
     with open(output_path, file_mode, encoding="utf-8") as f:
         if file_mode == "w":
-            f.write(json.dumps({
-                "record_type": "metadata",
-                "timestamp": datetime.now().isoformat(),
-                "model": model_id,
-                "provider": provider,
-                "law": law,
-                "profiles_count": len(entries),
-                "approach": "open_prompt",
-                "git_info": get_git_info(),
-                "reference_date": TODAY,
-            }, ensure_ascii=False) + "\n")
+            f.write(
+                json.dumps(
+                    {
+                        "record_type": "metadata",
+                        "timestamp": datetime.now().isoformat(),
+                        "model": model_id,
+                        "provider": provider,
+                        "law": law,
+                        "profiles_count": len(entries),
+                        "approach": "open_prompt",
+                        "git_info": get_git_info(),
+                        "reference_date": TODAY,
+                    },
+                    ensure_ascii=False,
+                )
+                + "\n"
+            )
 
         for entry in entries:
             bsn = entry["bsn"]
@@ -329,12 +365,26 @@ def run_open_approach(
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
             results.append(record)
 
+            if not record.get("explanation"):
+                print(
+                    f"\n⚠️  WARNING: geen explanation voor {bsn} ({entry['profile_name']}) [{law} / {model}]",
+                    file=sys.stderr,
+                )
+                if record.get("error"):
+                    print(f"   Fout: {record['error']}", file=sys.stderr)
+                try:
+                    input("   Druk Enter om door te gaan, of Ctrl+C om te stoppen... ")
+                except KeyboardInterrupt:
+                    print("\nAfgebroken door gebruiker.", file=sys.stderr)
+                    return results
+
     return results
 
 
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     from extract import precompute_graph_entries, run_graph_approach
@@ -345,10 +395,12 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    parser.add_argument("--models", nargs="+", choices=list(AVAILABLE_MODELS.keys()),
-                        default=DEFAULT_MODELS, metavar="MODEL")
-    parser.add_argument("--laws", nargs="+", choices=list(THESIS_LAWS.keys()),
-                        default=list(THESIS_LAWS.keys()), metavar="LAW")
+    parser.add_argument(
+        "--models", nargs="+", choices=list(AVAILABLE_MODELS.keys()), default=DEFAULT_MODELS, metavar="MODEL"
+    )
+    parser.add_argument(
+        "--laws", nargs="+", choices=list(THESIS_LAWS.keys()), default=list(THESIS_LAWS.keys()), metavar="LAW"
+    )
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--output-dir", default=None)
     parser.add_argument("--quiet", action="store_true")
@@ -377,36 +429,31 @@ def main() -> None:
     open_precomputed: dict[str, list[dict]] = {}
 
     for law, cfg in laws_to_run.items():
-        profiles = cfg["profiles"]
         law_slug = law.replace("/", "_")
-        print(f"\n{'─'*60}")
-        print(f"Precomputing: {law}  profiles: {profiles}")
+        cache_path = run_dir / f"cache_{law_slug}.json"
+        print(f"\n{'─' * 60}")
+        print(f"Precomputing: {law}  (all profiles)")
 
-        # Open precompute first (uses _eval_via_engine — correct gemeente + law names)
+        # Open precompute: loads from cache if available (fast on resume), else calls engine
         open_precomputed[law] = thesis_precompute_open(
             law=law,
-            profiles_filter=profiles,
+            profiles_filter=None,
             verbose=verbose,
+            cache_file=cache_path,
         )
 
-        # Seed the graph cache with the open precomputed calc_results so the graph
-        # approach uses the same correct evaluation (MCPLawConnector returns None for
-        # internal law paths like "participatiewet/bijstand" and "alcoholwet/vergunning").
-        cache_path = run_dir / f"cache_{law_slug}.json"
-        seed_cache = {
-            e["bsn"]: e["calc_result"]
-            for e in open_precomputed[law]
-            if e.get("calc_result") is not None
-        }
-        if seed_cache:
-            cache_path.parent.mkdir(parents=True, exist_ok=True)
-            with open(cache_path, "w", encoding="utf-8") as _cf:
-                json.dump(seed_cache, _cf, ensure_ascii=False)
+        # Seed graph cache with open precomputed results (shares the same cache file)
+        if not cache_path.exists():
+            seed_cache = {e["bsn"]: e["calc_result"] for e in open_precomputed[law] if e.get("calc_result") is not None}
+            if seed_cache:
+                cache_path.parent.mkdir(parents=True, exist_ok=True)
+                with open(cache_path, "w", encoding="utf-8") as _cf:
+                    json.dump(seed_cache, _cf, ensure_ascii=False)
 
-        # Graph precompute — loads seeded cache, skips re-evaluation
+        # Graph precompute — loads from same cache, skips re-evaluation
         graph_precomputed[law] = precompute_graph_entries(
             law=law,
-            profiles_filter=profiles,
+            profiles_filter=None,
             verbose=verbose,
             cache_file=cache_path,
             profiles_file=PROFILES_FILE,
@@ -416,9 +463,9 @@ def main() -> None:
     # LLM pass: iterate models, then laws
     # -------------------------------------------------------------------
     for model in args.models:
-        print(f"\n{'='*60}")
+        print(f"\n{'=' * 60}")
         print(f"Model: {model}")
-        print(f"{'='*60}")
+        print(f"{'=' * 60}")
 
         model_dir = run_dir / model
         model_dir.mkdir(exist_ok=True)
@@ -452,9 +499,9 @@ def main() -> None:
                 resume=args.resume,
             )
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"Done. All output in: {run_dir.absolute()}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
 
 
 if __name__ == "__main__":

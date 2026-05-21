@@ -35,6 +35,7 @@ except ImportError:
 try:
     import matplotlib.pyplot as plt
     import networkx as nx
+
     VISUALIZATION_AVAILABLE = True
 except ImportError:
     VISUALIZATION_AVAILABLE = False
@@ -44,9 +45,11 @@ except ImportError:
 # Graph primitives
 # ---------------------------------------------------------------------------
 
+
 @dataclass
 class GraphNode:
     """Represents a node in the knowledge graph."""
+
     id: str
     type: str
     label: str
@@ -56,6 +59,7 @@ class GraphNode:
 @dataclass
 class GraphEdge:
     """Represents a directed edge in the knowledge graph."""
+
     source: str
     target: str
     relation: str
@@ -65,6 +69,7 @@ class GraphEdge:
 @dataclass
 class KnowledgeGraph:
     """Knowledge graph for law and profile data."""
+
     nodes: list[GraphNode] = field(default_factory=list)
     edges: list[GraphEdge] = field(default_factory=list)
 
@@ -90,11 +95,19 @@ class KnowledgeGraph:
             raise ImportError("networkx and matplotlib are required: uv add networkx matplotlib")
         G = self.to_networkx()
         node_colors = {
-            "DECISION": "#2ECC71", "RULE": "#E74C3C", "FACT": "#3498DB",
-            "THRESHOLD": "#9B59B6", "CALCULATION": "#F39C12",
-            "LAW": "#4A90D9", "REQUIREMENT": "#E74C3C", "INPUT": "#27AE60",
-            "OUTPUT": "#F39C12", "DEFINITION": "#9B59B6", "PERSON": "#3498DB",
-            "VALUE": "#1ABC9C", "OPERATION": "#95A5A6",
+            "DECISION": "#2ECC71",
+            "RULE": "#E74C3C",
+            "FACT": "#3498DB",
+            "THRESHOLD": "#9B59B6",
+            "CALCULATION": "#F39C12",
+            "LAW": "#4A90D9",
+            "REQUIREMENT": "#E74C3C",
+            "INPUT": "#27AE60",
+            "OUTPUT": "#F39C12",
+            "DEFINITION": "#9B59B6",
+            "PERSON": "#3498DB",
+            "VALUE": "#1ABC9C",
+            "OPERATION": "#95A5A6",
         }
         fig, ax = plt.subplots(1, 1, figsize=figsize)
         try:
@@ -103,17 +116,27 @@ class KnowledgeGraph:
             pos = nx.spring_layout(G, k=3, iterations=50, seed=42)
         colors = [node_colors.get(G.nodes[n].get("node_type", ""), "#CCCCCC") for n in G.nodes()]
         nx.draw_networkx_nodes(G, pos, ax=ax, node_color=colors, node_size=2000, alpha=0.9)
-        nx.draw_networkx_edges(G, pos, ax=ax, edge_color="#666666", arrows=True,
-                               arrowsize=20, alpha=0.6, connectionstyle="arc3,rad=0.1")
-        labels = {n: (G.nodes[n].get("label", n)[:22] + "..." if len(G.nodes[n].get("label", n)) > 25
-                      else G.nodes[n].get("label", n)) for n in G.nodes()}
+        nx.draw_networkx_edges(
+            G, pos, ax=ax, edge_color="#666666", arrows=True, arrowsize=20, alpha=0.6, connectionstyle="arc3,rad=0.1"
+        )
+        labels = {
+            n: (
+                G.nodes[n].get("label", n)[:22] + "..."
+                if len(G.nodes[n].get("label", n)) > 25
+                else G.nodes[n].get("label", n)
+            )
+            for n in G.nodes()
+        }
         nx.draw_networkx_labels(G, pos, ax=ax, labels=labels, font_size=8, font_weight="bold")
         edge_labels = {(u, v): d.get("relation", "") for u, v, d in G.edges(data=True)}
         nx.draw_networkx_edge_labels(G, pos, ax=ax, edge_labels=edge_labels, font_size=6, font_color="#444444")
         from matplotlib.patches import Patch
-        legend_elements = [Patch(facecolor=color, label=nt)
-                           for nt, color in node_colors.items()
-                           if any(G.nodes[n].get("node_type") == nt for n in G.nodes())]
+
+        legend_elements = [
+            Patch(facecolor=color, label=nt)
+            for nt, color in node_colors.items()
+            if any(G.nodes[n].get("node_type") == nt for n in G.nodes())
+        ]
         ax.legend(handles=legend_elements, loc="upper left", fontsize=10)
         ax.set_title(title, fontsize=14, fontweight="bold")
         ax.axis("off")
@@ -128,22 +151,39 @@ class KnowledgeGraph:
 # ---------------------------------------------------------------------------
 
 AVAILABLE_MODELS: dict[str, dict] = {
-    "haiku":    {"id": "claude-haiku-4-5-20251001",  "provider": "anthropic", "description": "Fast and cheap, good for batch processing"},
-    "sonnet":   {"id": "claude-sonnet-4-5-20250929", "provider": "anthropic", "description": "Balanced performance and cost"},
-    "opus":     {"id": "claude-opus-4-6",             "provider": "anthropic", "description": "Most capable, highest quality output"},
-    "gpt4":     {"id": "gpt-4o",        "provider": "openai",     "description": "GPT-4o via OpenAI API"},
-    "llama3.2": {"id": "llama3.2:3b",   "provider": "ollama", "description": "Llama 3.2 3B via local Ollama (~2GB RAM)"},
-    "llama3.1": {"id": "llama3.1:8b",   "provider": "ollama", "description": "Llama 3.1 8B via local Ollama (~5GB RAM)"},
-    "llama3.3": {"id": "llama3.3:70b",  "provider": "ollama", "description": "Llama 3.3 70B via local Ollama (~38GB RAM)"},
-    "mistral":  {"id": "mistral:7b",    "provider": "ollama", "description": "Mistral 7B via local Ollama (~4GB RAM)"},
-    "deepseek": {"id": "deepseek-r1:8b","provider": "ollama", "description": "DeepSeek R1 8B via local Ollama (~5GB RAM)"},
-    "gemma2":   {"id": "gemma2:9b",     "provider": "ollama", "description": "Gemma 2 9B via local Ollama (~6GB RAM)"},
+    "haiku": {
+        "id": "claude-haiku-4-5-20251001",
+        "provider": "anthropic",
+        "description": "Fast and cheap, good for batch processing",
+    },
+    "sonnet": {
+        "id": "claude-sonnet-4-5-20250929",
+        "provider": "anthropic",
+        "description": "Balanced performance and cost",
+    },
+    "opus": {"id": "claude-opus-4-6", "provider": "anthropic", "description": "Most capable, highest quality output"},
+    "gpt4": {"id": "gpt-4o", "provider": "openai", "description": "GPT-4o via OpenAI API"},
+    "llama3.2": {"id": "llama3.2:3b", "provider": "ollama", "description": "Llama 3.2 3B via local Ollama (~2GB RAM)"},
+    "llama3.1": {"id": "llama3.1:8b", "provider": "ollama", "description": "Llama 3.1 8B via local Ollama (~5GB RAM)"},
+    "llama3.3": {
+        "id": "llama3.3:70b",
+        "provider": "ollama",
+        "description": "Llama 3.3 70B via local Ollama (~38GB RAM)",
+    },
+    "mistral": {"id": "mistral:7b", "provider": "ollama", "description": "Mistral 7B via local Ollama (~4GB RAM)"},
+    "deepseek": {
+        "id": "deepseek-r1:8b",
+        "provider": "ollama",
+        "description": "DeepSeek R1 8B via local Ollama (~5GB RAM)",
+    },
+    "gemma2": {"id": "gemma2:9b", "provider": "ollama", "description": "Gemma 2 9B via local Ollama (~6GB RAM)"},
 }
 
 
 # ---------------------------------------------------------------------------
 # Shared utilities
 # ---------------------------------------------------------------------------
+
 
 def get_git_info() -> dict:
     """Get git commit/branch info for reproducibility (includes submodule if present)."""
@@ -153,15 +193,17 @@ def get_git_info() -> dict:
             (["git", "rev-parse", "HEAD"], "commit"),
             (["git", "rev-parse", "--abbrev-ref", "HEAD"], "branch"),
         ]:
-            r = subprocess.run(cmd, capture_output=True, text=True, cwd=PROJECT_ROOT)
+            r = subprocess.run(cmd, capture_output=True, text=True, cwd=PROJECT_ROOT, timeout=5)
             if r.returncode == 0:
                 info[key] = r.stdout.strip()
-        r = subprocess.run(["git", "status", "--porcelain"], capture_output=True, text=True, cwd=PROJECT_ROOT)
+        r = subprocess.run(
+            ["git", "status", "--porcelain"], capture_output=True, text=True, cwd=PROJECT_ROOT, timeout=5
+        )
         if r.returncode == 0:
             info["dirty"] = len(r.stdout.strip()) > 0
         law_path = PROJECT_ROOT / "submodules" / "regelrecht-laws"
         if law_path.exists():
-            r = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=law_path)
+            r = subprocess.run(["git", "rev-parse", "HEAD"], capture_output=True, text=True, cwd=law_path, timeout=5)
             if r.returncode == 0:
                 info["regelrecht_laws_commit"] = r.stdout.strip()
     except Exception as e:
@@ -205,14 +247,30 @@ def _normalize_unicode_for_llm(text: str) -> str:
     The original skeleton (with correct unicode) is preserved separately.
     """
     replacements = {
-        "ë": "e", "é": "e", "è": "e", "ê": "e",
-        "ï": "i", "í": "i", "î": "i",
-        "ü": "u", "ú": "u", "û": "u",
-        "ö": "o", "ó": "o", "ô": "o",
-        "ä": "a", "á": "a", "â": "a",
+        "ë": "e",
+        "é": "e",
+        "è": "e",
+        "ê": "e",
+        "ï": "i",
+        "í": "i",
+        "î": "i",
+        "ü": "u",
+        "ú": "u",
+        "û": "u",
+        "ö": "o",
+        "ó": "o",
+        "ô": "o",
+        "ä": "a",
+        "á": "a",
+        "â": "a",
         "ñ": "n",
-        "Ë": "E", "É": "E", "È": "E",
-        "Ï": "I", "Ü": "U", "Ö": "O", "Ä": "A",
+        "Ë": "E",
+        "É": "E",
+        "È": "E",
+        "Ï": "I",
+        "Ü": "U",
+        "Ö": "O",
+        "Ä": "A",
     }
     for char, replacement in replacements.items():
         text = text.replace(char, replacement)
@@ -400,6 +458,7 @@ WAT JE NIET MAG DOEN:
 # Generic DecisionGraphExtractor
 # ---------------------------------------------------------------------------
 
+
 class DecisionGraphExtractor:
     """
     Builds a focused decision subgraph from any law YAML + calc_result.
@@ -565,10 +624,7 @@ class DecisionGraphExtractor:
         if isinstance(value, int) and value > 10000:
             return f"{_to_dutch_format(value / 100)} euro"
         if isinstance(value, list):
-            return ", ".join(
-                _humanize_code_value(str(v)) if isinstance(v, str) else str(v)
-                for v in value
-            )
+            return ", ".join(_humanize_code_value(str(v)) if isinstance(v, str) else str(v) for v in value)
         if isinstance(value, str):
             return _humanize_code_value(value)
         return str(value)
@@ -633,11 +689,11 @@ class DecisionGraphExtractor:
         try:
             op_map = {
                 "GREATER_OR_EQUAL": lambda a, b: a >= b,
-                "GREATER_THAN":     lambda a, b: a > b,
-                "LESS_OR_EQUAL":    lambda a, b: a <= b,
-                "LESS_THAN":        lambda a, b: a < b,
-                "EQUALS":           lambda a, b: a == b,
-                "NOT_EQUALS":       lambda a, b: a != b,
+                "GREATER_THAN": lambda a, b: a > b,
+                "LESS_OR_EQUAL": lambda a, b: a <= b,
+                "LESS_THAN": lambda a, b: a < b,
+                "EQUALS": lambda a, b: a == b,
+                "NOT_EQUALS": lambda a, b: a != b,
             }
             fn = op_map.get(operation)
             if fn is None:
@@ -653,11 +709,11 @@ class DecisionGraphExtractor:
         vals = cond.get("values", [])
         op_nl = {
             "GREATER_OR_EQUAL": "moet minimaal",
-            "GREATER_THAN":     "moet meer dan",
-            "LESS_OR_EQUAL":    "mag maximaal",
-            "LESS_THAN":        "moet minder dan",
-            "EQUALS":           "moet gelijk zijn aan",
-            "NOT_EQUALS":       "mag niet gelijk zijn aan",
+            "GREATER_THAN": "moet meer dan",
+            "LESS_OR_EQUAL": "mag maximaal",
+            "LESS_THAN": "moet minder dan",
+            "EQUALS": "moet gelijk zijn aan",
+            "NOT_EQUALS": "mag niet gelijk zijn aan",
         }
         op_text = op_nl.get(operation, operation)
         lhs_label = self._expression_to_human(vals[0]) if len(vals) > 0 else "?"
@@ -686,11 +742,11 @@ class DecisionGraphExtractor:
             else:
                 op_map = {
                     "GREATER_OR_EQUAL": lambda a, b: a >= b,
-                    "GREATER_THAN":     lambda a, b: a > b,
-                    "LESS_OR_EQUAL":    lambda a, b: a <= b,
-                    "LESS_THAN":        lambda a, b: a < b,
-                    "EQUALS":           lambda a, b: a == b,
-                    "NOT_EQUALS":       lambda a, b: a != b,
+                    "GREATER_THAN": lambda a, b: a > b,
+                    "LESS_OR_EQUAL": lambda a, b: a <= b,
+                    "LESS_THAN": lambda a, b: a < b,
+                    "EQUALS": lambda a, b: a == b,
+                    "NOT_EQUALS": lambda a, b: a != b,
                 }
                 fn = op_map.get(operation)
                 if fn is None:
@@ -725,22 +781,22 @@ class DecisionGraphExtractor:
             label = _expand_abbreviations(meta.get("description", field_name))
         # Strip parenthetical enum lists / field codes — not useful for citizens.
         # Matches: (UPPER_CASE_CODE), (snake_case_code), (lowercase_identifier)
-        label = re.sub(r"\s*\([^)]*[A-Z_]{3,}[^)]*\)", "", label).strip()   # UPPERCASE codes
+        label = re.sub(r"\s*\([^)]*[A-Z_]{3,}[^)]*\)", "", label).strip()  # UPPERCASE codes
         label = re.sub(r"\s*\([^)]*[a-z][a-z0-9]*_[a-z0-9_]+[^)]*\)", "", label).strip()  # snake_case
-        label = re.sub(r"\s*\([a-z][a-z0-9]+\)", "", label).strip()          # single lowercase identifier
+        label = re.sub(r"\s*\([a-z][a-z0-9]+\)", "", label).strip()  # single lowercase identifier
         unit = meta.get("unit", "")
 
         op_nl = {
             "GREATER_OR_EQUAL": "moet minimaal",
-            "GREATER_THAN":     "moet meer dan",
-            "LESS_OR_EQUAL":    "mag maximaal",
-            "LESS_THAN":        "moet minder dan",
-            "EQUALS":           "moet gelijk zijn aan",
-            "NOT_EQUALS":       "mag niet gelijk zijn aan",
-            "IS_NULL":          "mag niet aanwezig zijn",
-            "NOT_NULL":         "moet aanwezig zijn",
-            "IN":               "moet een van de volgende zijn:",
-            "NOT_IN":           "mag geen van de volgende zijn:",
+            "GREATER_THAN": "moet meer dan",
+            "LESS_OR_EQUAL": "mag maximaal",
+            "LESS_THAN": "moet minder dan",
+            "EQUALS": "moet gelijk zijn aan",
+            "NOT_EQUALS": "mag niet gelijk zijn aan",
+            "IS_NULL": "mag niet aanwezig zijn",
+            "NOT_NULL": "moet aanwezig zijn",
+            "IN": "moet een van de volgende zijn:",
+            "NOT_IN": "mag geen van de volgende zijn:",
         }
         op_text = op_nl.get(operation, operation)
 
@@ -748,7 +804,7 @@ class DecisionGraphExtractor:
             return f"{label} {op_text}"
         # For boolean EQUALS/NOT_EQUALS the label already implies the yes/no meaning;
         # appending "moet gelijk zijn aan Ja" is redundant and confuses the LLM.
-        _bool_true  = {True, "Ja", "ja", "true", "True", 1}
+        _bool_true = {True, "Ja", "ja", "true", "True", 1}
         _bool_false = {False, "Nee", "nee", "false", "False", 0}
         if operation == "EQUALS" and resolved in _bool_true:
             return label
@@ -774,19 +830,20 @@ class DecisionGraphExtractor:
             if "subject" in cond:
                 # Handle both "value" and "values" keys in conditions
                 raw_val = cond.get("value") if "value" in cond else cond.get("values")
-                status, _ = self._evaluate_condition(
-                    cond["subject"], cond["operation"], raw_val
+                status, _ = self._evaluate_condition(cond["subject"], cond["operation"], raw_val)
+                nodes.append(
+                    {
+                        "id": node_id,
+                        "label": self._condition_to_human(cond),
+                        "status": self.STATUS_NOT_APPLICABLE
+                        if status is None
+                        else (self.STATUS_SATISFIED if status else self.STATUS_FAILED),
+                        "is_or_group": False,
+                        "subject": cond.get("subject", "").lstrip("$"),
+                        "operation": cond.get("operation", ""),
+                        "value": raw_val,
+                    }
                 )
-                nodes.append({
-                    "id": node_id,
-                    "label": self._condition_to_human(cond),
-                    "status": self.STATUS_NOT_APPLICABLE if status is None
-                              else (self.STATUS_SATISFIED if status else self.STATUS_FAILED),
-                    "is_or_group": False,
-                    "subject": cond.get("subject", "").lstrip("$"),
-                    "operation": cond.get("operation", ""),
-                    "value": raw_val,
-                })
 
             elif "any" in cond or "or" in cond:
                 or_items = cond.get("any") or cond.get("or") or []
@@ -799,15 +856,17 @@ class DecisionGraphExtractor:
                 else:
                     group_status = self.STATUS_FAILED
                 labels = [s["label"] for s in sub]
-                nodes.append({
-                    "id": node_id,
-                    "label": " OF ".join(labels),
-                    "status": group_status,
-                    "is_or_group": True,
-                    "subject": "",
-                    "operation": "OR",
-                    "value": None,
-                })
+                nodes.append(
+                    {
+                        "id": node_id,
+                        "label": " OF ".join(labels),
+                        "status": group_status,
+                        "is_or_group": True,
+                        "subject": "",
+                        "operation": "OR",
+                        "value": None,
+                    }
+                )
 
             elif "all" in cond:
                 nodes.extend(self._process_conditions(cond["all"], f"{node_id}_all"))
@@ -815,15 +874,17 @@ class DecisionGraphExtractor:
             elif "operation" in cond and "values" in cond:
                 # Expression condition: no subject, e.g. ADD(X, Y) > 0
                 status, _ = self._evaluate_expression_condition(cond)
-                nodes.append({
-                    "id": node_id,
-                    "label": self._expression_condition_to_human(cond),
-                    "status": status,
-                    "is_or_group": False,
-                    "subject": "",
-                    "operation": cond.get("operation", ""),
-                    "value": None,
-                })
+                nodes.append(
+                    {
+                        "id": node_id,
+                        "label": self._expression_condition_to_human(cond),
+                        "status": status,
+                        "is_or_group": False,
+                        "subject": "",
+                        "operation": cond.get("operation", ""),
+                        "value": None,
+                    }
+                )
 
         return nodes
 
@@ -838,10 +899,10 @@ class DecisionGraphExtractor:
         These are NOT in requirements but are just as decisive for the amount outcome.
         """
         _op_inverse = {
-            "GREATER_THAN":     "LESS_OR_EQUAL",
+            "GREATER_THAN": "LESS_OR_EQUAL",
             "GREATER_OR_EQUAL": "LESS_THAN",
-            "LESS_THAN":        "GREATER_OR_EQUAL",
-            "LESS_OR_EQUAL":    "GREATER_THAN",
+            "LESS_THAN": "GREATER_OR_EQUAL",
+            "LESS_OR_EQUAL": "GREATER_THAN",
         }
         results: list[dict] = []
         seen: set[tuple] = set()
@@ -870,24 +931,38 @@ class DecisionGraphExtractor:
                         op_inv = _op_inverse[op]
                         actual, _ = self._evaluate_condition(subj, op_inv, val)
                         cond_dict = {"subject": subj, "operation": op_inv, "value": val}
-                        results.append({
-                            "id": f"action_rule_{len(results)}",
-                            "label": self._condition_to_human(cond_dict),
-                            "status": self.STATUS_NOT_APPLICABLE if actual is None
-                                      else (self.STATUS_SATISFIED if actual else self.STATUS_FAILED),
-                            "is_or_group": False,
-                            "subject": subj.lstrip("$") if isinstance(subj, str) else subj,
-                            "operation": op_inv,
-                            "value": val,
-                        })
+                        results.append(
+                            {
+                                "id": f"action_rule_{len(results)}",
+                                "label": self._condition_to_human(cond_dict),
+                                "status": self.STATUS_NOT_APPLICABLE
+                                if actual is None
+                                else (self.STATUS_SATISFIED if actual else self.STATUS_FAILED),
+                                "is_or_group": False,
+                                "subject": subj.lstrip("$") if isinstance(subj, str) else subj,
+                                "operation": op_inv,
+                                "value": val,
+                            }
+                        )
                 # Recurse into nested then/else/conditions
                 for sub_key in ("then", "else"):
                     child = cond.get(sub_key)
                     if isinstance(child, dict):
                         _traverse(child, depth + 1)
             # Recurse into other nested dicts/lists (excluding leaf fields)
-            _skip = {"subject", "operation", "value", "legal_basis", "explanation",
-                     "output", "bwb_id", "article", "paragraph", "url", "juriconnect"}
+            _skip = {
+                "subject",
+                "operation",
+                "value",
+                "legal_basis",
+                "explanation",
+                "output",
+                "bwb_id",
+                "article",
+                "paragraph",
+                "url",
+                "juriconnect",
+            }
             for k, v in node.items():
                 if k not in _skip and isinstance(v, (dict, list)):
                     _traverse(v, depth + 1)
@@ -913,15 +988,17 @@ class DecisionGraphExtractor:
                 else:
                     group_status = self.STATUS_FAILED
                 labels = [s["label"] for s in sub]
-                all_infos.append({
-                    "id": f"{prefix}_any",
-                    "label": " OF ".join(labels),
-                    "status": group_status,
-                    "is_or_group": True,
-                    "subject": "",
-                    "operation": "OR",
-                    "value": None,
-                })
+                all_infos.append(
+                    {
+                        "id": f"{prefix}_any",
+                        "label": " OF ".join(labels),
+                        "status": group_status,
+                        "is_or_group": True,
+                        "subject": "",
+                        "operation": "OR",
+                        "value": None,
+                    }
+                )
         return all_infos
 
     # ------------------------------------------------------------------
@@ -994,11 +1071,13 @@ class DecisionGraphExtractor:
             properties={"bsn": self.bsn},
         )
         self.graph.add_node(person_node)
-        self.graph.add_edge(GraphEdge(
-            source=f"person_{self.bsn}",
-            target="decision",
-            relation="KRIJGT_BESLISSING",
-        ))
+        self.graph.add_edge(
+            GraphEdge(
+                source=f"person_{self.bsn}",
+                target="decision",
+                relation="KRIJGT_BESLISSING",
+            )
+        )
 
         # Collect rule infos: action threshold conditions first (financially decisive),
         # then eligibility requirements. This ordering ensures that the income/vermogen
@@ -1020,11 +1099,13 @@ class DecisionGraphExtractor:
                 },
             )
             self.graph.add_node(rule_node)
-            self.graph.add_edge(GraphEdge(
-                source="decision",
-                target=rule_info["id"],
-                relation=rule_info["status"],
-            ))
+            self.graph.add_edge(
+                GraphEdge(
+                    source="decision",
+                    target=rule_info["id"],
+                    relation=rule_info["status"],
+                )
+            )
 
         # FACT nodes — one per profile value, connected person→fact and fact→relevant rules
         for field_name, info in self.profile_values.items():
@@ -1046,19 +1127,23 @@ class DecisionGraphExtractor:
                 },
             )
             self.graph.add_node(fact_node)
-            self.graph.add_edge(GraphEdge(
-                source=f"person_{self.bsn}",
-                target=fact_id,
-                relation="HAS_FACT",
-            ))
+            self.graph.add_edge(
+                GraphEdge(
+                    source=f"person_{self.bsn}",
+                    target=fact_id,
+                    relation="HAS_FACT",
+                )
+            )
             # Connect fact to rules that use this field as subject
             for rule_info in rule_infos:
                 if rule_info.get("subject") == field_name:
-                    self.graph.add_edge(GraphEdge(
-                        source=fact_id,
-                        target=rule_info["id"],
-                        relation="USED_IN",
-                    ))
+                    self.graph.add_edge(
+                        GraphEdge(
+                            source=fact_id,
+                            target=rule_info["id"],
+                            relation="USED_IN",
+                        )
+                    )
 
         # THRESHOLD nodes — definitions used in condition comparisons
         seen_thresholds: set[str] = set()
@@ -1083,18 +1168,16 @@ class DecisionGraphExtractor:
                 properties={"definition": def_name, "value": def_value},
             )
             self.graph.add_node(threshold_node)
-            self.graph.add_edge(GraphEdge(
-                source=threshold_id,
-                target=rule_info["id"],
-                relation="DEFINES_THRESHOLD",
-            ))
+            self.graph.add_edge(
+                GraphEdge(
+                    source=threshold_id,
+                    target=rule_info["id"],
+                    relation="DEFINES_THRESHOLD",
+                )
+            )
 
         # CALCULATION node (only if there is a non-zero amount output)
-        if (
-            requirements_met
-            and primary_value is not None
-            and (primary_unit == "eurocent" or primary_type == "amount")
-        ):
+        if requirements_met and primary_value is not None and (primary_unit == "eurocent" or primary_type == "amount"):
             calc_node = GraphNode(
                 id="calculation",
                 type="CALCULATION",
@@ -1102,11 +1185,13 @@ class DecisionGraphExtractor:
                 properties={"output_field": primary_field, "output_amount": primary_value},
             )
             self.graph.add_node(calc_node)
-            self.graph.add_edge(GraphEdge(
-                source="decision",
-                target="calculation",
-                relation="BEREKEND_ALS",
-            ))
+            self.graph.add_edge(
+                GraphEdge(
+                    source="decision",
+                    target="calculation",
+                    relation="BEREKEND_ALS",
+                )
+            )
 
         return self.graph
 
@@ -1151,7 +1236,13 @@ class DecisionGraphExtractor:
             unit = info.get("unit", "")
             label = info.get("description", field_name)
             entry: dict = {"label": label, "raw": value}
-            if unit == "eurocent" and isinstance(value, (int, float)) or isinstance(value, (int, float)) and value > 10000 and unit == "":
+            if (
+                unit == "eurocent"
+                and isinstance(value, (int, float))
+                or isinstance(value, (int, float))
+                and value > 10000
+                and unit == ""
+            ):
                 entry["value_euro"] = round(value / 100, 2)
             else:
                 entry["value"] = value
@@ -1175,8 +1266,8 @@ class DecisionGraphExtractor:
             }
 
         satisfied = [_cond(n) for n in rule_nodes if n.properties.get("status") == self.STATUS_SATISFIED]
-        failed    = [_cond(n) for n in rule_nodes if n.properties.get("status") == self.STATUS_FAILED]
-        unknown   = [_cond(n) for n in rule_nodes if n.properties.get("status") == self.STATUS_NOT_APPLICABLE]
+        failed = [_cond(n) for n in rule_nodes if n.properties.get("status") == self.STATUS_FAILED]
+        unknown = [_cond(n) for n in rule_nodes if n.properties.get("status") == self.STATUS_NOT_APPLICABLE]
 
         # Decisive condition — action rules (financial thresholds) take priority
         if not requirements_met:
@@ -1196,8 +1287,8 @@ class DecisionGraphExtractor:
             },
             "key_facts": key_facts,
             "satisfied_conditions": [c["label"] for c in satisfied],
-            "failed_conditions":    [c["label"] for c in failed],
-            "unknown_conditions":   [c["label"] for c in unknown],
+            "failed_conditions": [c["label"] for c in failed],
+            "unknown_conditions": [c["label"] for c in unknown],
             "legal_basis": self.law.get("legal_basis"),
             "references": self.law.get("references", []),
         }
@@ -1221,15 +1312,13 @@ class DecisionGraphExtractor:
         # Group RULE nodes by status
         rule_nodes = [n for n in self.graph.nodes if n.type == "RULE"]
         satisfied = [n for n in rule_nodes if n.properties.get("status") == self.STATUS_SATISFIED]
-        failed    = [n for n in rule_nodes if n.properties.get("status") == self.STATUS_FAILED]
-        unknown   = [n for n in rule_nodes if n.properties.get("status") == self.STATUS_NOT_APPLICABLE]
+        failed = [n for n in rule_nodes if n.properties.get("status") == self.STATUS_FAILED]
+        unknown = [n for n in rule_nodes if n.properties.get("status") == self.STATUS_NOT_APPLICABLE]
 
         # Collect condition subjects so we only show citizen-relevant profile data
         # (filters out normative constants like LANDELIJK_BASISBEDRAG)
         condition_subjects: set[str] = {
-            n.properties.get("subject", "")
-            for n in rule_nodes
-            if n.properties.get("subject")
+            n.properties.get("subject", "") for n in rule_nodes if n.properties.get("subject")
         }
 
         # Personal situation — only fields used directly in conditions
@@ -1297,7 +1386,8 @@ class DecisionGraphExtractor:
                 # Find relevant income/threshold FACT nodes to show concrete values
                 income_keywords = {"inkomen", "drempel", "vermogen", "toetsing", "grens"}
                 income_facts = [
-                    n for n in self.graph.nodes
+                    n
+                    for n in self.graph.nodes
                     if n.type == "FACT"
                     and any(kw in n.properties.get("description", "").lower() for kw in income_keywords)
                 ]
@@ -1312,7 +1402,9 @@ class DecisionGraphExtractor:
         # Conclusion — engine's requirements_met is authoritative
         lines.append("## Conclusie:")
         if requirements_met and has_zero_amount:
-            lines.append(f"U voldoet aan de formele voorwaarden voor {law_name}, maar het berekende bedrag is 0 euro vanwege uw inkomen of vermogen.")
+            lines.append(
+                f"U voldoet aan de formele voorwaarden voor {law_name}, maar het berekende bedrag is 0 euro vanwege uw inkomen of vermogen."
+            )
         elif requirements_met:
             lines.append(f"U voldoet aan de voorwaarden voor {law_name}.")
         elif requirements_met is False:
@@ -1355,6 +1447,7 @@ class DecisionGraphExtractor:
 # LLM integration
 # ---------------------------------------------------------------------------
 
+
 def generate_decision_explanation(
     decision_extractor: DecisionGraphExtractor,
     person_name: str,
@@ -1373,6 +1466,7 @@ def generate_decision_explanation(
 
     if provider == "ollama":
         import ollama
+
         response = ollama.chat(
             model=model_id,
             messages=[
@@ -1397,6 +1491,7 @@ def generate_decision_explanation(
 
     if provider == "openai":
         import openai as _openai
+
         _oai_key = api_key or os.environ.get("OPENAI_API_KEY")
         if not _oai_key:
             raise ValueError("No OPENAI_API_KEY provided for gpt4 model")
@@ -1425,6 +1520,7 @@ def generate_decision_explanation(
         }
 
     import anthropic
+
     if not api_key:
         api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
@@ -1454,6 +1550,7 @@ def generate_decision_explanation(
 # ---------------------------------------------------------------------------
 # Law loading + calculation (generic)
 # ---------------------------------------------------------------------------
+
 
 def _resolve_law_parameters(law: dict, profile: dict, bsn: str) -> dict:
     """Generically resolve required law parameters from the profile sources.

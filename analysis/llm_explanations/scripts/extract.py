@@ -60,6 +60,7 @@ _DEFAULT_EXTRACTOR = "extraction_generic"
 def _get_extractor(law: str):
     """Import the extraction module for a given law (always extraction_generic)."""
     import importlib
+
     return importlib.import_module(_DEFAULT_EXTRACTOR)
 
 
@@ -89,10 +90,10 @@ def _call_llm(
     """Call LLM (Ollama, Anthropic, or OpenAI) and return (text, usage_dict)."""
     if provider == "ollama":
         import ollama
+
         response = ollama.chat(
             model=model_id,
-            messages=[{"role": "system", "content": system_prompt},
-                      {"role": "user", "content": user_prompt}],
+            messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}],
             options={"temperature": 0.3, "num_predict": 1500},
         )
         return response["message"]["content"], {
@@ -101,12 +102,14 @@ def _call_llm(
         }
     if provider == "openai":
         import openai as _openai
+
         _oai_key = api_key or _os.environ.get("OPENAI_API_KEY")
         oai_client = _openai.OpenAI(api_key=_oai_key)
         oai_resp = oai_client.chat.completions.create(
-            model=model_id, max_tokens=1500, temperature=0.3,
-            messages=[{"role": "system", "content": system_prompt},
-                      {"role": "user", "content": user_prompt}],
+            model=model_id,
+            max_tokens=1500,
+            temperature=0.3,
+            messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}],
         )
         text = oai_resp.choices[0].message.content or ""
         return text, {
@@ -115,10 +118,14 @@ def _call_llm(
         }
     actual_key = api_key or _os.environ.get("ANTHROPIC_API_KEY")
     import anthropic
+
     client = anthropic.Anthropic(api_key=actual_key)
     response = client.messages.create(
-        model=model_id, max_tokens=1500, temperature=0.3,
-        system=system_prompt, messages=[{"role": "user", "content": user_prompt}],
+        model=model_id,
+        max_tokens=1500,
+        temperature=0.3,
+        system=system_prompt,
+        messages=[{"role": "user", "content": user_prompt}],
     )
     return response.content[0].text, {
         "input_tokens": response.usage.input_tokens,
@@ -152,6 +159,7 @@ def _create_open_prompt(service_name: str, result: dict, profile: dict, bsn: str
 
 def _load_profiles_raw(profiles_path: str = "data/profiles.yaml") -> tuple[dict, dict]:
     import yaml as _yaml
+
     with open(profiles_path) as f:
         raw_data = _yaml.safe_load(f)
     return raw_data.get("profiles", {}), raw_data
@@ -161,8 +169,13 @@ def precompute_open_entries(
     laws_filter: list[str] | None = None,
     profiles_filter: list[str] | None = None,
     verbose: bool = True,
+    cache_dir: Path | None = None,
 ) -> tuple[list[dict], list[str], dict]:
-    """Compute law calculations for all profile × law combinations once."""
+    """Compute law calculations for all profile × law combinations once.
+
+    Reuses existing per-law graph cache files (cache_{law_slug}.json) so no
+    separate open cache is needed. Each law's cache is keyed by BSN.
+    """
     from explain.mcp_connector import MCPLawConnector
     from web.dependencies import get_case_manager, get_claim_manager, get_machine_service
 
@@ -179,20 +192,65 @@ def precompute_open_entries(
     if verbose:
         print(f"Loaded {len(profiles)} profiles, {len(available_laws)} laws", file=sys.stderr)
 
+    # Load per-law caches (shared with graph approach)
+    law_caches: dict[str, dict] = {}
+    if cache_dir:
+        for law_name in available_laws:
+            cache_path = cache_dir / f"cache_{law_name.replace('/', '_')}.json"
+            if cache_path.exists():
+                with open(cache_path, encoding="utf-8") as _cf:
+                    law_caches[law_name] = json.load(_cf)
+                if verbose:
+                    print(
+                        f"  Open precompute: loaded {len(law_caches[law_name])} cached results for {law_name}",
+                        file=sys.stderr,
+                    )
+
     total = len(profiles) * len(available_laws)
     entries: list[dict] = []
 
     for current, (bsn, profile) in enumerate(profiles.items(), 1):
         full_profile = raw_profiles_data.get("profiles", {}).get(bsn, profile)
         for law_name in available_laws:
+            # Use cached calc_result if available
+            if law_name in law_caches and bsn in law_caches[law_name]:
+                calc_result = law_caches[law_name][bsn]
+                entry: dict = {
+                    "bsn": bsn,
+                    "profile": profile,
+                    "law_name": law_name,
+                    "profile_name": profile.get("name", "Unknown"),
+                    "calc_result": calc_result,
+                    "requirements_met": calc_result.get("requirements_met") if calc_result else None,
+                    "calculation_result": {
+                        "requirements_met": calc_result.get("requirements_met"),
+                        "missing_required": calc_result.get("missing_required"),
+                        "missing_fields": calc_result.get("missing_fields", []),
+                        "output": calc_result.get("result", {}),
+                        "input_data": calc_result.get("input_data", {}),
+                        "system_explanation": calc_result.get("explanation", ""),
+                    }
+                    if calc_result
+                    else None,
+                    "prompt": _create_open_prompt(law_name, calc_result, profile, bsn) if calc_result else None,
+                    "error": None if calc_result else f"No calc_result for {bsn}/{law_name}",
+                }
+                entries.append(entry)
+                continue
+
             if verbose:
                 print(f"[{current}/{total}] {law_name} / {profile.get('name', bsn)}...", file=sys.stderr)
 
-            entry: dict = {
-                "bsn": bsn, "profile": profile, "law_name": law_name,
+            entry = {
+                "bsn": bsn,
+                "profile": profile,
+                "law_name": law_name,
                 "profile_name": profile.get("name", "Unknown"),
-                "calc_result": None, "prompt": None, "error": None,
-                "requirements_met": None, "calculation_result": None,
+                "calc_result": None,
+                "prompt": None,
+                "error": None,
+                "requirements_met": None,
+                "calculation_result": None,
             }
             try:
                 service = connector.registry.get_service(law_name)
@@ -201,8 +259,16 @@ def precompute_open_entries(
                     entries.append(entry)
                     continue
                 extra_params: dict = {}
-                for svc_name in ["KVK", "GEMEENTE_ROTTERDAM", "GEMEENTE_AMSTERDAM", "GEMEENTE_DEN_HAAG",
-                                  "GEMEENTE_EINDHOVEN", "GEMEENTE_GRONINGEN", "GEMEENTE_MAASTRICHT", "GEMEENTE_UTRECHT"]:
+                for svc_name in [
+                    "KVK",
+                    "GEMEENTE_ROTTERDAM",
+                    "GEMEENTE_AMSTERDAM",
+                    "GEMEENTE_DEN_HAAG",
+                    "GEMEENTE_EINDHOVEN",
+                    "GEMEENTE_GRONINGEN",
+                    "GEMEENTE_MAASTRICHT",
+                    "GEMEENTE_UTRECHT",
+                ]:
                     rows = full_profile.get("sources", {}).get(svc_name, {}).get("leidinggevenden", [])
                     if isinstance(rows, list) and rows and rows[0].get("kvk_nummer"):
                         extra_params["KVK_NUMMER"] = str(rows[0]["kvk_nummer"])
@@ -223,6 +289,14 @@ def precompute_open_entries(
                     "system_explanation": calc_result.get("explanation", ""),
                 }
                 entry["prompt"] = _create_open_prompt(law_name, calc_result, profile, bsn)
+                # Save to per-law cache
+                if cache_dir:
+                    cache_path = cache_dir / f"cache_{law_name.replace('/', '_')}.json"
+                    law_caches.setdefault(law_name, {})[bsn] = calc_result
+                    tmp = cache_path.with_suffix(".tmp")
+                    with open(tmp, "w", encoding="utf-8") as _cf:
+                        json.dump(law_caches[law_name], _cf, ensure_ascii=False)
+                    tmp.replace(cache_path)
             except Exception as e:
                 entry["error"] = str(e)
             entries.append(entry)
@@ -240,6 +314,7 @@ def extract_explanations(
     precomputed: list[dict] | None = None,
     available_laws: list[str] | None = None,
     raw_profiles_data: dict | None = None,
+    resume: bool = False,
 ) -> list[dict]:
     """Extract LLM explanations for all profile × law combinations (open approach)."""
     model_info = AVAILABLE_MODELS[model]
@@ -255,30 +330,62 @@ def extract_explanations(
         else precompute_open_entries(laws_filter=laws_filter, profiles_filter=profiles_filter, verbose=verbose)
     )
 
-    results = []
     output_path = Path(output_file)
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(_json.dumps({
-            "record_type": "metadata",
-            "timestamp": datetime.now().isoformat(),
-            "model": model_id, "provider": provider,
-            "law": laws_filter[0] if laws_filter and len(laws_filter) == 1 else None,
-            "profiles_count": len({e["bsn"] for e in entries}),
-            "approach": "open_prompt",
-            "git_info": get_git_info(),
-            "reference_date": TODAY,
-            "filters": {"laws_filter": laws_filter, "profiles_filter": profiles_filter},
-        }, ensure_ascii=False) + "\n")
+
+    # Resume: skip already-done profile+law combinations
+    already_done: set[tuple[str, str]] = set()
+    if resume and output_path.exists():
+        with open(output_path, encoding="utf-8") as _rf:
+            for line in _rf:
+                try:
+                    r = _json.loads(line)
+                    if r.get("record_type") == "explanation":
+                        already_done.add((r.get("profile", ""), r.get("law", "")))
+                except _json.JSONDecodeError:
+                    pass
+        if verbose and already_done:
+            print(f"  Resuming open: {len(already_done)} already done, skipping", file=sys.stderr)
+    entries = [e for e in entries if (e["bsn"], e["law_name"]) not in already_done]
+    file_mode = "a" if (resume and already_done) else "w"
+
+    results = []
+    with open(output_path, file_mode, encoding="utf-8") as f:
+        if file_mode == "w":
+            f.write(
+                _json.dumps(
+                    {
+                        "record_type": "metadata",
+                        "timestamp": datetime.now().isoformat(),
+                        "model": model_id,
+                        "provider": provider,
+                        "law": laws_filter[0] if laws_filter and len(laws_filter) == 1 else None,
+                        "profiles_count": len({e["bsn"] for e in entries}),
+                        "approach": "open_prompt",
+                        "git_info": get_git_info(),
+                        "reference_date": TODAY,
+                        "filters": {"laws_filter": laws_filter, "profiles_filter": profiles_filter},
+                    },
+                    ensure_ascii=False,
+                )
+                + "\n"
+            )
 
         for i, entry in enumerate(entries, 1):
             bsn, law_name = entry["bsn"], entry["law_name"]
             record: dict = {
-                "record_type": "explanation", "approach": "open", "graph_type": None,
-                "law": law_name, "profile": bsn, "profile_name": entry["profile_name"],
+                "record_type": "explanation",
+                "approach": "open",
+                "graph_type": None,
+                "law": law_name,
+                "profile": bsn,
+                "profile_name": entry["profile_name"],
                 "requirements_met": entry["requirements_met"],
-                "explanation": None, "skeleton_used": None,
-                "prompt_used": entry["prompt"], "model": model_id,
-                "usage": None, "graph_stats": None,
+                "explanation": None,
+                "skeleton_used": None,
+                "prompt_used": entry["prompt"],
+                "model": model_id,
+                "usage": None,
+                "graph_stats": None,
                 "calculation_result": entry["calculation_result"],
             }
             if entry.get("error"):
@@ -303,6 +410,7 @@ def extract_explanations(
 # ---------------------------------------------------------------------------
 # Shared utilities
 # ---------------------------------------------------------------------------
+
 
 def _run_label(model: str, law: str | None, profiles: list[str] | None) -> str:
     """Shared label used in filenames and folder names."""
@@ -336,7 +444,9 @@ def generate_multi_output_dir(approach: str, law: str | None, profiles: list[str
     """Create and return a timestamped top-level folder for multi-model runs."""
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     law_part = law or "all-laws"
-    profile_part = "all-profiles" if not profiles else (profiles[0] if len(profiles) == 1 else f"{len(profiles)}profiles")
+    profile_part = (
+        "all-profiles" if not profiles else (profiles[0] if len(profiles) == 1 else f"{len(profiles)}profiles")
+    )
     folder_name = f"{timestamp}_multi_{law_part}_{profile_part}_{approach}"
     folder = OUTPUT_DIR / folder_name
     folder.mkdir(parents=True, exist_ok=True)
@@ -346,6 +456,7 @@ def generate_multi_output_dir(approach: str, law: str | None, profiles: list[str
 # ---------------------------------------------------------------------------
 # Graph approach runner
 # ---------------------------------------------------------------------------
+
 
 def precompute_graph_entries(
     law: str,
@@ -410,8 +521,10 @@ def precompute_graph_entries(
             if cache_file:
                 cached[bsn] = calc_result
                 cache_file.parent.mkdir(parents=True, exist_ok=True)
-                with open(cache_file, "w", encoding="utf-8") as f:
+                tmp = cache_file.with_suffix(".tmp")
+                with open(tmp, "w", encoding="utf-8") as f:
                     json.dump(cached, f, ensure_ascii=False)
+                tmp.replace(cache_file)
 
         decision_extractor = DecisionGraphExtractor(law_yaml, profile_data, bsn, calc_result)
         graph = decision_extractor.extract()
@@ -433,15 +546,17 @@ def precompute_graph_entries(
         calc_output = calc_result.get("result", {}) if calc_result else {}
         profile_vals = decision_extractor.profile_values
 
-        entries.append({
-            "bsn": bsn,
-            "person_name": person_name,
-            "decision_extractor": decision_extractor,
-            "graph": graph,
-            "calc_result": calc_result,
-            "calc_output": calc_output,
-            "profile_vals": profile_vals,
-        })
+        entries.append(
+            {
+                "bsn": bsn,
+                "person_name": person_name,
+                "decision_extractor": decision_extractor,
+                "graph": graph,
+                "calc_result": calc_result,
+                "calc_output": calc_output,
+                "profile_vals": profile_vals,
+            }
+        )
 
     return entries
 
@@ -561,7 +676,9 @@ def run_graph_approach(
                     "calculation_result": {
                         "requirements_met": calc_result.get("requirements_met") if calc_result else None,
                         "output": calc_output,
-                    } if calc_result else None,
+                    }
+                    if calc_result
+                    else None,
                 }
 
             except Exception as e:
@@ -580,6 +697,16 @@ def run_graph_approach(
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
             results.append(record)
 
+            if not record.get("explanation"):
+                print(f"\n⚠️  WARNING: geen explanation voor {bsn} ({person_name}) [{law} / {model}]", file=sys.stderr)
+                if record.get("error"):
+                    print(f"   Fout: {record['error']}", file=sys.stderr)
+                try:
+                    input("   Druk Enter om door te gaan, of Ctrl+C om te stoppen... ")
+                except KeyboardInterrupt:
+                    print("\nAfgebroken door gebruiker.", file=sys.stderr)
+                    return results
+
     if verbose:
         print(f"\nCompleted graph approach! {len(results)} profiles.", file=sys.stderr)
         print(f"Total tokens: {total_input_tokens} input, {total_output_tokens} output", file=sys.stderr)
@@ -591,6 +718,7 @@ def run_graph_approach(
 # ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(
@@ -648,17 +776,13 @@ Examples:
     )
     parser.add_argument(
         "--law",
+        "--laws",
         "--graph-laws",
         nargs="+",
-        default=["zorgtoeslag"],
+        default=["zorgtoeslag", "bijstand", "alcoholwet"],
         metavar="LAW",
         dest="laws_graph",
-        help="Law(s) for the graph approach (default: zorgtoeslag). Works for any law.",
-    )
-    parser.add_argument(
-        "--laws",
-        nargs="+",
-        help="Law(s) for the open approach (default: all). Defaults to the same as --law if not set.",
+        help="Law(s) to run (default: all 3). Short names: zorgtoeslag, bijstand, alcoholwet.",
     )
     parser.add_argument(
         "--profiles",
@@ -705,16 +829,32 @@ Examples:
     models_to_run: list[str] = args.models
     multi_model = len(models_to_run) > 1
 
-    # Laws for each approach
-    graph_laws: list[str] = args.laws_graph
-    open_laws: list[str] | None = args.laws  # None = all laws
+    # Resolve short law name aliases to full names
+    _law_aliases: dict[str, str] = {
+        "zorgtoeslag": "zorgtoeslag",
+        "bijstand": "participatiewet/bijstand",
+        "participatiewet": "participatiewet/bijstand",
+        "alcoholwet": "alcoholwet/vergunning",
+        "alcohol": "alcoholwet/vergunning",
+    }
+
+    def _resolve_laws(names: list[str]) -> list[str]:
+        return [_law_aliases.get(n, n) for n in names]
+
+    # Graph approach uses full law paths (file-based); open approach uses short MCP service names
+    graph_laws: list[str] = _resolve_laws(args.laws_graph)
+    open_laws: list[str] = args.laws_graph  # keep short names for MCP registry filtering
 
     do_graph = args.approach in ("graph", "both")
     do_open = args.approach in ("open", "both")
 
     # Label for folder names
     label_law = graph_laws[0] if len(graph_laws) == 1 else f"{len(graph_laws)}laws"
-    label_profiles = "all-profiles" if not args.profiles else (args.profiles[0] if len(args.profiles) == 1 else f"{len(args.profiles)}profiles")
+    label_profiles = (
+        "all-profiles"
+        if not args.profiles
+        else (args.profiles[0] if len(args.profiles) == 1 else f"{len(args.profiles)}profiles")
+    )
 
     # Use existing folder if --output-dir given, otherwise create a new timestamped one
     if args.output_dir:
@@ -732,7 +872,7 @@ Examples:
     graph_precomputed: dict[str, list[dict]] = {}
     if do_graph:
         for law in graph_laws:
-            cache_path = run_dir / f"cache_{law}.json"
+            cache_path = run_dir / f"cache_{law.replace('/', '_')}.json"
             if cache_path.exists():
                 print(f"\nLoading cached calculations for law: {law} ({cache_path.name})")
             else:
@@ -752,15 +892,16 @@ Examples:
     open_raw_data: dict = {}
     if do_open:
         open_filter = open_laws or graph_laws
-        print(f"\nPrecomputing open calculations for laws: {open_filter}...")
+        print(f"\nPrecomputing open calculations for laws: {open_filter} (reusing graph caches)...")
         open_entries, open_laws_used, open_raw_data = precompute_open_entries(
             laws_filter=open_filter,
             profiles_filter=args.profiles,
             verbose=verbose,
+            cache_dir=run_dir,
         )
 
     for model in models_to_run:
-        print(f"\n{'='*60}\nModel: {model}\n{'='*60}")
+        print(f"\n{'=' * 60}\nModel: {model}\n{'=' * 60}")
         model_dir = run_dir / model
         model_dir.mkdir(exist_ok=True)
 
@@ -784,22 +925,26 @@ Examples:
                 )
 
         # -------------------------------------------------------------------
-        # Open approach — LLM only (calculations already done above)
+        # Open approach — one output file per law
         # -------------------------------------------------------------------
         if do_open:
-            output_open = str(model_dir / f"open_{model}_{label_law}.jsonl")
-            print(f"Output file (open): {output_open}")
-            extract_explanations(
-                api_key=args.api_key,
-                laws_filter=open_laws or graph_laws,
-                profiles_filter=args.profiles,
-                output_file=output_open,
-                model=model,
-                verbose=verbose,
-                precomputed=open_entries,
-                available_laws=open_laws_used,
-                raw_profiles_data=open_raw_data,
-            )
+            for law in open_laws:
+                law_slug = law.replace("/", "_")
+                output_open = str(model_dir / f"open_{model}_{law_slug}.jsonl")
+                print(f"Output file (open, {law}): {output_open}")
+                law_entries = [e for e in open_entries if e["law_name"] == law]
+                extract_explanations(
+                    api_key=args.api_key,
+                    laws_filter=[law],
+                    profiles_filter=args.profiles,
+                    output_file=output_open,
+                    model=model,
+                    verbose=verbose,
+                    precomputed=law_entries,
+                    available_laws=[law],
+                    raw_profiles_data=open_raw_data,
+                    resume=args.resume,
+                )
 
 
 if __name__ == "__main__":
