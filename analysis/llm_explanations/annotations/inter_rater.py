@@ -10,7 +10,7 @@ Computes:
     3. Cohen's Kappa       - inter-rater agreement on ontbrekende_informatie (Ja/Deels/Nee)
     4. Spearman + Kendall  - inter-rater correlation on juridische_correctheid
   All:
-    5. Automatic metrics   - text length, jargon density, sentence count per explanation
+    5. Automatic metrics   - text length, sentence count per explanation
     6. Pearson/Spearman/Kendall - automatic metrics vs. mean human scores
 
 Output:
@@ -39,13 +39,6 @@ OUTPUT_DIR   = Path(__file__).parent / "results"
 THESIS_DIR   = Path(__file__).parent.parent / "output" / "thesis_20260428_091358"
 LONG_CSV     = OUTPUT_DIR / "annotations_long.csv"
 
-JARGON_WORDS = [
-    "toetsingsinkomen", "drempelinkomen", "vermogensgrens", "beschikking",
-    "bezwaar", "rechtsmiddel", "leidinggevende", "horecabedrijf",
-    "arbeidsvermogen", "kostendelersnorm", "toeslagpartner", "normbedrag",
-    "uitkeringsgerechtigde", "bijstandsnorm", "sociale hygiëne",
-    "wsnp", "curatele", "handelingsbekwaam", "verzekerde", "premieplichtig",
-]
 
 LAW_SLUGS = {
     "zorgtoeslag":  "zorgtoeslag",
@@ -188,20 +181,17 @@ def _text_metrics(text: str) -> dict:
     if not text:
         return {
             "char_count": 0, "word_count": 0, "sentence_count": 0,
-            "avg_sentence_len": 0.0, "jargon_count": 0, "jargon_density": 0.0,
+            "avg_sentence_len": 0.0,
         }
     words = text.split()
     sentences = [s.strip() for s in re.split(r"[.!?]+", text) if s.strip()]
     word_count = len(words)
     sent_count = max(len(sentences), 1)
-    jargon_hits = sum(1 for w in words if w.lower().strip(".,;:") in JARGON_WORDS)
     return {
         "char_count":       len(text),
         "word_count":       word_count,
         "sentence_count":   sent_count,
         "avg_sentence_len": round(word_count / sent_count, 2),
-        "jargon_count":     jargon_hits,
-        "jargon_density":   round(jargon_hits / max(word_count, 1), 4),
     }
 
 
@@ -217,8 +207,7 @@ def auto_vs_human(auto_df: pd.DataFrame, scores_df: pd.DataFrame) -> pd.DataFram
     jurist_scores = scores_df[scores_df["annotator_type"] == "jurist"]
 
     rows = []
-    auto_cols = ["char_count", "word_count", "sentence_count",
-                 "avg_sentence_len", "jargon_count", "jargon_density"]
+    auto_cols = ["char_count", "word_count", "sentence_count", "avg_sentence_len"]
 
     for human_type, hdf, human_cols in [
         ("burger", burger_scores, ["duidelijkheid_mean", "actionability_mean", "leesbaarheid_mean"]),
@@ -287,7 +276,7 @@ def main() -> None:
     all_auto = pd.concat([extract_auto_metrics(wet) for wet in wetten], ignore_index=True)
     all_auto.to_csv(OUTPUT_DIR / "auto_metrics.csv", index=False)
     print(all_auto[["approach", "model", "profile_name",
-                    "word_count", "jargon_density", "avg_sentence_len"]].to_string(index=False))
+                    "word_count", "avg_sentence_len"]].to_string(index=False))
 
     # 3. Auto vs human
     print("\n3. Auto metrics vs. human scores (Pearson + Spearman + Kendall)")

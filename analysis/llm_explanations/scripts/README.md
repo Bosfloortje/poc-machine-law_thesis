@@ -84,7 +84,7 @@ Score = supported required claims / total required claims (outcome + amount).
 Imported by `evaluate.py`.
 
 ### `dim3_citizen.py` — citizen quality metrics
-Computes Flesch reading ease (NL), jargon density, and contestability (3 binary checks / 3).
+Computes Flesch reading ease (NL) and contestability (3 binary checks / 3).
 Imported by `evaluate.py`.
 
 ### `correlate.py` — auto-metric vs human correlation

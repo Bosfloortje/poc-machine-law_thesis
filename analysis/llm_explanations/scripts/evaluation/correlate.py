@@ -177,7 +177,6 @@ def main() -> None:
             "human_legal": legal_score,
             # Dim3 (citizen)
             "d3_flesch": ev.get("d3_flesch"),
-            "d3_jargon_density": ev.get("d3_jargon_density"),
             "d3_contestability": ev.get("d3_contestability"),
             "d3_word_count": ev.get("d3_word_count"),
             # Dim2 (faithfulness — only graphrag)
@@ -203,7 +202,6 @@ def main() -> None:
         corrs = []
         for auto_field, label in [
             ("d3_flesch", "Flesch ↔ makkelijkheid_burgers"),
-            ("d3_jargon_density", "Jargon density ↔ makkelijkheid_burgers"),
             ("d3_contestability", "Contestability ↔ makkelijkheid_burgers"),
         ]:
             pairs = [(r[auto_field], r["human_citizen"]) for r in rows

@@ -68,7 +68,6 @@ uv run python analysis/llm_explanations/annotations/evaluate_annotations.py
 |---|---|---|
 | Dim2 — Faithfulness | Required claims supported | String matching (outcome, amount) + mDeBERTa NLI (conditions) |
 | Dim3 — Readability | Flesch reading ease (NL) | `textstat` |
-| Dim3 — Jargon density | Legal term count | Curated jargon list |
 | Dim3 — Contestability | 3 binary checks / 3 | Decisive condition present, counterfactual phrasing, action mention |
 
 ## Laws Supported

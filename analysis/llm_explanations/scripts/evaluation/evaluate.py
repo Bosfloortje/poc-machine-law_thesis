@@ -155,7 +155,6 @@ def evaluate_record(
         # Dim3 — makkelijkheid burgers
         "d3_flesch": dim3.get("flesch"),
         "d3_avg_sentence_length": dim3.get("avg_sentence_length"),
-        "d3_jargon_density": dim3.get("jargon_density"),
         "d3_word_count": dim3.get("word_count"),
         "d3_contestability": dim3["contestability"]["contestability_score"],
         "d3_has_decisive": dim3["contestability"]["has_decisive_condition"],
@@ -209,7 +208,6 @@ def summarize(results: list[dict]) -> dict:
         return {"n": 0}
 
     flesch_vals = [r["d3_flesch"] for r in results if r.get("d3_flesch") is not None]
-    jargon_vals = [r["d3_jargon_density"] for r in results if r.get("d3_jargon_density") is not None]
     contest_vals = [r["d3_contestability"] for r in results if r.get("d3_contestability") is not None]
     decisive_n = sum(1 for r in results if r.get("d3_has_decisive"))
     counter_n = sum(1 for r in results if r.get("d3_has_counterfactual"))
@@ -221,7 +219,6 @@ def summarize(results: list[dict]) -> dict:
             "flesch_avg": _avg(flesch_vals),
             "flesch_n": len(flesch_vals),
             "flesch_readable_n": sum(1 for v in flesch_vals if v >= 60),
-            "jargon_avg": _avg(jargon_vals),
             "contestability_avg": _avg(contest_vals),
             "decisive_condition_n": decisive_n,
             "decisive_condition_pct": round(decisive_n / n, 3),
@@ -276,7 +273,6 @@ def summarize(results: list[dict]) -> dict:
         for key, recs in by_group.items():
             f_vals = [r["d3_flesch"] for r in recs if r.get("d3_flesch") is not None]
             c_vals = [r["d3_contestability"] for r in recs if r.get("d3_contestability") is not None]
-            j_vals = [r["d3_jargon_density"] for r in recs if r.get("d3_jargon_density") is not None]
             faith_vals = [r["d2_faithfulness"] for r in recs if r.get("d2_faithfulness") is not None]
             grp_nli: list[float] = []
             grp_lbls: list[int] = []
@@ -290,7 +286,6 @@ def summarize(results: list[dict]) -> dict:
                 "n": len(recs),
                 "flesch_avg": _avg(f_vals),
                 "contestability_avg": _avg(c_vals),
-                "jargon_avg": _avg(j_vals),
                 "faithfulness_avg": _avg(faith_vals),
                 "nli_auc": _roc_auc(grp_lbls, grp_nli),
             }
@@ -328,9 +323,6 @@ def print_summary(summary: dict) -> None:
             flesch_n = d3.get("flesch_n", 0)
             print(f"  Flesch (avg):          {flesch_avg:.1f}  (target >= 60)")
             print(f"  Readable (>= 60):      {readable_n}/{flesch_n}")
-        jargon_avg = d3.get("jargon_avg")
-        if jargon_avg is not None:
-            print(f"  Jargon density (avg):  {jargon_avg:.4f}  (lower = better)")
         c_avg = d3.get("contestability_avg")
         if c_avg is not None:
             print(f"  Contestability (avg):  {c_avg:.2f}  (0–1, higher = better)")
@@ -363,10 +355,9 @@ def print_summary(summary: dict) -> None:
         for key, stats in breakdown.items():
             f = f"{stats['flesch_avg']:.1f}" if stats.get("flesch_avg") is not None else "n/a"
             c = f"{stats['contestability_avg']:.2f}" if stats.get("contestability_avg") is not None else "n/a"
-            j = f"{stats['jargon_avg']:.4f}" if stats.get("jargon_avg") is not None else "n/a"
             faith = f"{stats['faithfulness_avg']:.2f}" if stats.get("faithfulness_avg") is not None else "n/a"
             auc = f"{stats['nli_auc']:.3f}" if stats.get("nli_auc") is not None else "n/a"
-            print(f"  {key:<22} n={stats['n']:<5} flesch={f:<6} contest={c} jargon={j} faith={faith} auc={auc}")
+            print(f"  {key:<22} n={stats['n']:<5} flesch={f:<6} contest={c} faith={faith} auc={auc}")
 
     by_approach = summary.get("by_approach")
     if by_approach:
@@ -551,10 +542,9 @@ def main() -> None:
                     name = result.get("profile_name") or bsn
                     f_str = f"{result['d3_flesch']:.0f}" if result.get("d3_flesch") is not None else "n/a"
                     c_str = f"{result['d3_contestability']:.2f}"
-                    j_str = f"{result['d3_jargon_density']:.3f}"
                     print(
                         f"  {name:<22} [{result['model']:<14}]  "
-                        f"flesch={f_str:<5}  jargon={j_str}  contest={c_str}"
+                        f"flesch={f_str:<5}  contest={c_str}"
                     )
 
                     if output_fh:

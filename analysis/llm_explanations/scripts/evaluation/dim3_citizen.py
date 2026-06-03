@@ -2,11 +2,10 @@
 Dimension 3: Citizen-focused evaluation.
 
 Measures whether an LLM-generated explanation is understandable and actionable
-for a non-expert citizen. Three sub-dimensions:
+for a non-expert citizen. Two sub-dimensions:
 
   1. Readability     — Flesch Reading Ease (Dutch), target >= 60
-  2. Jargon density  — ratio of legal terms to total word count, lower = better
-  3. Contestability  — decisive condition + counterfactual presence
+  2. Contestability  — decisive condition + counterfactual presence
 
 Optionally compares against a gold annotation when provided.
 
@@ -24,48 +23,6 @@ from typing import Any
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
-
-# ---------------------------------------------------------------------------
-# Dutch legal jargon list
-# ---------------------------------------------------------------------------
-
-_JARGON_PATTERNS: list[str] = [
-    r"\bingevolge\b",
-    r"\bkrachtens\b",
-    r"\bbehoudens\b",
-    r"\bvoor zover\b",
-    r"\bvoorzover\b",
-    r"\bdienaangaande\b",
-    r"\bterzake\b",
-    r"\bter zake\b",
-    r"\balsmede\b",
-    r"\bmitsdien\b",
-    r"\bderhalve\b",
-    r"\bovereenkomstig\b",
-    r"\brechthebbende\b",
-    r"\baanvrager\b",
-    r"\bverzekerde\b",
-    r"\btoetsingsinkomen\b",
-    r"\brendementsgrondslag\b",
-    r"\bnormpremie\b",
-    r"\bdrempelinkomen\b",
-    r"\bvermogensgrens\b",
-    r"\bjuridisch\b",
-    r"\bwettelijk\b",
-    r"\bregeling\b",
-    r"\bbeschikking\b",
-    r"\bbezwaar\b",
-    r"\bberoep\b",
-    r"\bartikel\b",
-    r"\blid\b(?=\s+\d)",    # "lid 1", "lid 2" — legal clause references
-    r"\bsubsidie\b",
-    r"\buitkering\b",
-    r"\btoelage\b",
-    r"\btoeslag\b",
-]
-
-_JARGON_RE = re.compile("|".join(_JARGON_PATTERNS), re.IGNORECASE)
-
 
 # ---------------------------------------------------------------------------
 # Readability
@@ -95,19 +52,6 @@ def _avg_sentence_length(text: str) -> float:
         return 0.0
     word_counts = [len(s.split()) for s in sentences]
     return round(sum(word_counts) / len(word_counts), 1)
-
-
-# ---------------------------------------------------------------------------
-# Jargon density
-# ---------------------------------------------------------------------------
-
-def _jargon_density(text: str) -> float:
-    """Ratio of jargon term occurrences to total word count (0.0–1.0)."""
-    words = text.split()
-    if not words:
-        return 0.0
-    matches = _JARGON_RE.findall(text)
-    return round(len(matches) / len(words), 4)
 
 
 # ---------------------------------------------------------------------------
@@ -198,20 +142,18 @@ def score_citizen(
         gold:               Optional gold annotation dict (from YAML template).
 
     Returns:
-        Dict with keys: flesch, avg_sentence_length, jargon_density, contestability,
+        Dict with keys: flesch, avg_sentence_length, contestability,
         gold_comparison (if gold provided).
     """
     text = (explanation or "").strip()
 
     flesch = _flesch_nl(text)
     avg_sent = _avg_sentence_length(text)
-    jargon = _jargon_density(text)
     contestability = _contestability(text, decisive_condition)
 
     result: dict = {
         "flesch": flesch,                          # None if textstat unavailable
         "avg_sentence_length": avg_sent,
-        "jargon_density": jargon,
         "word_count": len(text.split()),
         "contestability": contestability,
     }
@@ -292,8 +234,7 @@ def main() -> None:
 
                 print(
                     f"  {name:<22} [{model:<12}]  "
-                    f"flesch={f_str:<5}  jargon={scores['jargon_density']:.3f}  "
-                    f"contest={c_score:.2f}  decisive={decisive_y}  counter={counter_y}"
+                    f"flesch={f_str:<5}  contest={c_score:.2f}  decisive={decisive_y}  counter={counter_y}"
                 )
                 if gold and scores.get("gold_comparison"):
                     for field, comp in scores["gold_comparison"].items():
@@ -313,7 +254,6 @@ def main() -> None:
     # Summary
     n = len(all_scores)
     flesch_vals = [s["flesch"] for s in all_scores if s["flesch"] is not None]
-    jargon_vals = [s["jargon_density"] for s in all_scores]
     contest_vals = [s["contestability"]["contestability_score"] for s in all_scores]
 
     print(f"\n{'='*60}")
@@ -321,7 +261,6 @@ def main() -> None:
     if flesch_vals:
         print(f"Flesch (avg):       {sum(flesch_vals)/len(flesch_vals):.1f}  (target >= 60)")
         print(f"  >= 60 (readable): {sum(1 for v in flesch_vals if v >= 60)}/{len(flesch_vals)}")
-    print(f"Jargon density (avg): {sum(jargon_vals)/n:.3f}")
     print(f"Contestability (avg): {sum(contest_vals)/n:.2f}")
     decisive_n = sum(1 for s in all_scores if s["contestability"]["has_decisive_condition"])
     counter_n  = sum(1 for s in all_scores if s["contestability"]["has_counterfactual"])
