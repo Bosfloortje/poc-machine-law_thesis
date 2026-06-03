@@ -110,7 +110,7 @@ def _corr_stats(auto: list[float], human: list[float], label: str) -> dict:
 # Main
 # ---------------------------------------------------------------------------
 
-_EVAL_OUTPUT = Path(__file__).parent / "evaluation_output"
+_EVAL_OUTPUT = Path(__file__).parent.parent.parent / "output" / "evaluation_output"
 
 
 def main() -> None:

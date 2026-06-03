@@ -42,7 +42,7 @@ from typing import Any
 
 PROJECT_ROOT = Path(__file__).parent.parent.parent.parent.parent
 EVAL_DIR     = Path(__file__).parent
-EVAL_OUTPUT  = EVAL_DIR / "evaluation_output"
+EVAL_OUTPUT  = Path(__file__).parent.parent.parent / "output" / "evaluation_output"
 EVAL_OUTPUT.mkdir(exist_ok=True)
 sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(EVAL_DIR))
