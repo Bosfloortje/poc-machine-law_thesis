@@ -1,0 +1,61 @@
+wet,uitleg_nr,approach,model,profile_name,requirements_met,char_count,word_count,sentence_count,avg_sentence_len,jargon_count,jargon_density
+alcoholwet,1,graph,haiku,Sophie de Vries,True,756,105,10,10.5,1,0.0095
+alcoholwet,2,graph,haiku,Bram de Groot,False,935,140,15,9.33,1,0.0071
+alcoholwet,3,graph,llama3.1,Sophie de Vries,True,594,88,6,14.67,1,0.0114
+alcoholwet,4,graph,llama3.1,Bram de Groot,False,497,77,6,12.83,1,0.013
+alcoholwet,5,graph,mistral,Sophie de Vries,True,711,97,6,16.17,1,0.0103
+alcoholwet,6,graph,mistral,Bram de Groot,False,755,112,3,37.33,1,0.0089
+alcoholwet,7,graph,deepseek,Sophie de Vries,True,355,58,4,14.5,1,0.0172
+alcoholwet,8,graph,deepseek,Bram de Groot,False,747,115,9,12.78,1,0.0087
+alcoholwet,9,graph,gpt4,Sophie de Vries,True,422,62,6,10.33,1,0.0161
+alcoholwet,10,graph,gpt4,Bram de Groot,False,496,73,5,14.6,1,0.0137
+alcoholwet,11,open,haiku,Sophie de Vries,True,1192,201,13,15.46,1,0.005
+alcoholwet,12,open,haiku,Bram de Groot,False,1252,208,14,14.86,0,0.0
+alcoholwet,13,open,llama3.1,Sophie de Vries,True,1160,196,16,12.25,0,0.0
+alcoholwet,14,open,llama3.1,Bram de Groot,False,1239,212,11,19.27,0,0.0
+alcoholwet,15,open,mistral,Sophie de Vries,True,1128,174,9,19.33,2,0.0115
+alcoholwet,16,open,mistral,Bram de Groot,False,699,122,9,13.56,0,0.0
+alcoholwet,17,open,deepseek,Sophie de Vries,True,3147,513,31,16.55,0,0.0
+alcoholwet,18,open,deepseek,Bram de Groot,False,2843,453,38,11.92,0,0.0
+alcoholwet,19,open,gpt4,Sophie de Vries,True,2189,365,24,15.21,3,0.0082
+alcoholwet,20,open,gpt4,Bram de Groot,False,1289,230,23,10.0,0,0.0
+bijstand,1,graph,haiku,Daan Peters,True,537,82,7,11.71,1,0.0122
+bijstand,2,graph,haiku,Kevin van Dalen,False,741,111,8,13.88,2,0.018
+bijstand,3,graph,llama3.1,Daan Peters,True,364,56,7,8.0,1,0.0179
+bijstand,4,graph,llama3.1,Kevin van Dalen,False,744,110,7,15.71,2,0.0182
+bijstand,5,graph,mistral,Daan Peters,True,692,97,9,10.78,1,0.0103
+bijstand,6,graph,mistral,Kevin van Dalen,False,550,81,4,20.25,1,0.0123
+bijstand,7,graph,deepseek,Daan Peters,True,159,27,4,6.75,0,0.0
+bijstand,8,graph,deepseek,Kevin van Dalen,False,575,90,7,12.86,1,0.0111
+bijstand,9,graph,gpt4,Daan Peters,True,403,66,6,11.0,1,0.0152
+bijstand,10,graph,gpt4,Kevin van Dalen,False,514,81,5,16.2,1,0.0123
+bijstand,11,open,haiku,Daan Peters,True,1292,193,13,14.85,0,0.0
+bijstand,12,open,haiku,Kevin van Dalen,False,1167,191,13,14.69,1,0.0052
+bijstand,13,open,llama3.1,Daan Peters,True,1052,180,15,12.0,0,0.0
+bijstand,14,open,llama3.1,Kevin van Dalen,False,1033,176,11,16.0,1,0.0057
+bijstand,15,open,mistral,Daan Peters,True,769,122,9,13.56,0,0.0
+bijstand,16,open,mistral,Kevin van Dalen,False,1022,152,11,13.82,4,0.0263
+bijstand,17,open,deepseek,Daan Peters,True,1565,245,29,8.45,0,0.0
+bijstand,18,open,deepseek,Kevin van Dalen,False,2651,420,33,12.73,0,0.0
+bijstand,19,open,gpt4,Daan Peters,True,1546,243,22,11.05,1,0.0041
+bijstand,20,open,gpt4,Kevin van Dalen,False,1688,274,26,10.54,5,0.0182
+zorgtoeslag,1,graph,haiku,Lisa Vermeer,True,730,113,18,6.28,1,0.0088
+zorgtoeslag,2,graph,haiku,Robert Janssen,True,862,130,13,10.0,2,0.0154
+zorgtoeslag,3,graph,llama3.1,Lisa Vermeer,True,921,152,22,6.91,3,0.0197
+zorgtoeslag,4,graph,llama3.1,Robert Janssen,True,621,107,12,8.92,2,0.0187
+zorgtoeslag,5,graph,mistral,Lisa Vermeer,True,627,104,10,10.4,2,0.0192
+zorgtoeslag,6,graph,mistral,Robert Janssen,True,609,101,8,12.62,1,0.0099
+zorgtoeslag,7,graph,deepseek,Lisa Vermeer,True,372,63,8,7.88,1,0.0159
+zorgtoeslag,8,graph,deepseek,Robert Janssen,True,481,75,11,6.82,2,0.0267
+zorgtoeslag,9,graph,gpt4,Lisa Vermeer,True,494,77,10,7.7,1,0.013
+zorgtoeslag,10,graph,gpt4,Robert Janssen,True,586,94,12,7.83,1,0.0106
+zorgtoeslag,11,open,haiku,Lisa Vermeer,True,1217,186,25,7.44,0,0.0
+zorgtoeslag,12,open,haiku,Robert Janssen,True,1134,193,14,13.79,1,0.0052
+zorgtoeslag,13,open,llama3.1,Lisa Vermeer,True,1417,243,16,15.19,0,0.0
+zorgtoeslag,14,open,llama3.1,Robert Janssen,True,1236,208,16,13.0,0,0.0
+zorgtoeslag,15,open,mistral,Lisa Vermeer,True,750,120,8,15.0,0,0.0
+zorgtoeslag,16,open,mistral,Robert Janssen,True,746,127,8,15.88,0,0.0
+zorgtoeslag,17,open,deepseek,Lisa Vermeer,True,2362,372,29,12.83,0,0.0
+zorgtoeslag,18,open,deepseek,Robert Janssen,True,1727,294,23,12.78,1,0.0034
+zorgtoeslag,19,open,gpt4,Lisa Vermeer,True,1829,285,27,10.56,0,0.0
+zorgtoeslag,20,open,gpt4,Robert Janssen,True,1492,229,18,12.72,1,0.0044

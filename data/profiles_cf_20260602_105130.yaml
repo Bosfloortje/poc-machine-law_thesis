@@ -1,0 +1,1156 @@
+profiles:
+  CF263271979:
+    description: 'Counterfactual van BSN 263271979. Mutatie: Actief horeca bedrijf
+      toegevoegd: KVK actief, SVH geregistreerd, geen BIBOB-bezwaren'
+    name: '[CF] Piet Smit'
+    parameters:
+      KVK_NUMMER: KVKCF263271
+    sources:
+      BELASTINGDIENST:
+        aftrekposten:
+        - bsn: CF263271979
+          persoonsgebonden_aftrek: 0
+        assets:
+        - bedrag: 1192424
+          bsn: CF263271979
+        bedrijfsinkomen:
+        - bedrag: 0
+          bsn: CF263271979
+        belastingdienst_vermogen:
+        - bsn: CF263271979
+          vermogen: 1192424
+        bezittingen:
+        - bedrag: 1192424
+          bsn: CF263271979
+        box1:
+        - bsn: CF263271979
+          eigen_woning: -85000
+          loon_uit_dienstbetrekking: 0
+          resultaat_overige_werkzaamheden: 0
+          uitkeringen_en_pensioenen: 3012426
+          winst_uit_onderneming: 0
+        box2:
+        - bsn: CF263271979
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - beleggingen: 0
+          bsn: CF263271979
+          buitenlands_inkomen: 0
+          onroerend_goed: 0
+          schulden: 0
+          spaargeld: 1192424
+        buitenlands_inkomen:
+        - bedrag: 0
+          bsn: CF263271979
+          land: GEEN
+        business_income:
+        - bedrag: 0
+          bsn: CF263271979
+        maandelijks_inkomen:
+        - bedrag: 251035
+          bsn: CF263271979
+        monthly_income:
+        - bedrag: 251035
+          bsn: CF263271979
+      CBS:
+        levensverwachting:
+        - jaar: 2025
+          verwachting_65: 20.5
+      DJI:
+        detentie:
+        - bsn: CF263271979
+          is_gedetineerd: false
+        detenties:
+        - bsn: CF263271979
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: CF263271979
+          waarde: false
+      DUO:
+        inschrijvingen:
+        - bsn: CF263271979
+          onderwijssoort: GEEN
+        is_student:
+        - bsn: CF263271979
+          waarde: false
+        receives_study_grant:
+        - bsn: CF263271979
+          waarde: false
+        studiefinanciering:
+        - bsn: CF263271979
+          ontvangt_studiefinanciering: false
+      GEMEENTE_GRONINGEN: {}
+      IND:
+        residence_permit_type:
+        - bsn: CF263271979
+          type: PERMANENT
+        verblijfsvergunningen:
+        - bsn: CF263271979
+          status: VERLEEND
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: CF263271979
+          verblijfsvergunning_type: null
+      JenV:
+        jurisdicties:
+        - arrondissement: AMSTERDAM
+          gemeente: Amsterdam
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: AMSTERDAM
+          gemeente: Amstelveen
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Haarlem
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Alkmaar
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: ROTTERDAM
+          gemeente: Rotterdam
+          rechtbank: RECHTBANK_ROTTERDAM
+        - arrondissement: MIDDEN-NEDERLAND
+          gemeente: Utrecht
+          rechtbank: RECHTBANK_MIDDEN_NEDERLAND
+        - arrondissement: DEN_HAAG
+          gemeente: Den Haag
+          rechtbank: RECHTBANK_DEN_HAAG
+        - arrondissement: NOORD-NEDERLAND
+          gemeente: Groningen
+          rechtbank: RECHTBANK_NOORD_NEDERLAND
+        - arrondissement: LIMBURG
+          gemeente: Maastricht
+          rechtbank: RECHTBANK_LIMBURG
+        - arrondissement: GELDERLAND
+          gemeente: Arnhem
+          rechtbank: RECHTBANK_GELDERLAND
+      KIESRAAD:
+        verkiezingen:
+        - type: TWEEDE_KAMER
+          verkiezingsdatum: '2025-10-29'
+      KVK:
+        inrichtingen:
+        - kvk_nummer: KVKCF263271
+          type_bedrijf: horecabedrijf
+          vloeroppervlakte_horecalokaliteit: 50
+        leidinggevenden:
+        - bsn: CF263271979
+          kvk_nummer: KVKCF263271
+        organisaties:
+        - kvk_nummer: KVKCF263271
+          rechtsvorm: Eenmanszaak
+          status: Actief
+      LBB:
+        bibob_adviezen:
+        - bsn: CF263271979
+          mate_van_gevaar: geen_gevaar
+      RECHTSPRAAK:
+        curatele_registraties: []
+      RVZ:
+        verzekeringen:
+        - bsn: CF263271979
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      RvIG:
+        CHILDREN_DATA:
+        - bsn: CF263271979
+          kinderen:
+          - age: 4
+            geboortedatum: '2022-04-01'
+            kind_bsn: '595974130'
+        brp_gegevens:
+        - bsn: CF263271979
+          geboortedatum: '1952-10-19'
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: true
+          heeft_vast_adres: true
+          huishoudgrootte: 3
+          leeftijd: 74
+          verblijfsadres: Molenweg 157, 9712HX Groningen
+        gezag_relaties:
+        - bsn_gezagdrager: '263271979'
+          bsn_kind: '595974130'
+          datum_einde: null
+          datum_ingang: '2022-04-01'
+          geboortedatum_kind: '2022-04-01'
+          naam_kind: Kind 1 Smit
+          status: ACTIEF
+          type_gezag: OUDERLIJK_GEZAG
+        personen:
+        - age: 74
+          bsn: CF263271979
+          geboortedatum: '1952-10-19'
+          geslacht: M
+          has_dutch_nationality: true
+          has_fixed_address: true
+          has_partner: true
+          herkomst: NL_AUTOCHTOON
+          household_size: 3
+          land_verblijf: NEDERLAND
+          leeftijd: 74
+          nationaliteit: NEDERLANDS
+          residence_address: Molenweg 157, 9712HX Groningen
+          verblijfsadres: Groningen
+        relaties:
+        - bsn: CF263271979
+          has_partner: true
+          kinderen:
+          - bsn: '595974130'
+            geboortedatum: '2022-04-01'
+            naam: Kind 1 Smit
+          partner_bsn: '559697588'
+          partnerschap_type: GEHUWD
+        verblijfplaats:
+        - bsn: CF263271979
+          heeft_vast_adres: true
+          huisnummer: '157'
+          postcode: 9712HX
+          straat: Molenweg
+          type: WOONADRES
+          woonplaats: Groningen
+      SVB:
+        algemene_kinderbijslagwet:
+        - aantal_kinderen: 1
+          kinderen_leeftijden:
+          - 4
+          ontvangt_kinderbijslag: true
+          ouder_bsn: '263271979'
+        algemene_ouderdomswet_gegevens:
+        - bsn: CF263271979
+          pensioenleeftijd: 68
+        retirement_age:
+        - bsn: CF263271979
+          leeftijd: 68
+      SVH:
+        register_sociale_hygiene:
+        - bsn: CF263271979
+          is_geregistreerd: true
+      UWV:
+        WIA:
+        - bsn: CF263271979
+          heeft_wia_uitkering: false
+        arbeidsverhoudingen:
+        - bsn: CF263271979
+          dienstverband_type: GEEN
+          verzekerd_wia: false
+          verzekerd_ww: false
+        uwv_toetsingsinkomen:
+        - bsn: CF263271979
+          toetsingsinkomen: 3012426
+        uwv_werkgegevens:
+        - arbeidsverleden_jaren: 0
+          bsn: CF263271979
+          gemiddeld_uren_per_week: 0.0
+          gewerkte_weken_36: 0
+          huidige_uren_per_week: 0.0
+          jaarloon: 0
+        ziektewet:
+        - bsn: CF263271979
+          heeft_ziektewet_uitkering: false
+  CF280776299:
+    description: 'Counterfactual van BSN 280776299. Mutatie: Actief horeca bedrijf
+      toegevoegd: KVK actief, SVH geregistreerd, geen BIBOB-bezwaren'
+    name: '[CF] Anna Janssen'
+    parameters:
+      KVK_NUMMER: KVKCF280776
+    sources:
+      BELASTINGDIENST:
+        aftrekposten:
+        - bsn: CF280776299
+          persoonsgebonden_aftrek: 0
+        assets:
+        - bedrag: 7300166
+          bsn: CF280776299
+        bedrijfsinkomen:
+        - bedrag: 0
+          bsn: CF280776299
+        belastingdienst_vermogen:
+        - bsn: CF280776299
+          vermogen: 7300166
+        bezittingen:
+        - bedrag: 7300166
+          bsn: CF280776299
+        box1:
+        - bsn: CF280776299
+          eigen_woning: 0
+          loon_uit_dienstbetrekking: 0
+          resultaat_overige_werkzaamheden: 0
+          uitkeringen_en_pensioenen: 6639066
+          winst_uit_onderneming: 0
+        box2:
+        - bsn: CF280776299
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - beleggingen: 2060722
+          bsn: CF280776299
+          buitenlands_inkomen: 0
+          onroerend_goed: 0
+          schulden: 0
+          spaargeld: 7300166
+        buitenlands_inkomen:
+        - bedrag: 0
+          bsn: CF280776299
+          land: GEEN
+        business_income:
+        - bedrag: 0
+          bsn: CF280776299
+        maandelijks_inkomen:
+        - bedrag: 553255
+          bsn: CF280776299
+        monthly_income:
+        - bedrag: 553255
+          bsn: CF280776299
+      CBS:
+        levensverwachting:
+        - jaar: 2025
+          verwachting_65: 20.5
+      DJI:
+        detentie:
+        - bsn: CF280776299
+          is_gedetineerd: false
+        detenties:
+        - bsn: CF280776299
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: CF280776299
+          waarde: false
+      DUO:
+        inschrijvingen:
+        - bsn: CF280776299
+          onderwijssoort: GEEN
+        is_student:
+        - bsn: CF280776299
+          waarde: false
+        receives_study_grant:
+        - bsn: CF280776299
+          waarde: false
+        studiefinanciering:
+        - bsn: CF280776299
+          ontvangt_studiefinanciering: false
+      GEMEENTE_DEN_HAAG: {}
+      IND:
+        residence_permit_type:
+        - bsn: CF280776299
+          type: PERMANENT
+        verblijfsvergunningen:
+        - bsn: CF280776299
+          status: VERLEEND
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: CF280776299
+          verblijfsvergunning_type: null
+      JenV:
+        jurisdicties:
+        - arrondissement: AMSTERDAM
+          gemeente: Amsterdam
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: AMSTERDAM
+          gemeente: Amstelveen
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Haarlem
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Alkmaar
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: ROTTERDAM
+          gemeente: Rotterdam
+          rechtbank: RECHTBANK_ROTTERDAM
+        - arrondissement: MIDDEN-NEDERLAND
+          gemeente: Utrecht
+          rechtbank: RECHTBANK_MIDDEN_NEDERLAND
+        - arrondissement: DEN_HAAG
+          gemeente: Den Haag
+          rechtbank: RECHTBANK_DEN_HAAG
+        - arrondissement: NOORD-NEDERLAND
+          gemeente: Groningen
+          rechtbank: RECHTBANK_NOORD_NEDERLAND
+        - arrondissement: LIMBURG
+          gemeente: Maastricht
+          rechtbank: RECHTBANK_LIMBURG
+        - arrondissement: GELDERLAND
+          gemeente: Arnhem
+          rechtbank: RECHTBANK_GELDERLAND
+      KIESRAAD:
+        verkiezingen:
+        - type: TWEEDE_KAMER
+          verkiezingsdatum: '2025-10-29'
+      KVK:
+        inrichtingen:
+        - kvk_nummer: KVKCF280776
+          type_bedrijf: horecabedrijf
+          vloeroppervlakte_horecalokaliteit: 50
+        leidinggevenden:
+        - bsn: CF280776299
+          kvk_nummer: KVKCF280776
+        organisaties:
+        - kvk_nummer: KVKCF280776
+          rechtsvorm: Eenmanszaak
+          status: Actief
+      LBB:
+        bibob_adviezen:
+        - bsn: CF280776299
+          mate_van_gevaar: geen_gevaar
+      RECHTSPRAAK:
+        curatele_registraties: []
+      RVZ:
+        verzekeringen:
+        - bsn: CF280776299
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      RvIG:
+        brp_gegevens:
+        - bsn: CF280776299
+          geboortedatum: '1953-06-11'
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: true
+          heeft_vast_adres: true
+          huishoudgrootte: 2
+          leeftijd: 73
+          verblijfsadres: Amsteldijk 22, 2508HF Den Haag
+        personen:
+        - age: 73
+          bsn: CF280776299
+          geboortedatum: '1953-06-11'
+          geslacht: V
+          has_dutch_nationality: true
+          has_fixed_address: true
+          has_partner: true
+          herkomst: NL_AUTOCHTOON
+          household_size: 2
+          land_verblijf: NEDERLAND
+          leeftijd: 73
+          nationaliteit: NEDERLANDS
+          residence_address: Amsteldijk 22, 2508HF Den Haag
+          verblijfsadres: Den Haag
+        relaties:
+        - bsn: CF280776299
+          has_partner: true
+          kinderen: []
+          partner_bsn: '557554926'
+          partnerschap_type: GEHUWD
+        verblijfplaats:
+        - bsn: CF280776299
+          heeft_vast_adres: true
+          huisnummer: '22'
+          postcode: 2508HF
+          straat: Amsteldijk
+          type: WOONADRES
+          woonplaats: Den Haag
+      SVB:
+        algemene_ouderdomswet_gegevens:
+        - bsn: CF280776299
+          pensioenleeftijd: 68
+        retirement_age:
+        - bsn: CF280776299
+          leeftijd: 68
+      SVH:
+        register_sociale_hygiene:
+        - bsn: CF280776299
+          is_geregistreerd: true
+      UWV:
+        WIA:
+        - bsn: CF280776299
+          heeft_wia_uitkering: false
+        arbeidsverhoudingen:
+        - bsn: CF280776299
+          dienstverband_type: GEEN
+          verzekerd_wia: false
+          verzekerd_ww: false
+        uwv_toetsingsinkomen:
+        - bsn: CF280776299
+          toetsingsinkomen: 6639066
+        uwv_werkgegevens:
+        - arbeidsverleden_jaren: 0
+          bsn: CF280776299
+          gemiddeld_uren_per_week: 0.0
+          gewerkte_weken_36: 0
+          huidige_uren_per_week: 0.0
+          jaarloon: 0
+        ziektewet:
+        - bsn: CF280776299
+          heeft_ziektewet_uitkering: false
+  CF326889935:
+    description: 'Counterfactual van BSN 326889935. Mutatie: Actief horeca bedrijf
+      toegevoegd: KVK actief, SVH geregistreerd, geen BIBOB-bezwaren'
+    name: '[CF] Bram de Groot'
+    parameters:
+      KVK_NUMMER: KVKCF326889
+    sources:
+      BELASTINGDIENST:
+        aftrekposten:
+        - bsn: CF326889935
+          persoonsgebonden_aftrek: 0
+        assets:
+        - bedrag: 1547970
+          bsn: CF326889935
+        bedrijfsinkomen:
+        - bedrag: 0
+          bsn: CF326889935
+        belastingdienst_vermogen:
+        - bsn: CF326889935
+          vermogen: 1547970
+        bezittingen:
+        - bedrag: 1547970
+          bsn: CF326889935
+        box1:
+        - bsn: CF326889935
+          eigen_woning: -85000
+          loon_uit_dienstbetrekking: 0
+          resultaat_overige_werkzaamheden: 0
+          uitkeringen_en_pensioenen: 2623688
+          winst_uit_onderneming: 0
+        box2:
+        - bsn: CF326889935
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - beleggingen: 0
+          bsn: CF326889935
+          buitenlands_inkomen: 0
+          onroerend_goed: 0
+          schulden: 0
+          spaargeld: 1547970
+        buitenlands_inkomen:
+        - bedrag: 0
+          bsn: CF326889935
+          land: GEEN
+        business_income:
+        - bedrag: 0
+          bsn: CF326889935
+        maandelijks_inkomen:
+        - bedrag: 218640
+          bsn: CF326889935
+        monthly_income:
+        - bedrag: 218640
+          bsn: CF326889935
+      CBS:
+        levensverwachting:
+        - jaar: 2025
+          verwachting_65: 20.5
+      DJI:
+        detentie:
+        - bsn: CF326889935
+          is_gedetineerd: false
+        detenties:
+        - bsn: CF326889935
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: CF326889935
+          waarde: false
+      DUO:
+        inschrijvingen:
+        - bsn: CF326889935
+          onderwijssoort: GEEN
+        is_student:
+        - bsn: CF326889935
+          waarde: false
+        receives_study_grant:
+        - bsn: CF326889935
+          waarde: false
+        studiefinanciering:
+        - bsn: CF326889935
+          ontvangt_studiefinanciering: false
+      GEMEENTE_ROTTERDAM: {}
+      IND:
+        residence_permit_type:
+        - bsn: CF326889935
+          type: PERMANENT
+        verblijfsvergunningen:
+        - bsn: CF326889935
+          status: VERLEEND
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: CF326889935
+          verblijfsvergunning_type: null
+      JenV:
+        jurisdicties:
+        - arrondissement: AMSTERDAM
+          gemeente: Amsterdam
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: AMSTERDAM
+          gemeente: Amstelveen
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Haarlem
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Alkmaar
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: ROTTERDAM
+          gemeente: Rotterdam
+          rechtbank: RECHTBANK_ROTTERDAM
+        - arrondissement: MIDDEN-NEDERLAND
+          gemeente: Utrecht
+          rechtbank: RECHTBANK_MIDDEN_NEDERLAND
+        - arrondissement: DEN_HAAG
+          gemeente: Den Haag
+          rechtbank: RECHTBANK_DEN_HAAG
+        - arrondissement: NOORD-NEDERLAND
+          gemeente: Groningen
+          rechtbank: RECHTBANK_NOORD_NEDERLAND
+        - arrondissement: LIMBURG
+          gemeente: Maastricht
+          rechtbank: RECHTBANK_LIMBURG
+        - arrondissement: GELDERLAND
+          gemeente: Arnhem
+          rechtbank: RECHTBANK_GELDERLAND
+      KIESRAAD:
+        verkiezingen:
+        - type: TWEEDE_KAMER
+          verkiezingsdatum: '2025-10-29'
+      KVK:
+        inrichtingen:
+        - kvk_nummer: KVKCF326889
+          type_bedrijf: horecabedrijf
+          vloeroppervlakte_horecalokaliteit: 50
+        leidinggevenden:
+        - bsn: CF326889935
+          kvk_nummer: KVKCF326889
+        organisaties:
+        - kvk_nummer: KVKCF326889
+          rechtsvorm: Eenmanszaak
+          status: Actief
+      LBB:
+        bibob_adviezen:
+        - bsn: CF326889935
+          mate_van_gevaar: geen_gevaar
+      RECHTSPRAAK:
+        curatele_registraties: []
+      RVZ:
+        verzekeringen:
+        - bsn: CF326889935
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      RvIG:
+        brp_gegevens:
+        - bsn: CF326889935
+          geboortedatum: '1956-08-28'
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: false
+          heeft_vast_adres: true
+          huishoudgrootte: 1
+          leeftijd: 70
+          verblijfsadres: Nassaulaan 182, 3089ZZ Rotterdam
+        personen:
+        - age: 70
+          bsn: CF326889935
+          geboortedatum: '1956-08-28'
+          geslacht: M
+          has_dutch_nationality: true
+          has_fixed_address: true
+          has_partner: false
+          herkomst: NL_AUTOCHTOON
+          household_size: 1
+          land_verblijf: NEDERLAND
+          leeftijd: 70
+          nationaliteit: NEDERLANDS
+          residence_address: Nassaulaan 182, 3089ZZ Rotterdam
+          verblijfsadres: Rotterdam
+        relaties:
+        - bsn: CF326889935
+          has_partner: false
+          kinderen: []
+          partner_bsn: null
+          partnerschap_type: GEEN
+        verblijfplaats:
+        - bsn: CF326889935
+          heeft_vast_adres: true
+          huisnummer: '182'
+          postcode: 3089ZZ
+          straat: Nassaulaan
+          type: WOONADRES
+          woonplaats: Rotterdam
+      SVB:
+        algemene_ouderdomswet_gegevens:
+        - bsn: CF326889935
+          pensioenleeftijd: 68
+        retirement_age:
+        - bsn: CF326889935
+          leeftijd: 68
+      SVH:
+        register_sociale_hygiene:
+        - bsn: CF326889935
+          is_geregistreerd: true
+      UWV:
+        WIA:
+        - bsn: CF326889935
+          heeft_wia_uitkering: false
+        arbeidsverhoudingen:
+        - bsn: CF326889935
+          dienstverband_type: GEEN
+          verzekerd_wia: false
+          verzekerd_ww: false
+        uwv_toetsingsinkomen:
+        - bsn: CF326889935
+          toetsingsinkomen: 2623688
+        uwv_werkgegevens:
+        - arbeidsverleden_jaren: 0
+          bsn: CF326889935
+          gemiddeld_uren_per_week: 0.0
+          gewerkte_weken_36: 0
+          huidige_uren_per_week: 0.0
+          jaarloon: 0
+        ziektewet:
+        - bsn: CF326889935
+          heeft_ziektewet_uitkering: false
+  CF942016411:
+    description: 'Counterfactual van BSN 942016411. Mutatie: Actief horeca bedrijf
+      toegevoegd: KVK actief, SVH geregistreerd, geen BIBOB-bezwaren'
+    name: '[CF] Johanna Vos'
+    parameters:
+      KVK_NUMMER: KVKCF942016
+    sources:
+      BELASTINGDIENST:
+        aftrekposten:
+        - bsn: CF942016411
+          persoonsgebonden_aftrek: 0
+        assets:
+        - bedrag: 448510
+          bsn: CF942016411
+        bedrijfsinkomen:
+        - bedrag: 0
+          bsn: CF942016411
+        belastingdienst_vermogen:
+        - bsn: CF942016411
+          vermogen: 448510
+        bezittingen:
+        - bedrag: 448510
+          bsn: CF942016411
+        box1:
+        - bsn: CF942016411
+          eigen_woning: 0
+          loon_uit_dienstbetrekking: 0
+          resultaat_overige_werkzaamheden: 0
+          uitkeringen_en_pensioenen: 800000
+          winst_uit_onderneming: 0
+        box2:
+        - bsn: CF942016411
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - beleggingen: 0
+          bsn: CF942016411
+          buitenlands_inkomen: 0
+          onroerend_goed: 0
+          schulden: 0
+          spaargeld: 448510
+        buitenlands_inkomen:
+        - bedrag: 0
+          bsn: CF942016411
+          land: GEEN
+        business_income:
+        - bedrag: 0
+          bsn: CF942016411
+        maandelijks_inkomen:
+        - bedrag: 66666
+          bsn: CF942016411
+        monthly_income:
+        - bedrag: 66666
+          bsn: CF942016411
+      CBS:
+        levensverwachting:
+        - jaar: 2025
+          verwachting_65: 20.5
+      DJI:
+        detentie:
+        - bsn: CF942016411
+          is_gedetineerd: false
+        detenties:
+        - bsn: CF942016411
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: CF942016411
+          waarde: false
+      DUO:
+        inschrijvingen:
+        - bsn: CF942016411
+          onderwijssoort: GEEN
+        is_student:
+        - bsn: CF942016411
+          waarde: false
+        receives_study_grant:
+        - bsn: CF942016411
+          waarde: false
+        studiefinanciering:
+        - bsn: CF942016411
+          ontvangt_studiefinanciering: false
+      GEMEENTE_DEN_HAAG: {}
+      IND:
+        residence_permit_type:
+        - bsn: CF942016411
+          type: PERMANENT
+        verblijfsvergunningen:
+        - bsn: CF942016411
+          status: VERLEEND
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: CF942016411
+          verblijfsvergunning_type: null
+      JenV:
+        jurisdicties:
+        - arrondissement: AMSTERDAM
+          gemeente: Amsterdam
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: AMSTERDAM
+          gemeente: Amstelveen
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Haarlem
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Alkmaar
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: ROTTERDAM
+          gemeente: Rotterdam
+          rechtbank: RECHTBANK_ROTTERDAM
+        - arrondissement: MIDDEN-NEDERLAND
+          gemeente: Utrecht
+          rechtbank: RECHTBANK_MIDDEN_NEDERLAND
+        - arrondissement: DEN_HAAG
+          gemeente: Den Haag
+          rechtbank: RECHTBANK_DEN_HAAG
+        - arrondissement: NOORD-NEDERLAND
+          gemeente: Groningen
+          rechtbank: RECHTBANK_NOORD_NEDERLAND
+        - arrondissement: LIMBURG
+          gemeente: Maastricht
+          rechtbank: RECHTBANK_LIMBURG
+        - arrondissement: GELDERLAND
+          gemeente: Arnhem
+          rechtbank: RECHTBANK_GELDERLAND
+      KIESRAAD:
+        verkiezingen:
+        - type: TWEEDE_KAMER
+          verkiezingsdatum: '2025-10-29'
+      KVK:
+        inrichtingen:
+        - kvk_nummer: KVKCF942016
+          type_bedrijf: horecabedrijf
+          vloeroppervlakte_horecalokaliteit: 50
+        leidinggevenden:
+        - bsn: CF942016411
+          kvk_nummer: KVKCF942016
+        organisaties:
+        - kvk_nummer: KVKCF942016
+          rechtsvorm: Eenmanszaak
+          status: Actief
+      LBB:
+        bibob_adviezen:
+        - bsn: CF942016411
+          mate_van_gevaar: geen_gevaar
+      RECHTSPRAAK:
+        curatele_registraties: []
+      RVZ:
+        verzekeringen:
+        - bsn: CF942016411
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      RvIG:
+        brp_gegevens:
+        - bsn: CF942016411
+          geboortedatum: '1949-09-22'
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: false
+          heeft_vast_adres: true
+          huishoudgrootte: 1
+          leeftijd: 77
+          verblijfsadres: Wilhelminastraat 118, 2512QD Den Haag
+        personen:
+        - age: 77
+          bsn: CF942016411
+          geboortedatum: '1949-09-22'
+          geslacht: V
+          has_dutch_nationality: true
+          has_fixed_address: true
+          has_partner: false
+          herkomst: NL_AUTOCHTOON
+          household_size: 1
+          land_verblijf: NEDERLAND
+          leeftijd: 77
+          nationaliteit: NEDERLANDS
+          residence_address: Wilhelminastraat 118, 2512QD Den Haag
+          verblijfsadres: Den Haag
+        relaties:
+        - bsn: CF942016411
+          has_partner: false
+          kinderen: []
+          partner_bsn: null
+          partnerschap_type: GEEN
+        verblijfplaats:
+        - bsn: CF942016411
+          heeft_vast_adres: true
+          huisnummer: '118'
+          postcode: 2512QD
+          straat: Wilhelminastraat
+          type: WOONADRES
+          woonplaats: Den Haag
+      SVB:
+        algemene_ouderdomswet_gegevens:
+        - bsn: CF942016411
+          pensioenleeftijd: 68
+        retirement_age:
+        - bsn: CF942016411
+          leeftijd: 68
+      SVH:
+        register_sociale_hygiene:
+        - bsn: CF942016411
+          is_geregistreerd: true
+      UWV:
+        WIA:
+        - bsn: CF942016411
+          heeft_wia_uitkering: false
+        arbeidsverhoudingen:
+        - bsn: CF942016411
+          dienstverband_type: GEEN
+          verzekerd_wia: false
+          verzekerd_ww: false
+        uwv_toetsingsinkomen:
+        - bsn: CF942016411
+          toetsingsinkomen: 800000
+        uwv_werkgegevens:
+        - arbeidsverleden_jaren: 0
+          bsn: CF942016411
+          gemiddeld_uren_per_week: 0.0
+          gewerkte_weken_36: 0
+          huidige_uren_per_week: 0.0
+          jaarloon: 0
+        ziektewet:
+        - bsn: CF942016411
+          heeft_ziektewet_uitkering: false
+  CF961800832:
+    description: 'Counterfactual van BSN 961800832. Mutatie: Actief horeca bedrijf
+      toegevoegd: KVK actief, SVH geregistreerd, geen BIBOB-bezwaren'
+    name: '[CF] Mustafa Yilmaz'
+    parameters:
+      KVK_NUMMER: KVKCF961800
+    sources:
+      BELASTINGDIENST:
+        aftrekposten:
+        - bsn: CF961800832
+          persoonsgebonden_aftrek: 0
+        assets:
+        - bedrag: 2484674
+          bsn: CF961800832
+        bedrijfsinkomen:
+        - bedrag: 0
+          bsn: CF961800832
+        belastingdienst_vermogen:
+        - bsn: CF961800832
+          vermogen: 2484674
+        bezittingen:
+        - bedrag: 2484674
+          bsn: CF961800832
+        box1:
+        - bsn: CF961800832
+          eigen_woning: -85000
+          loon_uit_dienstbetrekking: 9599614
+          resultaat_overige_werkzaamheden: 0
+          uitkeringen_en_pensioenen: 0
+          winst_uit_onderneming: 0
+        box2:
+        - bsn: CF961800832
+          reguliere_voordelen: 0
+          vervreemdingsvoordelen: 0
+        box3:
+        - beleggingen: 1168693
+          bsn: CF961800832
+          buitenlands_inkomen: 0
+          onroerend_goed: 0
+          schulden: 0
+          spaargeld: 2484674
+        buitenlands_inkomen:
+        - bedrag: 0
+          bsn: CF961800832
+          land: GEEN
+        business_income:
+        - bedrag: 0
+          bsn: CF961800832
+        maandelijks_inkomen:
+        - bedrag: 799967
+          bsn: CF961800832
+        monthly_income:
+        - bedrag: 799967
+          bsn: CF961800832
+      CBS:
+        levensverwachting:
+        - jaar: 2025
+          verwachting_65: 20.5
+      DJI:
+        detentie:
+        - bsn: CF961800832
+          is_gedetineerd: false
+        detenties:
+        - bsn: CF961800832
+          is_gedetineerd: false
+        is_detainee:
+        - bsn: CF961800832
+          waarde: false
+      DUO:
+        inschrijvingen:
+        - bsn: CF961800832
+          onderwijssoort: GEEN
+        is_student:
+        - bsn: CF961800832
+          waarde: false
+        receives_study_grant:
+        - bsn: CF961800832
+          waarde: false
+        studiefinanciering:
+        - bsn: CF961800832
+          ontvangt_studiefinanciering: false
+      GEMEENTE_AMSTERDAM:
+        werk_en_re_integratie:
+        - arbeidsvermogen: null
+          bsn: CF961800832
+          ontheffing_einddatum: null
+          ontheffing_reden: null
+          re_integratie_traject: null
+      IND:
+        residence_permit_type:
+        - bsn: CF961800832
+          type: PERMANENT
+        verblijfsvergunningen:
+        - bsn: CF961800832
+          status: VERLEEND
+          type: PERMANENT
+        vreemdelingenwet:
+        - bsn: CF961800832
+          verblijfsvergunning_type: null
+      JenV:
+        jurisdicties:
+        - arrondissement: AMSTERDAM
+          gemeente: Amsterdam
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: AMSTERDAM
+          gemeente: Amstelveen
+          rechtbank: RECHTBANK_AMSTERDAM
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Haarlem
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: NOORD-HOLLAND
+          gemeente: Alkmaar
+          rechtbank: RECHTBANK_NOORD_HOLLAND
+        - arrondissement: ROTTERDAM
+          gemeente: Rotterdam
+          rechtbank: RECHTBANK_ROTTERDAM
+        - arrondissement: MIDDEN-NEDERLAND
+          gemeente: Utrecht
+          rechtbank: RECHTBANK_MIDDEN_NEDERLAND
+        - arrondissement: DEN_HAAG
+          gemeente: Den Haag
+          rechtbank: RECHTBANK_DEN_HAAG
+        - arrondissement: NOORD-NEDERLAND
+          gemeente: Groningen
+          rechtbank: RECHTBANK_NOORD_NEDERLAND
+        - arrondissement: LIMBURG
+          gemeente: Maastricht
+          rechtbank: RECHTBANK_LIMBURG
+        - arrondissement: GELDERLAND
+          gemeente: Arnhem
+          rechtbank: RECHTBANK_GELDERLAND
+      KIESRAAD:
+        verkiezingen:
+        - type: TWEEDE_KAMER
+          verkiezingsdatum: '2025-10-29'
+      KVK:
+        inrichtingen:
+        - kvk_nummer: KVKCF961800
+          type_bedrijf: horecabedrijf
+          vloeroppervlakte_horecalokaliteit: 50
+        leidinggevenden:
+        - bsn: CF961800832
+          kvk_nummer: KVKCF961800
+        organisaties:
+        - kvk_nummer: KVKCF961800
+          rechtsvorm: Eenmanszaak
+          status: Actief
+      LBB:
+        bibob_adviezen:
+        - bsn: CF961800832
+          mate_van_gevaar: geen_gevaar
+      RECHTSPRAAK:
+        curatele_registraties: []
+      RVZ:
+        verzekeringen:
+        - bsn: CF961800832
+          polis_status: ACTIEF
+          verdrag_status: GEEN
+          zorg_type: BASIS
+      RvIG:
+        brp_gegevens:
+        - bsn: CF961800832
+          geboortedatum: '1993-08-09'
+          heeft_nederlandse_nationaliteit: true
+          heeft_partner: false
+          heeft_vast_adres: true
+          huishoudgrootte: 1
+          leeftijd: 33
+          verblijfsadres: Kerkstraat 149, 1101HW Amsterdam
+        personen:
+        - age: 33
+          bsn: CF961800832
+          geboortedatum: '1993-08-09'
+          geslacht: M
+          has_dutch_nationality: true
+          has_fixed_address: true
+          has_partner: false
+          herkomst: TURKS
+          household_size: 1
+          land_verblijf: NEDERLAND
+          leeftijd: 33
+          nationaliteit: NEDERLANDS
+          residence_address: Kerkstraat 149, 1101HW Amsterdam
+          verblijfsadres: Amsterdam
+        relaties:
+        - bsn: CF961800832
+          has_partner: false
+          kinderen: []
+          partner_bsn: null
+          partnerschap_type: GEEN
+        verblijfplaats:
+        - bsn: CF961800832
+          heeft_vast_adres: true
+          huisnummer: '149'
+          postcode: 1101HW
+          straat: Kerkstraat
+          type: WOONADRES
+          woonplaats: Amsterdam
+      SVB:
+        algemene_ouderdomswet_gegevens:
+        - bsn: CF961800832
+          pensioenleeftijd: 68
+        retirement_age:
+        - bsn: CF961800832
+          leeftijd: 68
+      SVH:
+        register_sociale_hygiene:
+        - bsn: CF961800832
+          is_geregistreerd: true
+      UWV:
+        WIA:
+        - bsn: CF961800832
+          heeft_wia_uitkering: false
+        arbeidsverhoudingen:
+        - bsn: CF961800832
+          dienstverband_type: VAST
+          verzekerd_wia: true
+          verzekerd_ww: true
+        uwv_toetsingsinkomen:
+        - bsn: CF961800832
+          toetsingsinkomen: 9599614
+        uwv_werkgegevens:
+        - arbeidsverleden_jaren: 7
+          bsn: CF961800832
+          gemiddeld_uren_per_week: 38.0
+          gewerkte_weken_36: 52
+          huidige_uren_per_week: 38.0
+          jaarloon: 9599614
+        ziektewet:
+        - bsn: CF961800832
+          heeft_ziektewet_uitkering: false

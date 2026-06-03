@@ -1,0 +1,121 @@
+annotator_type,wet,uitleg_nr,approach,model,profile_name,requirements_met,duidelijkheid_mean,duidelijkheid_std,duidelijkheid_count,actionability_mean,actionability_std,actionability_count,leesbaarheid_mean,leesbaarheid_std,leesbaarheid_count,juridische_correctheid_mean,juridische_correctheid_std,juridische_correctheid_count,ontbrekende_informatie_mean,ontbrekende_informatie_std,ontbrekende_informatie_count,extra_aandacht_mean,extra_aandacht_std,extra_aandacht_count
+burger,alcoholwet,1,graph,haiku,Sophie de Vries,True,3.4,1.517,5,0.7,0.274,5,3.6,1.342,5,,,0,,,0,,,0
+burger,alcoholwet,2,graph,haiku,Bram de Groot,False,4.2,0.837,5,0.9,0.224,5,3.4,1.14,5,,,0,,,0,,,0
+burger,alcoholwet,3,graph,llama3.1,Sophie de Vries,True,4.0,0.707,5,0.9,0.224,5,4.4,0.894,5,,,0,,,0,,,0
+burger,alcoholwet,4,graph,llama3.1,Bram de Groot,False,3.2,1.304,5,0.8,0.274,5,2.4,0.894,5,,,0,,,0,,,0
+burger,alcoholwet,5,graph,mistral,Sophie de Vries,True,4.2,0.837,5,0.6,0.418,5,4.2,0.837,5,,,0,,,0,,,0
+burger,alcoholwet,6,graph,mistral,Bram de Groot,False,3.8,1.304,5,0.6,0.418,5,2.6,1.517,5,,,0,,,0,,,0
+burger,alcoholwet,7,graph,deepseek,Sophie de Vries,True,3.4,1.14,5,0.7,0.274,5,3.8,0.837,5,,,0,,,0,,,0
+burger,alcoholwet,8,graph,deepseek,Bram de Groot,False,3.4,1.342,5,0.7,0.447,5,3.0,1.225,5,,,0,,,0,,,0
+burger,alcoholwet,9,graph,gpt4,Sophie de Vries,True,3.2,2.168,5,0.7,0.447,5,3.4,1.517,5,,,0,,,0,,,0
+burger,alcoholwet,10,graph,gpt4,Bram de Groot,False,3.6,0.894,5,0.7,0.274,5,2.2,0.447,5,,,0,,,0,,,0
+burger,alcoholwet,11,open,haiku,Sophie de Vries,True,3.2,1.304,5,0.6,0.548,5,3.4,0.894,5,,,0,,,0,,,0
+burger,alcoholwet,12,open,haiku,Bram de Groot,False,4.0,1.0,5,0.8,0.274,5,3.2,1.483,5,,,0,,,0,,,0
+burger,alcoholwet,13,open,llama3.1,Sophie de Vries,True,4.2,0.837,5,0.7,0.447,5,4.2,0.837,5,,,0,,,0,,,0
+burger,alcoholwet,14,open,llama3.1,Bram de Groot,False,2.2,2.168,5,0.5,0.5,5,2.4,1.517,5,,,0,,,0,,,0
+burger,alcoholwet,15,open,mistral,Sophie de Vries,True,3.6,1.517,5,0.4,0.548,5,3.6,1.14,5,,,0,,,0,,,0
+burger,alcoholwet,16,open,mistral,Bram de Groot,False,4.4,0.548,5,1.0,0.0,5,4.0,1.225,5,,,0,,,0,,,0
+burger,alcoholwet,17,open,deepseek,Sophie de Vries,True,3.4,1.14,5,0.3,0.447,5,3.8,0.447,5,,,0,,,0,,,0
+burger,alcoholwet,18,open,deepseek,Bram de Groot,False,3.6,0.894,5,0.7,0.274,5,3.8,1.304,5,,,0,,,0,,,0
+burger,alcoholwet,19,open,gpt4,Sophie de Vries,True,3.0,1.581,5,0.6,0.418,5,3.4,1.342,5,,,0,,,0,,,0
+burger,alcoholwet,20,open,gpt4,Bram de Groot,False,3.8,0.837,5,0.9,0.224,5,4.4,0.894,5,,,0,,,0,,,0
+burger,bijstand,1,graph,haiku,Daan Peters,True,3.0,2.646,3,0.5,0.5,3,4.0,1.0,3,,,0,,,0,,,0
+burger,bijstand,2,graph,haiku,Kevin van Dalen,False,4.0,1.0,3,1.0,0.0,3,3.0,1.0,3,,,0,,,0,,,0
+burger,bijstand,3,graph,llama3.1,Daan Peters,True,2.0,2.0,3,0.16666666666666666,0.289,3,4.666666666666667,0.577,3,,,0,,,0,,,0
+burger,bijstand,4,graph,llama3.1,Kevin van Dalen,False,2.6666666666666665,1.528,3,0.5,0.5,3,2.3333333333333335,1.155,3,,,0,,,0,,,0
+burger,bijstand,5,graph,mistral,Daan Peters,True,2.3333333333333335,2.082,3,0.5,0.5,3,3.3333333333333335,1.155,3,,,0,,,0,,,0
+burger,bijstand,6,graph,mistral,Kevin van Dalen,False,2.6666666666666665,0.577,3,0.6666666666666666,0.289,3,2.3333333333333335,0.577,3,,,0,,,0,,,0
+burger,bijstand,7,graph,deepseek,Daan Peters,True,2.6666666666666665,0.577,3,0.3333333333333333,0.289,3,3.6666666666666665,0.577,3,,,0,,,0,,,0
+burger,bijstand,8,graph,deepseek,Kevin van Dalen,False,1.6666666666666667,0.577,3,0.5,0.5,3,2.6666666666666665,0.577,3,,,0,,,0,,,0
+burger,bijstand,9,graph,gpt4,Daan Peters,True,3.0,1.0,3,0.6666666666666666,0.289,3,3.3333333333333335,1.155,3,,,0,,,0,,,0
+burger,bijstand,10,graph,gpt4,Kevin van Dalen,False,2.3333333333333335,0.577,3,0.5,0.5,3,2.0,1.0,3,,,0,,,0,,,0
+burger,bijstand,11,open,haiku,Daan Peters,True,3.6666666666666665,1.528,3,0.16666666666666666,0.289,3,2.6666666666666665,0.577,3,,,0,,,0,,,0
+burger,bijstand,12,open,haiku,Kevin van Dalen,False,3.3333333333333335,0.577,3,0.5,0.5,3,2.6666666666666665,1.155,3,,,0,,,0,,,0
+burger,bijstand,13,open,llama3.1,Daan Peters,True,1.6666666666666667,1.155,3,0.0,0.0,3,3.3333333333333335,1.155,3,,,0,,,0,,,0
+burger,bijstand,14,open,llama3.1,Kevin van Dalen,False,2.6666666666666665,2.082,3,0.8333333333333334,0.289,3,3.0,1.0,3,,,0,,,0,,,0
+burger,bijstand,15,open,mistral,Daan Peters,True,2.0,2.0,3,0.16666666666666666,0.289,3,3.3333333333333335,1.155,3,,,0,,,0,,,0
+burger,bijstand,16,open,mistral,Kevin van Dalen,False,4.666666666666667,0.577,3,1.0,0.0,3,4.666666666666667,0.577,3,,,0,,,0,,,0
+burger,bijstand,17,open,deepseek,Daan Peters,True,3.3333333333333335,1.528,3,0.3333333333333333,0.577,3,3.6666666666666665,1.528,3,,,0,,,0,,,0
+burger,bijstand,18,open,deepseek,Kevin van Dalen,False,3.6666666666666665,0.577,3,0.8333333333333334,0.289,3,4.333333333333333,0.577,3,,,0,,,0,,,0
+burger,bijstand,19,open,gpt4,Daan Peters,True,3.0,1.732,3,0.3333333333333333,0.577,3,4.0,1.0,3,,,0,,,0,,,0
+burger,bijstand,20,open,gpt4,Kevin van Dalen,False,3.0,1.0,3,0.6666666666666666,0.289,3,2.3333333333333335,1.528,3,,,0,,,0,,,0
+burger,zorgtoeslag,1,graph,haiku,Lisa Vermeer,True,4.333333333333333,0.577,3,0.5,0.0,3,4.0,0.0,3,,,0,,,0,,,0
+burger,zorgtoeslag,2,graph,haiku,Robert Janssen,True,3.3333333333333335,2.082,3,0.6666666666666666,0.577,3,2.6666666666666665,2.082,3,,,0,,,0,,,0
+burger,zorgtoeslag,3,graph,llama3.1,Lisa Vermeer,True,3.6666666666666665,0.577,3,0.16666666666666666,0.289,3,3.3333333333333335,2.082,3,,,0,,,0,,,0
+burger,zorgtoeslag,4,graph,llama3.1,Robert Janssen,True,2.6666666666666665,1.528,3,0.6666666666666666,0.289,3,2.0,1.0,3,,,0,,,0,,,0
+burger,zorgtoeslag,5,graph,mistral,Lisa Vermeer,True,4.0,1.732,3,0.5,0.5,3,5.0,0.0,3,,,0,,,0,,,0
+burger,zorgtoeslag,6,graph,mistral,Robert Janssen,True,3.6666666666666665,0.577,3,1.0,0.0,3,2.6666666666666665,1.155,3,,,0,,,0,,,0
+burger,zorgtoeslag,7,graph,deepseek,Lisa Vermeer,True,4.333333333333333,0.577,3,0.8333333333333334,0.289,3,4.333333333333333,0.577,3,,,0,,,0,,,0
+burger,zorgtoeslag,8,graph,deepseek,Robert Janssen,True,2.3333333333333335,2.309,3,0.6666666666666666,0.577,3,2.6666666666666665,2.082,3,,,0,,,0,,,0
+burger,zorgtoeslag,9,graph,gpt4,Lisa Vermeer,True,4.333333333333333,0.577,3,0.5,0.0,3,4.666666666666667,0.577,3,,,0,,,0,,,0
+burger,zorgtoeslag,10,graph,gpt4,Robert Janssen,True,2.0,1.732,3,0.0,0.0,3,2.3333333333333335,0.577,3,,,0,,,0,,,0
+burger,zorgtoeslag,11,open,haiku,Lisa Vermeer,True,4.333333333333333,0.577,3,0.8333333333333334,0.289,3,4.0,1.0,3,,,0,,,0,,,0
+burger,zorgtoeslag,12,open,haiku,Robert Janssen,True,2.3333333333333335,1.528,3,0.6666666666666666,0.577,3,3.0,1.732,3,,,0,,,0,,,0
+burger,zorgtoeslag,13,open,llama3.1,Lisa Vermeer,True,3.3333333333333335,1.155,3,0.8333333333333334,0.289,3,3.6666666666666665,1.528,3,,,0,,,0,,,0
+burger,zorgtoeslag,14,open,llama3.1,Robert Janssen,True,2.3333333333333335,2.082,3,0.3333333333333333,0.289,3,2.0,1.0,3,,,0,,,0,,,0
+burger,zorgtoeslag,15,open,mistral,Lisa Vermeer,True,4.666666666666667,0.577,3,0.8333333333333334,0.289,3,4.0,1.732,3,,,0,,,0,,,0
+burger,zorgtoeslag,16,open,mistral,Robert Janssen,True,3.6666666666666665,0.577,3,0.8333333333333334,0.289,3,3.0,1.0,3,,,0,,,0,,,0
+burger,zorgtoeslag,17,open,deepseek,Lisa Vermeer,True,4.333333333333333,1.155,3,0.8333333333333334,0.289,3,4.333333333333333,1.155,3,,,0,,,0,,,0
+burger,zorgtoeslag,18,open,deepseek,Robert Janssen,True,3.0,1.0,3,0.3333333333333333,0.289,3,2.6666666666666665,0.577,3,,,0,,,0,,,0
+burger,zorgtoeslag,19,open,gpt4,Lisa Vermeer,True,3.6666666666666665,0.577,3,0.6666666666666666,0.289,3,4.333333333333333,1.155,3,,,0,,,0,,,0
+burger,zorgtoeslag,20,open,gpt4,Robert Janssen,True,2.0,2.0,3,0.3333333333333333,0.577,3,2.0,1.0,3,,,0,,,0,,,0
+jurist,alcoholwet,1,graph,haiku,Sophie de Vries,True,,,0,,,0,,,0,4.0,0.0,2,0.0,0.0,2,1.0,0.0,2
+jurist,alcoholwet,2,graph,haiku,Bram de Groot,False,,,0,,,0,,,0,3.5,0.707,2,0.5,0.707,2,1.0,,1
+jurist,alcoholwet,3,graph,llama3.1,Sophie de Vries,True,,,0,,,0,,,0,3.5,0.707,2,0.5,0.707,2,1.0,0.0,2
+jurist,alcoholwet,4,graph,llama3.1,Bram de Groot,False,,,0,,,0,,,0,4.0,0.0,2,0.5,0.707,2,1.0,0.0,2
+jurist,alcoholwet,5,graph,mistral,Sophie de Vries,True,,,0,,,0,,,0,4.5,0.707,2,0.5,0.707,2,1.0,,1
+jurist,alcoholwet,6,graph,mistral,Bram de Groot,False,,,0,,,0,,,0,4.0,0.0,2,0.0,,1,,,0
+jurist,alcoholwet,7,graph,deepseek,Sophie de Vries,True,,,0,,,0,,,0,3.0,1.414,2,1.0,0.0,2,1.0,0.0,2
+jurist,alcoholwet,8,graph,deepseek,Bram de Groot,False,,,0,,,0,,,0,3.5,0.707,2,0.5,0.707,2,1.0,,1
+jurist,alcoholwet,9,graph,gpt4,Sophie de Vries,True,,,0,,,0,,,0,4.0,0.0,2,1.0,0.0,2,1.0,,1
+jurist,alcoholwet,10,graph,gpt4,Bram de Groot,False,,,0,,,0,,,0,4.5,0.707,2,0.0,0.0,2,1.0,,1
+jurist,alcoholwet,11,open,haiku,Sophie de Vries,True,,,0,,,0,,,0,2.0,2.828,2,1.0,0.0,2,1.0,0.0,2
+jurist,alcoholwet,12,open,haiku,Bram de Groot,False,,,0,,,0,,,0,4.0,0.0,2,0.5,0.707,2,,,0
+jurist,alcoholwet,13,open,llama3.1,Sophie de Vries,True,,,0,,,0,,,0,2.5,2.121,2,1.0,0.0,2,1.0,0.0,2
+jurist,alcoholwet,14,open,llama3.1,Bram de Groot,False,,,0,,,0,,,0,3.0,1.414,2,0.5,0.707,2,1.0,,1
+jurist,alcoholwet,15,open,mistral,Sophie de Vries,True,,,0,,,0,,,0,3.0,2.828,2,1.0,0.0,2,1.0,,1
+jurist,alcoholwet,16,open,mistral,Bram de Groot,False,,,0,,,0,,,0,4.5,0.707,2,0.0,0.0,2,,,0
+jurist,alcoholwet,17,open,deepseek,Sophie de Vries,True,,,0,,,0,,,0,2.5,2.121,2,1.0,0.0,2,1.0,,1
+jurist,alcoholwet,18,open,deepseek,Bram de Groot,False,,,0,,,0,,,0,4.0,0.0,2,1.0,0.0,2,1.0,0.0,2
+jurist,alcoholwet,19,open,gpt4,Sophie de Vries,True,,,0,,,0,,,0,4.5,0.707,2,1.0,,1,1.0,,1
+jurist,alcoholwet,20,open,gpt4,Bram de Groot,False,,,0,,,0,,,0,2.5,2.121,2,1.0,0.0,2,1.0,,1
+jurist,bijstand,1,graph,haiku,Daan Peters,True,,,0,,,0,,,0,5.0,0.0,2,0.5,0.707,2,1.0,,1
+jurist,bijstand,2,graph,haiku,Kevin van Dalen,False,,,0,,,0,,,0,4.0,0.0,2,0.5,0.707,2,1.0,,1
+jurist,bijstand,3,graph,llama3.1,Daan Peters,True,,,0,,,0,,,0,3.0,0.0,2,1.0,0.0,2,1.0,0.0,2
+jurist,bijstand,4,graph,llama3.1,Kevin van Dalen,False,,,0,,,0,,,0,4.0,1.414,2,1.0,0.0,2,1.0,0.0,2
+jurist,bijstand,5,graph,mistral,Daan Peters,True,,,0,,,0,,,0,3.0,1.414,2,1.0,0.0,2,1.0,0.0,2
+jurist,bijstand,6,graph,mistral,Kevin van Dalen,False,,,0,,,0,,,0,4.0,0.0,2,1.0,,1,1.0,,1
+jurist,bijstand,7,graph,deepseek,Daan Peters,True,,,0,,,0,,,0,2.5,2.121,2,0.0,0.0,2,1.0,,1
+jurist,bijstand,8,graph,deepseek,Kevin van Dalen,False,,,0,,,0,,,0,3.5,0.707,2,0.5,0.707,2,1.0,,1
+jurist,bijstand,9,graph,gpt4,Daan Peters,True,,,0,,,0,,,0,4.0,0.0,2,0.0,,1,,,0
+jurist,bijstand,10,graph,gpt4,Kevin van Dalen,False,,,0,,,0,,,0,2.5,2.121,2,1.0,0.0,2,1.0,,1
+jurist,bijstand,11,open,haiku,Daan Peters,True,,,0,,,0,,,0,0.5,0.707,2,1.0,0.0,2,1.0,0.0,2
+jurist,bijstand,12,open,haiku,Kevin van Dalen,False,,,0,,,0,,,0,3.5,0.707,2,0.0,,1,1.0,,1
+jurist,bijstand,13,open,llama3.1,Daan Peters,True,,,0,,,0,,,0,1.5,0.707,2,1.0,0.0,2,1.0,0.0,2
+jurist,bijstand,14,open,llama3.1,Kevin van Dalen,False,,,0,,,0,,,0,3.5,0.707,2,0.5,0.707,2,1.0,,1
+jurist,bijstand,15,open,mistral,Daan Peters,True,,,0,,,0,,,0,2.0,1.414,2,1.0,0.0,2,1.0,0.0,2
+jurist,bijstand,16,open,mistral,Kevin van Dalen,False,,,0,,,0,,,0,3.5,0.707,2,0.5,0.707,2,1.0,,1
+jurist,bijstand,17,open,deepseek,Daan Peters,True,,,0,,,0,,,0,2.5,0.707,2,1.0,0.0,2,1.0,0.0,2
+jurist,bijstand,18,open,deepseek,Kevin van Dalen,False,,,0,,,0,,,0,3.0,1.414,2,0.5,0.707,2,1.0,,1
+jurist,bijstand,19,open,gpt4,Daan Peters,True,,,0,,,0,,,0,2.0,1.414,2,1.0,0.0,2,1.0,0.0,2
+jurist,bijstand,20,open,gpt4,Kevin van Dalen,False,,,0,,,0,,,0,4.0,0.0,2,0.0,,1,1.0,,1
+jurist,zorgtoeslag,1,graph,haiku,Lisa Vermeer,True,,,0,,,0,,,0,1.0,0.0,2,0.5,0.707,2,1.0,0.0,2
+jurist,zorgtoeslag,2,graph,haiku,Robert Janssen,True,,,0,,,0,,,0,1.5,0.707,2,1.0,0.0,2,1.0,0.0,2
+jurist,zorgtoeslag,3,graph,llama3.1,Lisa Vermeer,True,,,0,,,0,,,0,4.0,0.0,2,0.5,0.707,2,1.0,,1
+jurist,zorgtoeslag,4,graph,llama3.1,Robert Janssen,True,,,0,,,0,,,0,0.5,0.707,2,1.0,0.0,2,1.0,0.0,2
+jurist,zorgtoeslag,5,graph,mistral,Lisa Vermeer,True,,,0,,,0,,,0,3.0,2.828,2,1.0,,1,1.0,,1
+jurist,zorgtoeslag,6,graph,mistral,Robert Janssen,True,,,0,,,0,,,0,4.5,0.707,2,0.0,0.0,2,,,0
+jurist,zorgtoeslag,7,graph,deepseek,Lisa Vermeer,True,,,0,,,0,,,0,2.5,2.121,2,1.0,,1,1.0,0.0,2
+jurist,zorgtoeslag,8,graph,deepseek,Robert Janssen,True,,,0,,,0,,,0,1.0,1.414,2,1.0,0.0,2,1.0,0.0,2
+jurist,zorgtoeslag,9,graph,gpt4,Lisa Vermeer,True,,,0,,,0,,,0,2.0,2.828,2,1.0,,1,1.0,0.0,2
+jurist,zorgtoeslag,10,graph,gpt4,Robert Janssen,True,,,0,,,0,,,0,1.5,2.121,2,1.0,0.0,2,1.0,0.0,2
+jurist,zorgtoeslag,11,open,haiku,Lisa Vermeer,True,,,0,,,0,,,0,4.5,0.707,2,0.0,0.0,2,,,0
+jurist,zorgtoeslag,12,open,haiku,Robert Janssen,True,,,0,,,0,,,0,2.0,1.414,2,1.0,0.0,2,1.0,0.0,2
+jurist,zorgtoeslag,13,open,llama3.1,Lisa Vermeer,True,,,0,,,0,,,0,4.5,0.707,2,0.5,0.707,2,1.0,,1
+jurist,zorgtoeslag,14,open,llama3.1,Robert Janssen,True,,,0,,,0,,,0,0.0,0.0,2,1.0,0.0,2,1.0,0.0,2
+jurist,zorgtoeslag,15,open,mistral,Lisa Vermeer,True,,,0,,,0,,,0,3.5,0.707,2,0.5,0.707,2,1.0,,1
+jurist,zorgtoeslag,16,open,mistral,Robert Janssen,True,,,0,,,0,,,0,4.0,0.0,2,0.5,0.707,2,1.0,,1
+jurist,zorgtoeslag,17,open,deepseek,Lisa Vermeer,True,,,0,,,0,,,0,5.0,,1,0.0,,1,1.0,,1
+jurist,zorgtoeslag,18,open,deepseek,Robert Janssen,True,,,0,,,0,,,0,1.5,0.707,2,1.0,0.0,2,1.0,,1
+jurist,zorgtoeslag,19,open,gpt4,Lisa Vermeer,True,,,0,,,0,,,0,0.5,0.707,2,1.0,0.0,2,1.0,0.0,2
+jurist,zorgtoeslag,20,open,gpt4,Robert Janssen,True,,,0,,,0,,,0,0.0,0.0,2,1.0,0.0,2,1.0,0.0,2

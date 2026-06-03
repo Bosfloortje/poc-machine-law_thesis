@@ -126,6 +126,70 @@ def _call_llm(
     }
 
 
+def _create_flat_prompt(decision_extractor, person_name: str, law_name: str) -> str:
+    """
+    Build a plain-text prompt with the same engine output as the GraphRAG approach,
+    but without any graph structure. Isolates graph structure contribution from
+    mere information availability as an ablation baseline.
+    """
+    trace = decision_extractor.to_evaluation_trace()
+    outcome = trace.get("outcome", "onbekend")
+    amount_euro = trace.get("amount_euro")
+    decisive_label = (trace.get("decisive_condition") or {}).get("label", "")
+    key_facts = trace.get("key_facts", {})
+
+    lines = [
+        f"Ik heb een berekening uitgevoerd voor de regeling '{law_name}'.",
+        "",
+        f"Naam: {person_name}",
+        f"Uitkomst: {outcome}",
+        "",
+    ]
+
+    if decisive_label:
+        lines += ["Doorslaggevende voorwaarde:", f"  {decisive_label}", ""]
+
+    # Filter internal calculation constants — only show citizen attributes
+    _SKIP_PREFIXES = ("prev ", "minimum ", "maximum ", "percentage ", "perc ")
+    _SKIP_CONTAINS = ("drempelinkomen", "vermogensgrens", "normpremie", "standaardpremie",
+                      "basispremie", "grens alleenstaande", "grens partner")
+
+    if key_facts:
+        lines.append("Relevante feiten uit het profiel:")
+        for _field, info in key_facts.items():
+            label = info.get("label", _field)
+            label_lower = label.lower()
+            if any(label_lower.startswith(p) for p in _SKIP_PREFIXES):
+                continue
+            if any(s in label_lower for s in _SKIP_CONTAINS):
+                continue
+            # Use euro value if available, otherwise fall back to raw value
+            value = info.get("value_euro")
+            if value is not None:
+                dutch = f"{value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+                lines.append(f"  - {label}: €{dutch}")
+            else:
+                raw = info.get("display_value") or info.get("value", "")
+                # skip bare ratios / internal floats < 1
+                if isinstance(raw, float) and 0 < raw < 1:
+                    continue
+                if raw not in (None, ""):
+                    lines.append(f"  - {label}: {raw}")
+        lines.append("")
+
+    if amount_euro is not None and amount_euro > 0:
+        dutch = f"{amount_euro:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+        lines += [f"Berekend bedrag: €{dutch} per jaar", ""]
+
+    lines += [
+        "Geef een duidelijke uitleg in eenvoudig Nederlands (B1-niveau) over:",
+        "1. WAAROM deze burger wel of niet in aanmerking komt voor deze regeling",
+        "2. Welke factoren uit het profiel hebben geleid tot dit resultaat",
+        "3. Wat de burger eventueel kan doen als ze niet in aanmerking komen",
+    ]
+    return "\n".join(lines)
+
+
 def _create_open_prompt(service_name: str, result: dict, profile: dict, bsn: str) -> str:
     requirements_met = result.get("requirements_met", False)
     missing_required = result.get("missing_required", False)
@@ -589,6 +653,127 @@ def run_graph_approach(
 
 
 # ---------------------------------------------------------------------------
+# Flat-context approach runner
+# ---------------------------------------------------------------------------
+
+def run_flat_approach(
+    model: str,
+    law: str,
+    profiles_filter: list[str] | None,
+    output_file: str,
+    api_key: str | None = None,
+    verbose: bool = True,
+    resume: bool = False,
+    precomputed: list[dict] | None = None,
+) -> list[dict]:
+    """Run the flat-context ablation baseline.
+
+    Same engine output as the graph approach (outcome, decisive condition, key facts,
+    amount) but formatted as plain text without graph structure. Isolates whether
+    the graph approach wins because of *structure* or merely because the decisive
+    condition is made available to the LLM.
+
+    Comparison:
+        open  — raw calc output, decisive condition NOT explicitly labelled
+        flat  — decisive condition + key facts as plain text, no graph structure
+        graph — same info as flat PLUS graph structure, relations, legal articles
+    """
+    model_config = AVAILABLE_MODELS[model]
+    model_id = model_config["id"]
+    provider = model_config.get("provider", "anthropic")
+    output_path = Path(output_file)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    entries = precomputed if precomputed is not None else precompute_graph_entries(
+        law=law, profiles_filter=profiles_filter, verbose=verbose,
+    )
+
+    already_done: set[str] = set()
+    if resume and output_path.exists():
+        with open(output_path, encoding="utf-8") as f:
+            for line in f:
+                try:
+                    r = json.loads(line)
+                    if r.get("record_type") == "explanation" and "profile" in r:
+                        already_done.add(r["profile"])
+                except json.JSONDecodeError:
+                    pass
+        if verbose:
+            print(f"  Resuming: {len(already_done)} profiles already done, skipping.", file=sys.stderr)
+        entries = [e for e in entries if e["bsn"] not in already_done]
+
+    total = len(entries)
+    file_mode = "a" if (resume and already_done) else "w"
+    results: list[dict] = []
+    total_input_tokens = 0
+    total_output_tokens = 0
+
+    with open(output_path, file_mode, encoding="utf-8") as f:
+        if file_mode == "w":
+            f.write(json.dumps({
+                "record_type": "metadata",
+                "timestamp": datetime.now().isoformat(),
+                "model": model_id,
+                "provider": provider,
+                "law": law,
+                "profiles_count": total,
+                "approach": "flat",
+                "git_info": get_git_info(),
+            }, ensure_ascii=False) + "\n")
+
+        for i, entry in enumerate(entries, 1):
+            bsn = entry["bsn"]
+            person_name = entry["person_name"]
+            decision_extractor = entry["decision_extractor"]
+            graph = entry["graph"]
+            calc_output = entry["calc_output"]
+
+            if verbose:
+                print(f"  [{i}/{total}] LLM (flat) for {bsn} ({model})...", file=sys.stderr)
+
+            flat_prompt = _create_flat_prompt(decision_extractor, person_name, law)
+
+            record: dict = {
+                "record_type": "explanation",
+                "graph_type": None,
+                "approach": "flat",
+                "law": law,
+                "profile": bsn,
+                "profile_name": person_name,
+                "requirements_met": decision_extractor.effective_requirements_met,
+                "law_output": calc_output,
+                "explanation": None,
+                "skeleton_used": None,
+                "prompt_used": flat_prompt,
+                "model": model_id,
+                "usage": None,
+                "evaluation_trace": decision_extractor.to_evaluation_trace(),
+                "graph_stats": {"nodes": len(graph.nodes), "edges": len(graph.edges)},
+            }
+
+            try:
+                text, usage = _call_llm(model_id, provider, SYSTEM_PROMPT, flat_prompt, api_key)
+                record["explanation"] = text
+                record["usage"] = usage
+                total_input_tokens += usage.get("input_tokens", 0)
+                total_output_tokens += usage.get("output_tokens", 0)
+            except Exception as e:
+                if verbose:
+                    print(f"  Exception for {bsn}: {e}", file=sys.stderr)
+                record["error"] = str(e)
+
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+            results.append(record)
+
+    if verbose:
+        print(f"\nCompleted flat approach! {len(results)} profiles.", file=sys.stderr)
+        print(f"Total tokens: {total_input_tokens} input, {total_output_tokens} output", file=sys.stderr)
+        print(f"Output saved to: {output_path.absolute()}", file=sys.stderr)
+
+    return results
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -632,9 +817,16 @@ Examples:
 
     parser.add_argument(
         "--approach",
-        choices=["open", "graph", "both"],
+        choices=["open", "graph", "flat", "both"],
         default="open",
-        help="Extraction approach: open (free prompt), graph (skeleton), or both (default: open)",
+        help=(
+            "Extraction approach (default: open):\n"
+            "  open  — free prompt with raw calc output; decisive condition NOT explicit\n"
+            "  graph — constrained skeleton from decision graph\n"
+            "  flat  — ablation baseline: same info as graph (decisive condition, key facts,\n"
+            "           amount) as plain text, without graph structure\n"
+            "  both  — runs graph + open (flat can be added with a separate run)"
+        ),
     )
     parser.add_argument(
         "--model",
@@ -711,6 +903,7 @@ Examples:
 
     do_graph = args.approach in ("graph", "both")
     do_open = args.approach in ("open", "both")
+    do_flat = args.approach == "flat"
 
     # Label for folder names
     label_law = graph_laws[0] if len(graph_laws) == 1 else f"{len(graph_laws)}laws"
@@ -730,7 +923,7 @@ Examples:
     # Precompute ONCE (outside model loop) for both approaches
     # -------------------------------------------------------------------
     graph_precomputed: dict[str, list[dict]] = {}
-    if do_graph:
+    if do_graph or do_flat:
         for law in graph_laws:
             cache_path = run_dir / f"cache_{law}.json"
             if cache_path.exists():
@@ -800,6 +993,24 @@ Examples:
                 available_laws=open_laws_used,
                 raw_profiles_data=open_raw_data,
             )
+
+        # -------------------------------------------------------------------
+        # Flat approach — LLM only (uses same precomputed graph entries)
+        # -------------------------------------------------------------------
+        if do_flat:
+            for law in graph_laws:
+                output_flat = str(model_dir / f"flat_{model}_{law}.jsonl")
+                print(f"Output file (flat, {law}): {output_flat}")
+                run_flat_approach(
+                    model=model,
+                    law=law,
+                    profiles_filter=args.profiles,
+                    output_file=output_flat,
+                    api_key=args.api_key,
+                    verbose=verbose,
+                    resume=args.resume,
+                    precomputed=graph_precomputed[law],
+                )
 
 
 if __name__ == "__main__":

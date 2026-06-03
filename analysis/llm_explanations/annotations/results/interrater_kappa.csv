@@ -1,0 +1,12 @@
+annotator_type,rater_1,rater_2,metric,n_pairs,cohen_kappa,interpretation
+burger,1,2,actionability,60,0.1468,Slight
+burger,1,3,actionability,60,0.0143,Slight
+burger,1,4,actionability,20,-0.3043,No agreement
+burger,1,5,actionability,20,-0.0569,No agreement
+burger,2,3,actionability,60,0.038,Slight
+burger,2,4,actionability,20,0.3916,Fair
+burger,2,5,actionability,20,0.0805,Slight
+burger,3,4,actionability,20,0.0323,Slight
+burger,3,5,actionability,20,-0.3793,No agreement
+burger,4,5,actionability,20,0.1701,Slight
+jurist,1,2,ontbrekende_informatie,50,0.1445,Slight

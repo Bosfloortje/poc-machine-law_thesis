@@ -30,6 +30,14 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from sklearn.metrics import roc_auc_score as _sklearn_roc_auc
+
+
+def _roc_auc(labels: list[int], scores: list[float]) -> float | None:
+    if len(labels) < 2 or len(set(labels)) < 2:
+        return None
+    return round(float(_sklearn_roc_auc(labels, scores)), 3)
+
 # ---------------------------------------------------------------------------
 # Correlation helpers
 # ---------------------------------------------------------------------------
@@ -68,12 +76,31 @@ def _spearman(x: list[float], y: list[float]) -> float | None:
     return _pearson(_rank(x), _rank(y))
 
 
+def _kendall(x: list[float], y: list[float]) -> float | None:
+    n = len(x)
+    if n < 3:
+        return None
+    nc = nd = 0
+    for i in range(n):
+        for j in range(i + 1, n):
+            dx = x[i] - x[j]
+            dy = y[i] - y[j]
+            prod = dx * dy
+            if prod > 0:
+                nc += 1
+            elif prod < 0:
+                nd += 1
+    denom = n * (n - 1) / 2
+    return round((nc - nd) / denom, 3) if denom else None
+
+
 def _corr_stats(auto: list[float], human: list[float], label: str) -> dict:
     return {
         "label": label,
         "n": len(auto),
         "pearson": _pearson(auto, human),
         "spearman": _spearman(auto, human),
+        "kendall_tau": _kendall(auto, human),
         "auto_avg": round(sum(auto) / len(auto), 3) if auto else None,
         "human_avg": round(sum(human) / len(human), 3) if human else None,
     }
@@ -83,15 +110,21 @@ def _corr_stats(auto: list[float], human: list[float], label: str) -> dict:
 # Main
 # ---------------------------------------------------------------------------
 
+_EVAL_OUTPUT = Path(__file__).parent / "evaluation_output"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Correlate automatic scores with human annotations.")
-    parser.add_argument("--eval", required=True, help="eval_results.jsonl from evaluate.py")
+    parser.add_argument("--eval", default=str(_EVAL_OUTPUT / "eval_results.jsonl"),
+                        help="eval_results.jsonl from evaluate.py (default: evaluation_output/eval_results.jsonl)")
     parser.add_argument("--annot", required=True, help="Annotation CSV (record_id, makkelijkheid_burgers, juridische_aantoonbaarheid)")
-    parser.add_argument("--output", default=None, help="Write correlation report to JSON file")
+    parser.add_argument("--output", default=str(_EVAL_OUTPUT / "correlation_report.json"),
+                        help="Write correlation report to JSON file (default: evaluation_output/correlation_report.json)")
     parser.add_argument("--by-model", action="store_true", help="Also break down correlations per model")
     parser.add_argument("--by-law", action="store_true", help="Also break down correlations per law")
     parser.add_argument("--by-approach", action="store_true", help="Also break down correlations per approach")
     args = parser.parse_args()
+    _EVAL_OUTPUT.mkdir(exist_ok=True)
 
     # Load evaluation results
     eval_by_id: dict[str, dict] = {}
@@ -149,6 +182,8 @@ def main() -> None:
             "d3_word_count": ev.get("d3_word_count"),
             # Dim2 (faithfulness — only graphrag)
             "d2_faithfulness": ev.get("d2_faithfulness"),
+            "d2_nli_claim_scores": ev.get("d2_nli_claim_scores"),
+            "d2_string_labels": ev.get("d2_string_labels"),
         })
 
     if n_missing_eval:
@@ -179,12 +214,34 @@ def main() -> None:
         return corrs
 
     def _legal_corrs(rows: list[dict]) -> list[dict]:
+        corrs: list[dict] = []
         legal_rows = [r for r in rows if r.get("d2_faithfulness") is not None and r.get("human_legal") is not None]
-        if not legal_rows:
-            return []
-        auto_vals = [r["d2_faithfulness"] for r in legal_rows]
-        hum_vals = [r["human_legal"] for r in legal_rows]
-        return [_corr_stats(auto_vals, hum_vals, "NLI faithfulness ↔ juridische_aantoonbaarheid")]
+        if legal_rows:
+            auto_vals = [r["d2_faithfulness"] for r in legal_rows]
+            hum_vals = [r["human_legal"] for r in legal_rows]
+            corrs.append(_corr_stats(auto_vals, hum_vals, "Faithfulness ↔ juridische_aantoonbaarheid"))
+        # ROC AUC: NLI entailment prob vs string-match binary label (no human annotations needed)
+        all_nli: list[float] = []
+        all_lbls: list[int] = []
+        for r in rows:
+            nli = r.get("d2_nli_claim_scores") or []
+            lbls = r.get("d2_string_labels") or []
+            if len(nli) == len(lbls):
+                all_nli.extend(nli)
+                all_lbls.extend(lbls)
+        auc = _roc_auc(all_lbls, all_nli)
+        if auc is not None:
+            corrs.append({
+                "label": "NLI ROC AUC (NLI prob vs string-match ground truth)",
+                "n": len(all_nli),
+                "auc": auc,
+                "pearson": None,
+                "spearman": None,
+                "kendall_tau": None,
+                "auto_avg": round(sum(all_nli) / len(all_nli), 3) if all_nli else None,
+                "human_avg": None,
+            })
+        return corrs
 
     report: dict[str, Any] = {
         "n_joined": n,
@@ -220,10 +277,14 @@ def main() -> None:
     print("Overall correlations")
     print("-" * 65)
     for c in report["overall"]["citizen"] + report["overall"]["legal"]:
-        p = f"{c['pearson']:.3f}" if c["pearson"] is not None else "n/a"
-        s = f"{c['spearman']:.3f}" if c["spearman"] is not None else "n/a"
         print(f"  {c['label']}")
-        print(f"    n={c['n']}  Pearson={p}  Spearman={s}")
+        if c.get("auc") is not None:
+            print(f"    n={c['n']}  ROC AUC={c['auc']:.3f}")
+        else:
+            p = f"{c['pearson']:.3f}" if c["pearson"] is not None else "n/a"
+            s = f"{c['spearman']:.3f}" if c["spearman"] is not None else "n/a"
+            t = f"{c['kendall_tau']:.3f}" if c.get("kendall_tau") is not None else "n/a"
+            print(f"    n={c['n']}  Pearson={p}  Spearman={s}  Kendall={t}")
 
     for group_key in ("by_model", "by_law", "by_approach"):
         if group_key in report:
@@ -233,9 +294,13 @@ def main() -> None:
                 if all_corrs:
                     print(f"  [{key}]")
                     for c in all_corrs:
-                        p = f"{c['pearson']:.3f}" if c["pearson"] is not None else "n/a"
-                        s = f"{c['spearman']:.3f}" if c["spearman"] is not None else "n/a"
-                        print(f"    {c['label'][:50]:<50}  P={p}  S={s}")
+                        if c.get("auc") is not None:
+                            print(f"    {c['label'][:50]:<50}  AUC={c['auc']:.3f}")
+                        else:
+                            p = f"{c['pearson']:.3f}" if c["pearson"] is not None else "n/a"
+                            s = f"{c['spearman']:.3f}" if c["spearman"] is not None else "n/a"
+                            t = f"{c['kendall_tau']:.3f}" if c.get("kendall_tau") is not None else "n/a"
+                            print(f"    {c['label'][:50]:<50}  P={p}  S={s}  K={t}")
 
     print("=" * 65)
 

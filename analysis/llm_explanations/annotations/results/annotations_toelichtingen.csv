@@ -1,0 +1,134 @@
+annotator_type,wet,uitleg_nr,approach,model,profile_name,toelichting,toelichting_q1,toelichting_q2
+burger,alcoholwet,16,open,mistral,Bram de Groot,dubbel,,
+burger,alcoholwet,18,open,deepseek,Bram de Groot,dubbel,,
+burger,alcoholwet,20,open,gpt4,Bram de Groot,dubbel,,
+burger,alcoholwet,8,graph,deepseek,Bram de Groot,Lol hij zegt twee punten en noemt er vervolgens drie,,
+burger,alcoholwet,14,open,llama3.1,Bram de Groot,"Foutieve info over leeftijd, benoemen bsn, allemaal niet oke",,
+burger,alcoholwet,16,open,mistral,Bram de Groot,Stappen zijn wel nog beetje ambiguous,,
+burger,alcoholwet,18,open,deepseek,Bram de Groot,"Ook hier zijn stappen verwarrend. De svh is wel belangrijk, het snapt de context van alcohol verkoop dan even niet of vergeet het",,
+burger,alcoholwet,19,open,gpt4,Sophie de Vries,Ik snap niet dat alles leeftijd vergeet want dat is het grootste ding waardoor iemand nu valse hoop kan krijgen,,
+burger,alcoholwet,11,open,haiku,Sophie de Vries,"Je geeft dezelfde info op als bij Sophie, maar ineens is er te weinig info om te kijken of Art 8 & 10 voldoen, maar het is ook onduidelijk welke info er dan mist",,
+burger,alcoholwet,14,open,llama3.1,Bram de Groot,"Er stonden zoveel verschillende eisen in deze tekst. Eerst is het 18+, dan 21, super verwarrend. Daarnaast wordt er ineens een nieuwe term in gegooid ‘zwaarhandelzaak?’",,
+burger,alcoholwet,18,open,deepseek,Bram de Groot,Het feit dat de LLM zegt ‘hoewel dit misschien niet zo belangrijk is voor een snackbar’ vind ik echt heel raar,,
+jurist,alcoholwet,1,graph,haiku,Sophie de Vries,,mi akkoord,is volledig
+jurist,alcoholwet,2,graph,haiku,Bram de Groot,,is akkoord,mi correct
+jurist,alcoholwet,3,graph,llama3.1,Sophie de Vries,,klopt,
+jurist,alcoholwet,5,graph,mistral,Sophie de Vries,,,verwijzing gemeente
+jurist,alcoholwet,7,graph,deepseek,Sophie de Vries,,gegeneerde uitleg juridisch niet juist,
+jurist,alcoholwet,9,graph,gpt4,Sophie de Vries,,,verwijzing naar gemeente; daar moet ze aanvragen
+jurist,alcoholwet,11,open,haiku,Sophie de Vries,,aanvrager is geen 21,leeftijdsgrens
+jurist,alcoholwet,13,open,llama3.1,Sophie de Vries,,leeftijdsgrens niet genoemd,
+jurist,alcoholwet,15,open,mistral,Sophie de Vries,,leeftijd ontbreekt,
+jurist,alcoholwet,17,open,deepseek,Sophie de Vries,,leeftijdsgrens ontbreekt,
+jurist,alcoholwet,19,open,gpt4,Sophie de Vries,,,leeftijdsgrens ontbreekt
+jurist,alcoholwet,20,open,gpt4,Bram de Groot,,snackbar geen alcohol,
+jurist,alcoholwet,1,graph,haiku,Sophie de Vries,,Dit is niet geheel gebaseerd op art. 3 Alcoholwet,
+jurist,alcoholwet,2,graph,haiku,Bram de Groot,,Er wordt niet gefocust op art 8 & 10 Aw,
+jurist,alcoholwet,3,graph,llama3.1,Sophie de Vries,,,Wat houden die artikelen in?
+jurist,alcoholwet,4,graph,llama3.1,Bram de Groot,,Goede en duidelijke uitleg met advies,Juridische grondslag ontbreekt
+jurist,alcoholwet,7,graph,deepseek,Sophie de Vries,,Art. 10 ontbreekt,
+jurist,alcoholwet,8,graph,deepseek,Bram de Groot,,Te kort door de bocht,
+jurist,alcoholwet,9,graph,gpt4,Sophie de Vries,,Het X geldbedrag komt uit het niets,
+jurist,alcoholwet,11,open,haiku,Sophie de Vries,,niet duidelijk is of er voltooid is aan art. 8 en 10  aw,
+jurist,alcoholwet,12,open,haiku,Bram de Groot,,Ik weet niet welke leeftijd verbonden is aan het behalen van het diploma. Wel klopt dat hij 21 moet zijn (art. 8 lid 1 sub a Aw),Juridische grondslagen
+jurist,alcoholwet,13,open,llama3.1,Sophie de Vries,,,Meer diepgang in artikelen 8 & 10 mist
+jurist,alcoholwet,14,open,llama3.1,Bram de Groot,,Meerdere fouten in de tekst over de leeftijd. Vervolgens dat hij een andere zaak moet openen en het dan wel mag. Ook misinformatie.,
+jurist,alcoholwet,17,open,deepseek,Sophie de Vries,,,Jo. Art 8
+jurist,alcoholwet,18,open,deepseek,Bram de Groot,,"Het is geen en/of situatie. Bram moet aan ALLE voorwaarden voldoen, maar dit volgt niet meteen uit de tekst.
+
+“Zijn SVH-diploma halen, hoewel dit misschien niet zo belangrijk is voor een snackbar.“ lijkt verkeerde informatie te zijn",
+jurist,alcoholwet,19,open,gpt4,Sophie de Vries,,Goed en duidelijk,
+jurist,alcoholwet,20,open,gpt4,Bram de Groot,,,Andere factoren van afwijzingen dienen er ook in te staan
+burger,bijstand,1,graph,haiku,Daan Peters,staan geen voorwaarden,,
+burger,bijstand,6,graph,mistral,Kevin van Dalen,Oh help in eurocenten,,
+burger,bijstand,8,graph,deepseek,Kevin van Dalen,Geen fan van uitleggen wat ze in een ander scenario moeten doen,,
+burger,bijstand,12,open,haiku,Kevin van Dalen,"Wel riskie om te zeggen dat hij geen problemen heeft, dat weet je eigenlijk niet",,
+burger,bijstand,17,open,deepseek,Daan Peters,Het adres is er vlgm gewoon,,
+jurist,bijstand,2,graph,haiku,Kevin van Dalen,,"Ook mensen met werk hebben recht op een bijstandsuitkering, indien zij te weinig verdienen. Werkeloosheid is dus niet de harde eis. (Te) Weinig inkomen wel",
+jurist,bijstand,3,graph,llama3.1,Daan Peters,,Het basisbedrag is maar een deel van de uitkering,
+jurist,bijstand,4,graph,llama3.1,Kevin van Dalen,,"Meerdere fouten, het bedrag klopt niet, te veel focus op werkloosheid ipv het niet beschikken over de middelen",
+jurist,bijstand,5,graph,mistral,Daan Peters,,Bedrag is een basisbedrag (het kan/zal hoger uitpakken),
+jurist,bijstand,7,graph,deepseek,Daan Peters,,Het postadres mag WEL bij de onder de opsomming genoemde organisaties zijn,
+jurist,bijstand,8,graph,deepseek,Kevin van Dalen,,"hij krijgt niet automatisch een uitkering (daar zijn meerdere factoren), maar hij komt wel in aanmerking ervoor",
+jurist,bijstand,9,graph,gpt4,Daan Peters,,"Juridisch correct, maar taalkundig fouten",
+jurist,bijstand,10,graph,gpt4,Kevin van Dalen,,Geen informatie over re-integratie of arbeidsvermogen,
+jurist,bijstand,11,open,haiku,Daan Peters,,Genoeg gegevens om een oordeel te vellen.,Informatie over alle voorwaarden mist
+jurist,bijstand,13,open,llama3.1,Daan Peters,,"Het is niet dat hij geen recht heeft, maar door het ontbreken van gegevens kan er geen conclusie getrokken worden",Juridische grondslag mist
+jurist,bijstand,14,open,llama3.1,Kevin van Dalen,,"Het gaat niet om een specifiek bedrag maar om het niet kunnen bekostigen van de normale levensbehoeften. Daarnaast is de chatbot heel judgy (?), in de zin van dat het bijna een beschuldigende toon heeft.",
+jurist,bijstand,15,open,mistral,Daan Peters,,Wederom gaat het hier om de hoogte van het loon ipv de kosten,
+jurist,bijstand,16,open,mistral,Kevin van Dalen,,"Niet blijkt dat Kevin full- of parttime werkt, dus de chatbot lijkt dit aan te nemen. Wel klopt dat de uitkering vaker lager is dan €2200,- maar er mag iets meer informatie hierover.",Iets meer uitleg over de inkomensgrens
+jurist,bijstand,17,open,deepseek,Daan Peters,,Het mag ook een normaal woonadres zijn.,Heel kort door de bocht
+jurist,bijstand,18,open,deepseek,Kevin van Dalen,,,Er is niet gekeken naar de andere factoren/voorwaarden
+jurist,bijstand,19,open,gpt4,Daan Peters,,,"“Vast woonadres of postadres moet een van de volgende zijn, maar er ontbreken gegevens (deze voorwaarde kon dus niet beoordeeld worden)”: niet genoemd wat het wel had moeten zijn"
+jurist,bijstand,20,open,gpt4,Kevin van Dalen,,Duidelijk uitleg over de bijstandsnorm,
+jurist,bijstand,1,graph,haiku,Daan Peters,,,zoeken naar baan verplicht
+jurist,bijstand,2,graph,haiku,Kevin van Dalen,,,goede uitleg
+jurist,bijstand,3,graph,llama3.1,Daan Peters,,,voorwaarden zoals baan zoeken ontbreken
+jurist,bijstand,4,graph,llama3.1,Kevin van Dalen,,,verplichting baan zoeken ontbreekt
+jurist,bijstand,5,graph,mistral,Daan Peters,,,te korte uitleg
+jurist,bijstand,6,graph,mistral,Kevin van Dalen,,,sollicitatieplicht ontbreekt
+jurist,bijstand,7,graph,deepseek,Daan Peters,,info ontbreekt,
+jurist,bijstand,10,graph,gpt4,Kevin van Dalen,,te weinig info,te weinig info
+jurist,bijstand,11,open,haiku,Daan Peters,,naw gegevens zi9jn er wel,
+jurist,bijstand,12,open,haiku,Kevin van Dalen,,is dit goed nieuws?,
+jurist,bijstand,13,open,llama3.1,Daan Peters,,foutive uitleg,
+jurist,bijstand,14,open,llama3.1,Kevin van Dalen,,,goede uitleg
+jurist,bijstand,15,open,mistral,Daan Peters,,gegevens zijn er wel,
+jurist,bijstand,16,open,mistral,Kevin van Dalen,,,complete uitleg
+jurist,bijstand,17,open,deepseek,Daan Peters,,adresgegevens wel aanwezig,zie hierboven
+jurist,bijstand,18,open,deepseek,Kevin van Dalen,,goede info,
+jurist,bijstand,19,open,gpt4,Daan Peters,,gegevens aanwezig,gegevens zijn er wel
+jurist,bijstand,20,open,gpt4,Kevin van Dalen,,een overheidsorganisatie is te vaag,
+burger,zorgtoeslag,3,graph,llama3.1,Lisa Vermeer,wel beetje lullig verwoord,,
+burger,zorgtoeslag,8,graph,deepseek,Robert Janssen,die delen door 100 komt echt uit t niets,,
+burger,zorgtoeslag,2,graph,haiku,Robert Janssen,Gemeente klopt niet en de tekst opmaak is niet prettig,,
+burger,zorgtoeslag,3,graph,llama3.1,Lisa Vermeer,"slechte tekst, niet netjes",,
+burger,zorgtoeslag,4,graph,llama3.1,Robert Janssen,te lang,,
+burger,zorgtoeslag,6,graph,mistral,Robert Janssen,vrij lang,,
+burger,zorgtoeslag,7,graph,deepseek,Lisa Vermeer,"dubbelop, hak op de tak",,
+burger,zorgtoeslag,8,graph,deepseek,Robert Janssen,niet netjes en fouten,,
+burger,zorgtoeslag,9,graph,gpt4,Lisa Vermeer,mis de persoonlijke hulp,,
+burger,zorgtoeslag,10,graph,gpt4,Robert Janssen,niet duidelijk,,
+burger,zorgtoeslag,13,open,llama3.1,Lisa Vermeer,1 alinea,,
+burger,zorgtoeslag,14,open,llama3.1,Robert Janssen,verwarrend,,
+burger,zorgtoeslag,16,open,mistral,Robert Janssen,punt 1 onduidelijk,,
+burger,zorgtoeslag,18,open,deepseek,Robert Janssen,geen getallen,,
+burger,zorgtoeslag,1,graph,haiku,Lisa Vermeer,"Lisa is 27 jaar oud?, Wat bedoel je met winst/jaar?, is het bruto inkomen?",,
+burger,zorgtoeslag,3,graph,llama3.1,Lisa Vermeer,"voldoende jong, voldoende arm, genoeg vermogen is vaag",,
+burger,zorgtoeslag,4,graph,llama3.1,Robert Janssen,Dit is een goed nieuwsbrief!? Proberen om uw inkomen te verlagen?,,
+burger,zorgtoeslag,6,graph,mistral,Robert Janssen,waarschijnlijk is vaag,,
+jurist,zorgtoeslag,1,graph,haiku,Lisa Vermeer,,vermogen kan wel getoetst worden:1 huishoudgrootte,vermogen is wel bekend
+jurist,zorgtoeslag,2,graph,haiku,Robert Janssen,,verwijzing naar gemeente niet juist,belastingdienst voert zorgtoeslag uit
+jurist,zorgtoeslag,4,graph,llama3.1,Robert Janssen,,ze krijgt 178 k ?,
+jurist,zorgtoeslag,5,graph,mistral,Lisa Vermeer,,vermogen moet rendementsgrondslag zijn,vermogen is wel bekend
+jurist,zorgtoeslag,7,graph,deepseek,Lisa Vermeer,,wel of geen vermogen,
+jurist,zorgtoeslag,8,graph,deepseek,Robert Janssen,,gebaseerd op verkeerde aannames,berekening foutief
+jurist,zorgtoeslag,9,graph,gpt4,Lisa Vermeer,,gezamenlijk vermogne niet bekend,
+jurist,zorgtoeslag,10,graph,gpt4,Robert Janssen,,deeltijd niet van belang,
+jurist,zorgtoeslag,12,open,haiku,Robert Janssen,,"functie niet belangrijk, gaat om inkomen",
+jurist,zorgtoeslag,14,open,llama3.1,Robert Janssen,,foutieve info,
+jurist,zorgtoeslag,16,open,mistral,Robert Janssen,,,getallen ontbreken
+jurist,zorgtoeslag,17,open,deepseek,Lisa Vermeer,,,duidelijke tekst
+jurist,zorgtoeslag,18,open,deepseek,Robert Janssen,,,"getallen ontbreken, vage tekst"
+jurist,zorgtoeslag,19,open,gpt4,Lisa Vermeer,,heeft geen recht op zorgtoeslag,foutieve info
+jurist,zorgtoeslag,20,open,gpt4,Robert Janssen,,foutieve info,heeft juist geen recht
+jurist,zorgtoeslag,1,graph,haiku,Lisa Vermeer,,"Zij heeft eerder aangegeven geen partner te hebben, dus een gezamenlijk vermogen zou niet nodig moeten zijn.",
+jurist,zorgtoeslag,2,graph,haiku,Robert Janssen,,"Zorgtoeslag moet worden aangevraagd bij de belastingdienst/overheid. 
+Daarnaast staat er “uitkering”, dit kan verwarrend zijn voor Lisa, nu dit om een toeslag gaat. 
+Bovendien staat er dat zij niets extra hoeft te doen, maar volgt er wel een opsomming van meerdere dingen die zij moet doen. Ook verwarrend. 
+Of het bedrag klopt is ook maar de vraag: €148,- per maand aan zorgtoeslag met een loon van €1700,- klopt waarschijnlijk niet.",Hoe dient Lisa de toeslag aan te vragen?
+jurist,zorgtoeslag,3,graph,llama3.1,Lisa Vermeer,,Het is duidelijk en kort,De uitleg over zorgtoeslag in geval van een partner
+jurist,zorgtoeslag,4,graph,llama3.1,Robert Janssen,,"Veel fouten in de uitleg, het bedrag is veel te hoog en verkeerd begrepen.",Op basis waarvan wordt het toegekend?
+jurist,zorgtoeslag,6,graph,mistral,Robert Janssen,,,"Goede uitleg over wat ze bij afwijzing kan doen, zonder dingen te verzinnen."
+jurist,zorgtoeslag,7,graph,deepseek,Lisa Vermeer,,Ik weet niet waar ze het jaarlijkse bedrag op baseren. Dit kan toch alleen de belastingdienst?,
+jurist,zorgtoeslag,8,graph,deepseek,Robert Janssen,,"Grotendeels juist, tot we bij het stuk over het uwv en het bedrag komen. Het uwv gaat hier niet over en de berekening lijkt ook verzonnen te zijn.",Een correcte aanpak bij de aanvraag. En de hoogte van het bedrag
+jurist,zorgtoeslag,10,graph,gpt4,Robert Janssen,,Te veel focus op haar functie en te weinig op de kern van de zorgtoeslag (te laag inkomen/geen vermogen),
+jurist,zorgtoeslag,12,open,haiku,Robert Janssen,,"Robert heeft geen recht op zorgtoeslag, terwijl dit wel wordt gezegd. 
+De gemeente gaat niet over de zorgtoeslag. Het verandert wel per jaar.","Bijna niks klopt, dus er moet veel informatie bij."
+jurist,zorgtoeslag,13,open,llama3.1,Lisa Vermeer,,Robert heeft toch bij voorbaat al geen recht op zorgtoeslag door zijn inkomen?,Benadrukken waarom hij te veel verdient/wat de voorwaarden zijn
+jurist,zorgtoeslag,14,open,llama3.1,Robert Janssen,,Veel verkeerde informatie,Bijna niets klopt
+jurist,zorgtoeslag,15,open,mistral,Lisa Vermeer,,"Hij voldoet niet aan de voorwaarden, maar dit vaak wel gezegd.",De uitleg dat hij niet toekomt aan de zorgtoeslag
+jurist,zorgtoeslag,17,open,deepseek,Lisa Vermeer,,Art. 2 is gecompliceerd.,
+jurist,zorgtoeslag,18,open,deepseek,Robert Janssen,,"Heel verwarrend voor Robert, want hieruit kan er niet meteen geconcludeerd worden of hij hier recht op heeft (of niet)",
+jurist,zorgtoeslag,19,open,gpt4,Lisa Vermeer,,Art. 3 gaat over de rendementsgrondslag. Het gaat hier niet om in de tekst hierboven,
+jurist,zorgtoeslag,20,open,gpt4,Robert Janssen,,"Incorrect, de zinnen zijn zo onlogisch dat er niet te concluderen valt of er nou wel of aanspraak is op zorgtoeslag",

@@ -53,8 +53,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 SCRIPTS: dict[str, list[str]] = {
     "zorgtoeslag": [
         "Kom ik in aanmerking voor zorgtoeslag?",
-        "Wat als mijn jaarinkomen €20.000 zou zijn? Heb ik dan recht op zorgtoeslag?",
-        "Wat als mijn jaarinkomen €60.000 zou zijn? Heb ik dan recht op zorgtoeslag?",
+        "Waarom kom ik wel of niet in aanmerking? Leg uit welke factoren de doorslag geven.",
+        "Hoeveel zorgtoeslag zou ik per maand ontvangen?",
+        "Wat kan ik doen als ik nu niet in aanmerking kom?",
     ],
     "kinderbijslag": [
         "Heb ik recht op kinderbijslag?",
@@ -74,8 +75,9 @@ SCRIPTS: dict[str, list[str]] = {
     ],
     "bijstand": [
         "Heb ik recht op bijstand?",
-        "Wat als ik een deeltijdbaan heb met een inkomen van €500 per maand? Heb ik dan nog recht op bijstand?",
-        "Wat als ik €20.000 spaargeld heb? Heb ik dan nog recht op bijstand?",
+        "Wat zijn de voorwaarden en voldoe ik eraan?",
+        "Wat is het bedrag dat ik zou ontvangen?",
+        "Hoe vraag ik bijstand aan?",
     ],
     "kindgebonden_budget": [
         "Heb ik recht op kindgebonden budget?",
@@ -89,8 +91,9 @@ SCRIPTS: dict[str, list[str]] = {
     ],
     "alcoholwet": [
         "Kom ik in aanmerking voor een vergunning op basis van de alcoholwet?",
-        "Wat als mijn bedrijf niet actief staat ingeschreven bij de KVK? Krijg ik dan nog een vergunning?",
-        "Wat als ik geen geldige SVH-registratie voor sociale hygiëne heb? Kom ik dan nog in aanmerking?",
+        "Waarom wel of niet? Leg de belangrijkste voorwaarden uit.",
+        "Welk recht of welke mogelijkheid geeft deze vergunning mij?",
+        "Wat zijn mijn opties als ik niet in aanmerking kom?",
     ],
     "kieswet": [
         "Heb ik stemrecht op basis van de kieswet?",
@@ -253,10 +256,10 @@ async def run_conversation(
                             follow_text = follow_data.get("message", "")
                             if follow_text:
                                 assistant_parts.append(follow_text)
-                        except TimeoutError:
+                        except asyncio.TimeoutError:
                             break
 
-                    except TimeoutError:
+                    except asyncio.TimeoutError:
                         if not assistant_parts:
                             error = f"Timeout waiting for response on turn {i}"
                         break
@@ -278,7 +281,7 @@ async def run_conversation(
         error = "Connection refused — is the server running?"
     except websockets.exceptions.ConnectionClosedError as e:
         error = f"WebSocket closed unexpectedly (code {e.code})"
-    except TimeoutError:
+    except asyncio.TimeoutError:
         error = "Timeout during WebSocket handshake"
     except Exception as e:
         error = str(e)
@@ -317,7 +320,7 @@ async def run_batch(
         bsns = bsns[:limit]
 
     total = len(bsns)
-    print(f"\nBatch chat: {total} profiles x {len(script)} turns -> {output_path.name}")
+    print(f"\nBatch chat: {total} profiles × {len(script)} turns → {output_path.name}")
     print(f"Law: {law} | Provider: {provider} | GraphRAG: {graphrag} | Guard: {not no_guard}")
     print("=" * 60)
 

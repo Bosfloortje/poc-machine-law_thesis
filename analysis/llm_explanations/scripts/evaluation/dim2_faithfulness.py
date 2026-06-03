@@ -20,7 +20,6 @@ This module is importable (for evaluate.py) and runnable standalone:
 """
 from __future__ import annotations
 
-import re
 import sys
 from pathlib import Path
 
@@ -126,7 +125,7 @@ def extract_claims(trace: dict) -> list[dict]:
             "id": "decisive",
             "type": "condition",
             "premise": f"De doorslaggevende voorwaarde is: {decisive_label}.",
-            "required": False,
+            "required": True,
         })
 
     for field, info in trace.get("key_facts", {}).items():
@@ -147,13 +146,16 @@ def extract_claims(trace: dict) -> list[dict]:
 
 
 # ---------------------------------------------------------------------------
-# NLI-based sentence scoring
+# String-based claim scoring (replaces NLI — fast, no model required)
 # ---------------------------------------------------------------------------
 
-def _split_sentences(text: str) -> list[str]:
-    """Split text into sentences."""
-    parts = re.split(r"(?<=[.!?])\s+", text.strip())
-    return [p.strip() for p in parts if len(p.strip()) > 10]
+_NL_STOPWORDS = {
+    "de", "het", "een", "is", "van", "op", "in", "aan", "voor", "met", "zijn",
+    "mag", "moet", "worden", "dit", "dat", "die", "der", "den", "als", "dan",
+    "niet", "ook", "maar", "wel", "nog", "bij", "tot", "uit", "door", "over",
+    "naar", "om", "na", "per", "meer", "minder", "heeft", "hebben", "worden",
+    "wordt", "werd", "zijn", "was", "worden", "heeft", "uw", "ons", "uw",
+}
 
 
 def _amount_present(text: str, variants: list[str]) -> bool:
@@ -162,29 +164,33 @@ def _amount_present(text: str, variants: list[str]) -> bool:
     return any(v in text_lower for v in variants)
 
 
-def _claim_supported_nli(
-    explanation: str,
-    claim: dict,
-    pipeline,
-    entailment_threshold: float = 0.5,
-) -> dict:
-    """
-    Check if a claim is supported by any sentence in the explanation.
+def _condition_present(text: str, label: str) -> bool:
+    """Check if significant keywords from the decisive condition label appear in the explanation."""
+    text_lower = text.lower()
+    words = [w.strip(".,;:()") for w in label.lower().split()]
+    significant = [w for w in words if len(w) > 4 and w not in _NL_STOPWORDS]
+    if not significant:
+        return False
+    # At least half the significant words must appear
+    matches = sum(1 for w in significant if w in text_lower)
+    return matches >= max(1, len(significant) // 2)
 
-    For amount claims: first do a fast string check; NLI only if present.
-    For other claims: NLI on up to 5 most relevant sentences.
 
-    Returns a dict with: supported (bool), method, score (float).
-    """
-    premise = claim["premise"]
+def _nli_entailment_score(explanation: str, premise: str, nli_pipe) -> float:
+    """Return NLI entailment probability for (explanation entails premise). Falls back to 0.5."""
+    try:
+        result = nli_pipe(explanation, [premise], hypothesis_template="{}", multi_label=True)
+        return float(result["scores"][0])
+    except Exception:
+        return 0.5
 
-    # Fast path for amount/fact claims: string match on euro value
+
+def _claim_supported(explanation: str, claim: dict) -> dict:
+    """Check if a claim is supported using string matching (no NLI model required)."""
     if claim["type"] in ("amount", "fact") and claim.get("amount_variants"):
         supported = _amount_present(explanation, claim["amount_variants"])
         return {"supported": supported, "method": "string", "score": 1.0 if supported else 0.0}
 
-    # Fast path for outcome claims: keyword-based string match
-    # NLI is too sensitive to phrasing ("U heeft recht op" ≠ "De aanvraag is gehonoreerd")
     if claim["type"] == "outcome":
         text_lower = explanation.lower()
         is_positive = claim.get("outcome_positive", False)
@@ -201,35 +207,12 @@ def _claim_supported_nli(
             supported = any(s in text_lower for s in negative_signals)
         return {"supported": supported, "method": "string", "score": 1.0 if supported else 0.0}
 
-    # NLI path for condition claims
-    sentences = _split_sentences(explanation)
-    if not sentences:
-        return {"supported": False, "method": "nli", "score": 0.0}
+    if claim["type"] == "condition":
+        label = claim.get("premise", "")
+        supported = _condition_present(explanation, label)
+        return {"supported": supported, "method": "string", "score": 1.0 if supported else 0.0}
 
-    # Run NLI: hypothesis is the premise, each explanation sentence is the "sequence"
-    # We use zero-shot-classification: labels = ["entailment", "neutral", "contradiction"]
-    best_score = 0.0
-    for sentence in sentences[:10]:  # cap at 10 sentences for performance
-        try:
-            result = pipeline(
-                sentence,
-                candidate_labels=["entailment", "neutral", "contradiction"],
-                hypothesis_template=f"{{}} {premise}",
-                multi_label=False,
-            )
-            labels = result["labels"]
-            scores = result["scores"]
-            entail_idx = labels.index("entailment") if "entailment" in labels else -1
-            if entail_idx >= 0:
-                best_score = max(best_score, scores[entail_idx])
-        except Exception:
-            continue
-
-    return {
-        "supported": best_score >= entailment_threshold,
-        "method": "nli",
-        "score": round(best_score, 3),
-    }
+    return {"supported": False, "method": "string", "score": 0.0}
 
 
 # ---------------------------------------------------------------------------
@@ -239,7 +222,8 @@ def _claim_supported_nli(
 def score_faithfulness(
     explanation: str,
     trace: dict,
-    entailment_threshold: float = 0.5,
+    *,
+    nli_pipe=None,
 ) -> dict:
     """
     Compute Dimension 2 faithfulness score for a single explanation.
@@ -271,12 +255,11 @@ def score_faithfulness(
             "claims": [],
         }
 
-    pipeline = _get_nli_pipeline()
     claim_results: list[dict] = []
 
     for claim in claims:
-        check = _claim_supported_nli(text, claim, pipeline, entailment_threshold)
-        claim_results.append({
+        check = _claim_supported(text, claim)
+        cr: dict = {
             "id": claim["id"],
             "type": claim["type"],
             "required": claim["required"],
@@ -284,7 +267,10 @@ def score_faithfulness(
             "supported": check["supported"],
             "method": check["method"],
             "score": check["score"],
-        })
+        }
+        if nli_pipe is not None:
+            cr["nli_score"] = _nli_entailment_score(text, claim["premise"], nli_pipe)
+        claim_results.append(cr)
 
     n_claims = len(claim_results)
     n_supported = sum(1 for c in claim_results if c["supported"])
@@ -300,7 +286,7 @@ def score_faithfulness(
     else:
         faithfulness_score = None
 
-    return {
+    result: dict = {
         "faithfulness_score": faithfulness_score,
         "n_claims": n_claims,
         "n_supported": n_supported,
@@ -308,6 +294,10 @@ def score_faithfulness(
         "n_required_supported": n_required_supported,
         "claims": claim_results,
     }
+    if nli_pipe is not None:
+        result["nli_claim_scores"] = [c["nli_score"] for c in claim_results if "nli_score" in c]
+        result["string_labels"] = [1 if c["supported"] else 0 for c in claim_results]
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -360,7 +350,6 @@ def main() -> None:
                 scores = score_faithfulness(
                     record["explanation"],
                     record["evaluation_trace"],
-                    args.threshold,
                 )
 
                 f_score = scores["faithfulness_score"]
