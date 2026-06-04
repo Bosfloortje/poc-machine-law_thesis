@@ -90,6 +90,8 @@ class MCPServiceRegistry:
                                 service_type=service_type,
                             )
                             self.law_services[service_name] = service
+                            if law_path != service_name:
+                                self.law_services[law_path] = service
                             print(f"Added service: {service_name} ({description}) for law {law_path}")
                         except Exception as e:
                             print(f"Error adding service for {law_path}: {e}")

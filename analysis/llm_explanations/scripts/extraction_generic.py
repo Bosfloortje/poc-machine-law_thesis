@@ -1520,6 +1520,34 @@ def run_calculation(law_name: str, bsn: str, law: dict | None = None, profile: d
         if law and profile:
             params = _resolve_law_parameters(law, profile, bsn)
 
+        # For gemeente-specific laws, detect the right gemeente from the profile
+        # so we don't always evaluate against GEMEENTE_AMSTERDAM (the first registered)
+        sources = (profile or {}).get("sources", {})
+        gemeente = next((k for k in sources if k.startswith("GEMEENTE_")), None)
+        if gemeente and gemeente != service.service_type and service.service_type.startswith("GEMEENTE_"):
+            from web.dependencies import TODAY
+            params["BSN"] = bsn
+            result = services.evaluate(
+                service=gemeente,
+                law=service.law_path,
+                parameters=params,
+                reference_date=TODAY,
+                approved=True,
+            )
+            if result is None:
+                return None
+            return {
+                "requirements_met": result.requirements_met,
+                "missing_required": result.missing_required,
+                "result": result.output or {},
+                "input_data": result.input or {},
+                "explanation": (
+                    "U voldoet aan alle voorwaarden."
+                    if result.requirements_met
+                    else "U voldoet niet aan alle voorwaarden."
+                ),
+            }
+
         calc_result = service.execute(bsn, params)
         if "error" in calc_result:
             return None
