@@ -293,10 +293,8 @@ def precompute_open_entries(
                 if cache_dir:
                     cache_path = cache_dir / f"cache_{law_name.replace('/', '_')}.json"
                     law_caches.setdefault(law_name, {})[bsn] = calc_result
-                    tmp = cache_path.with_suffix(".tmp")
-                    with open(tmp, "w", encoding="utf-8") as _cf:
+                    with open(cache_path, "w", encoding="utf-8") as _cf:
                         json.dump(law_caches[law_name], _cf, ensure_ascii=False)
-                    tmp.replace(cache_path)
             except Exception as e:
                 entry["error"] = str(e)
             entries.append(entry)
@@ -521,10 +519,8 @@ def precompute_graph_entries(
             if cache_file:
                 cached[bsn] = calc_result
                 cache_file.parent.mkdir(parents=True, exist_ok=True)
-                tmp = cache_file.with_suffix(".tmp")
-                with open(tmp, "w", encoding="utf-8") as f:
+                with open(cache_file, "w", encoding="utf-8") as f:
                     json.dump(cached, f, ensure_ascii=False)
-                tmp.replace(cache_file)
 
         decision_extractor = DecisionGraphExtractor(law_yaml, profile_data, bsn, calc_result)
         graph = decision_extractor.extract()

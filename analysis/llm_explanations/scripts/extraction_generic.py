@@ -1596,12 +1596,14 @@ def _resolve_law_parameters(law: dict, profile: dict, bsn: str) -> dict:
 def run_calculation(law_name: str, bsn: str, law: dict | None = None, profile: dict | None = None) -> dict | None:
     """Run the law calculation via MCP service. Returns calc_result dict or None.
 
-    If `law` and `profile` are provided, required law parameters (e.g. KVK_NUMMER) are
-    auto-resolved from the profile sources so the engine can perform complete lookups.
+    Uses MCPLawConnector to find the service, but overrides the service_type with the
+    correct gemeente from the profile — the registry always defaults to GEMEENTE_AMSTERDAM
+    (first discovered), but source dataframes are loaded per gemeente so using the wrong
+    one causes all source lookups (BSN_LEIDINGGEVENDE etc.) to return null.
     """
     try:
         from explain.mcp_connector import MCPLawConnector
-        from web.dependencies import get_case_manager, get_claim_manager, get_machine_service
+        from web.dependencies import TODAY, get_case_manager, get_claim_manager, get_machine_service
 
         services = get_machine_service()
         case_manager = get_case_manager()
@@ -1617,10 +1619,34 @@ def run_calculation(law_name: str, bsn: str, law: dict | None = None, profile: d
         if law and profile:
             params = _resolve_law_parameters(law, profile, bsn)
 
-        calc_result = service.execute(bsn, params)
-        if "error" in calc_result:
+        # Detect the correct gemeente service from the profile's sources.
+        # service.service_type defaults to GEMEENTE_AMSTERDAM (first gemeente registered),
+        # but each profile's data is loaded into its own gemeente's source_dataframes.
+        service_type = service.service_type
+        if profile:
+            sources = profile.get("sources", profile)
+            gemeente_keys = [k for k in sources if k.startswith("GEMEENTE_")]
+            if gemeente_keys:
+                service_type = gemeente_keys[0]
+
+        result = services.evaluate(
+            service=service_type,
+            law=service.law_path,
+            parameters={"BSN": bsn, **params},
+            reference_date=TODAY,
+            approved=False,
+        )
+        if result is None:
             return None
-        return calc_result
+        return {
+            "requirements_met": result.requirements_met,
+            "missing_required": result.missing_required,
+            "result": result.output or {},
+            "input_data": result.input or {},
+            "explanation": (
+                "U voldoet aan alle voorwaarden." if result.requirements_met else "U voldoet niet aan alle voorwaarden."
+            ),
+        }
     except Exception as e:
         print(f"Warning: Could not run calculation for {law_name}/{bsn}: {e}", file=sys.stderr)
         return None

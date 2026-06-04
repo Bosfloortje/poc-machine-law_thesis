@@ -746,6 +746,8 @@ class RuleContext:
     def _resolve_from_source(self, source_ref, table, df, expected_type=None):
         if "select_on" in source_ref:
             for select_on in source_ref["select_on"]:
+                if df.empty or select_on["name"] not in df.columns:
+                    return None
                 value = self.resolve_value(select_on["value"])
 
                 if isinstance(value, dict) and "operation" in value and value["operation"] == "IN":
