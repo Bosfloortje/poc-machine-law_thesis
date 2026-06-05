@@ -89,13 +89,25 @@ def _call_llm(
 ) -> tuple[str, dict]:
     """Call LLM (Ollama, Anthropic, or OpenAI) and return (text, usage_dict)."""
     if provider == "ollama":
+        import time
+
         import ollama
 
-        response = ollama.chat(
-            model=model_id,
-            messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}],
-            options={"temperature": 0.3, "num_predict": 1500},
-        )
+        last_exc: Exception | None = None
+        for attempt in range(3):
+            try:
+                response = ollama.chat(
+                    model=model_id,
+                    messages=[{"role": "system", "content": system_prompt}, {"role": "user", "content": user_prompt}],
+                    options={"temperature": 0.3, "num_predict": 1500, "num_ctx": 4096},
+                )
+                break
+            except Exception as exc:
+                last_exc = exc
+                if attempt < 2:
+                    time.sleep(5 * (attempt + 1))
+        else:
+            raise last_exc  # type: ignore[misc]
         return response["message"]["content"], {
             "input_tokens": response.get("prompt_eval_count", 0),
             "output_tokens": response.get("eval_count", 0),
@@ -337,7 +349,7 @@ def extract_explanations(
             for line in _rf:
                 try:
                     r = _json.loads(line)
-                    if r.get("record_type") == "explanation":
+                    if r.get("record_type") == "explanation" and r.get("explanation"):
                         already_done.add((r.get("profile", ""), r.get("law", "")))
                 except _json.JSONDecodeError:
                     pass
@@ -600,7 +612,7 @@ def run_graph_approach(
             for line in f:
                 try:
                     r = json.loads(line)
-                    if r.get("record_type") == "explanation" and "profile" in r:
+                    if r.get("record_type") == "explanation" and "profile" in r and r.get("explanation"):
                         already_done.add(r["profile"])
                 except json.JSONDecodeError:
                     pass

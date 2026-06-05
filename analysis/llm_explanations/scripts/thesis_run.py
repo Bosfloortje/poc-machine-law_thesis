@@ -300,7 +300,7 @@ def run_open_approach(
             for line in f:
                 try:
                     r = json.loads(line)
-                    if r.get("record_type") == "explanation" and "profile" in r:
+                    if r.get("record_type") == "explanation" and "profile" in r and r.get("explanation"):
                         already_done.add(r["profile"])
                 except json.JSONDecodeError:
                     pass

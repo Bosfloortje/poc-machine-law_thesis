@@ -1465,16 +1465,28 @@ def generate_decision_explanation(
     expected_values = _build_expected_values(decision_extractor)
 
     if provider == "ollama":
+        import time
+
         import ollama
 
-        response = ollama.chat(
-            model=model_id,
-            messages=[
-                {"role": "system", "content": DECISION_SYSTEM_PROMPT},
-                {"role": "user", "content": prompt},
-            ],
-            options={"temperature": 0.2, "num_predict": 1000},
-        )
+        last_exc: Exception | None = None
+        for attempt in range(3):
+            try:
+                response = ollama.chat(
+                    model=model_id,
+                    messages=[
+                        {"role": "system", "content": DECISION_SYSTEM_PROMPT},
+                        {"role": "user", "content": prompt},
+                    ],
+                    options={"temperature": 0.2, "num_predict": 1000, "num_ctx": 4096},
+                )
+                break
+            except Exception as exc:
+                last_exc = exc
+                if attempt < 2:
+                    time.sleep(5 * (attempt + 1))
+        else:
+            raise last_exc  # type: ignore[misc]
         raw = response["message"]["content"].replace("\ufffd", "")
         explanation = _fix_rounded_amounts(raw, expected_values)
         return {
