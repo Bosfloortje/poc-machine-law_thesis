@@ -304,17 +304,53 @@ def score_faithfulness(
 # Standalone CLI
 # ---------------------------------------------------------------------------
 
+def build_trace_index(trace_files: list[str]) -> dict[tuple[str, str], dict]:
+    """Build a lookup index {(law_keyword, bsn): evaluation_trace} from graph JSONL files.
+
+    law_keyword is every path component of the graph law (e.g. 'alcoholwet' and 'vergunning'
+    for 'alcoholwet/vergunning', 'participatiewet' and 'bijstand' for 'participatiewet/bijstand').
+    This lets open/flat records match by their short law name (e.g. 'bijstand', 'alcoholwet').
+    """
+    import json as _json
+
+    index: dict[tuple[str, str], dict] = {}
+    for path in trace_files:
+        with open(path, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    rec = _json.loads(line)
+                except _json.JSONDecodeError:
+                    continue
+                if rec.get("record_type") != "explanation":
+                    continue
+                trace = rec.get("evaluation_trace")
+                if not trace:
+                    continue
+                bsn = str(rec.get("profile", ""))
+                law_path = rec.get("law", "")
+                for part in law_path.replace("/", " ").split():
+                    index[(part, bsn)] = trace
+    return index
+
+
 def main() -> None:
     import argparse
     import json
 
     parser = argparse.ArgumentParser(description="Dimension 2 faithfulness evaluation (NLI).")
-    parser.add_argument("--input", nargs="+", required=True, help="JSONL file(s) from extract.py")
+    parser.add_argument("--input", nargs="+", required=True, help="JSONL file(s) to evaluate")
+    parser.add_argument("--traces", nargs="+", default=None,
+                        help="Graph JSONL file(s) to use as evaluation_trace source for open/flat records")
     parser.add_argument("--threshold", type=float, default=0.5,
                         help="Entailment threshold (default: 0.5)")
     parser.add_argument("--law", nargs="+", default=None, help="Filter to specific law(s)")
     parser.add_argument("--verbose", action="store_true", help="Show per-claim details")
     args = parser.parse_args()
+
+    trace_index = build_trace_index(args.traces) if args.traces else {}
 
     law_filter = set(args.law) if args.law else None
     all_scores: list[dict] = []
@@ -336,7 +372,13 @@ def main() -> None:
                     continue
                 if record.get("error") or not record.get("explanation"):
                     continue
-                if not record.get("evaluation_trace"):
+
+                trace = record.get("evaluation_trace")
+                if not trace and trace_index:
+                    bsn = str(record.get("profile", ""))
+                    law_key = record.get("law", "").split("/")[-1]
+                    trace = trace_index.get((law_key, bsn))
+                if not trace:
                     continue
 
                 law = record.get("law", "")
@@ -349,7 +391,7 @@ def main() -> None:
 
                 scores = score_faithfulness(
                     record["explanation"],
-                    record["evaluation_trace"],
+                    trace,
                 )
 
                 f_score = scores["faithfulness_score"]

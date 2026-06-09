@@ -390,6 +390,8 @@ def main() -> None:
                         help="Directory with gold YAML templates")
     parser.add_argument("--dim2", action="store_true",
                         help="Enable Dim2 NLI faithfulness scoring (requires transformers)")
+    parser.add_argument("--dim2-string", action="store_true",
+                        help="Enable Dim2 string-based faithfulness scoring (fast, no model required)")
     parser.add_argument("--output", default=None,
                         help="Write per-record results to this JSONL file")
     parser.add_argument("--summary-json", default=None,
@@ -427,6 +429,11 @@ def main() -> None:
             print("Warning: dim2_faithfulness not available — Dim2 scoring skipped", file=sys.stderr)
         elif get_nli_pipeline is not None:
             nli_pipe = get_nli_pipeline()
+    elif getattr(args, "dim2_string", False):
+        score_faithfulness, _ = _try_load_dim2()
+        if score_faithfulness is None:
+            print("Warning: dim2_faithfulness not available — Dim2 scoring skipped", file=sys.stderr)
+        # nli_pipe stays None → string-based only
 
     # Filters
     law_filter = set(args.law) if args.law else None

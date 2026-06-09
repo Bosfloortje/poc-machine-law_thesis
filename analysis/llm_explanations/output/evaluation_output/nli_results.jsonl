@@ -1,0 +1,540 @@
+{"law": "alcoholwet", "profile": "280776299", "profile_name": "Anna Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "326889935", "profile_name": "Bram de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "263271979", "profile_name": "Piet Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "961800832", "profile_name": "Mustafa Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "942016411", "profile_name": "Johanna Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "149830333", "profile_name": "Pieter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "190599237", "profile_name": "Piet de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 2, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "114554643", "profile_name": "Eva de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "529541363", "profile_name": "Michiel Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "582408042", "profile_name": "Fleur Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "752360518", "profile_name": "Marieke de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "702809300", "profile_name": "Gerrit Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "919022564", "profile_name": "Lars van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "946665474", "profile_name": "Kemal Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "972551181", "profile_name": "Piet Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "553271327", "profile_name": "Hendrika van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "736730502", "profile_name": "Tim Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "487917127", "profile_name": "Lotte Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "441256912", "profile_name": "Cornelia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "895838726", "profile_name": "Ahmet Sahin", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "189497734", "profile_name": "Umut Celik", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "628707734", "profile_name": "Nabil Amrani", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "608988838", "profile_name": "Maarten de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "290290848", "profile_name": "Hendrika Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "880499800", "profile_name": "Wouter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "840836392", "profile_name": "Michiel Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "286806730", "profile_name": "Nabil El-Idrissi", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "829794436", "profile_name": "Mustafa Chakir", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "960600510", "profile_name": "Gladys Baldewsingh", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "200740861", "profile_name": "Anouk Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "374294578", "profile_name": "Anouk Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "710856627", "profile_name": "Kaan Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "735217937", "profile_name": "Michiel van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "729956537", "profile_name": "Willem de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "615998982", "profile_name": "Anna Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "737851543", "profile_name": "Gerrit Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "125679390", "profile_name": "Laura Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "172151331", "profile_name": "Julia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "305258283", "profile_name": "Ebru Aslan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "312259638", "profile_name": "Thomas van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "934259381", "profile_name": "Gerrit Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "720300302", "profile_name": "Michiel de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "943270344", "profile_name": "Emma Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "105886512", "profile_name": "Lars van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "989241827", "profile_name": "Roos Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "290657339", "profile_name": "Maria de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "632734519", "profile_name": "Julia Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "205137625", "profile_name": "Lotte Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "323614113", "profile_name": "Gerrit Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "370746575", "profile_name": "Elisabeth Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "824316069", "profile_name": "Iris Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "381866542", "profile_name": "Gerrit Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "529932109", "profile_name": "Piet Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "271662022", "profile_name": "Emma de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "124247516", "profile_name": "Hendrika de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "409764968", "profile_name": "Wouter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "836847468", "profile_name": "Piet Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "112365897", "profile_name": "Johanna Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "241718283", "profile_name": "Berk Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "829953672", "profile_name": "Gerrit de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "514863678", "profile_name": "Marieke de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "779943326", "profile_name": "Sven Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "860331444", "profile_name": "Cornelis Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "142886115", "profile_name": "Sara Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "777157409", "profile_name": "Aya Bouazza", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "943761044", "profile_name": "Dirk Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "655296958", "profile_name": "Ruben Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "alcoholwet", "profile": "681410504", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "936585296", "profile_name": "Asli Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "427321187", "profile_name": "Bram Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "924814864", "profile_name": "Cornelia van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "672621442", "profile_name": "Long Li", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "311768990", "profile_name": "Ruben Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "804398453", "profile_name": "Karima Kadiri", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "682592528", "profile_name": "Michiel de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "128499564", "profile_name": "Henk Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "831947857", "profile_name": "Olga Ionescu", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "586872064", "profile_name": "Sibel Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "444064714", "profile_name": "Michiel van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "983631859", "profile_name": "Luuk Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "345264421", "profile_name": "Ruben de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "348113992", "profile_name": "Henk van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "558807474", "profile_name": "Anouk Hendriks", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "934242004", "profile_name": "Miriam Ramdas", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "760304613", "profile_name": "Willem van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "678286159", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "229587036", "profile_name": "Elisabeth de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "242653176", "profile_name": "Cornelis Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "343938502", "profile_name": "Hafsa Tahiri", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "735058306", "profile_name": "Ruben Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "252107237", "profile_name": "Finn de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "501649890", "profile_name": "Roos Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "479459367", "profile_name": "Julia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "497399299", "profile_name": "Henk Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "216095414", "profile_name": "Serkan Kilic", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "770714911", "profile_name": "Maria Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "945180115", "profile_name": "Laura de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "798371702", "profile_name": "Khalid Tahiri", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "326692507", "profile_name": "Eva van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "748516748", "profile_name": "Ayse Dogan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "197083824", "profile_name": "Yan Liu", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "524600276", "profile_name": "Fleur Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "872605369", "profile_name": "Johan van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "226080087", "profile_name": "Nienke Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "139735250", "profile_name": "Dirk van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "340798890", "profile_name": "Hakan Polat", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "686101104", "profile_name": "Marieke Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "474811657", "profile_name": "Maud de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "890980793", "profile_name": "Sara Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "673395009", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "541960568", "profile_name": "Emma Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "424803391", "profile_name": "Jan Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "374929650", "profile_name": "Piet van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "456479410", "profile_name": "Hendrika Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "795530451", "profile_name": "Sophie de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "986667010", "profile_name": "Maria Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "782691320", "profile_name": "Pieter de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "991139258", "profile_name": "Tim van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "151727718", "profile_name": "Emma Hendriks", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "862125049", "profile_name": "Bilal Chakir", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "416445800", "profile_name": "Lars Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "540844520", "profile_name": "Maria de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "344376483", "profile_name": "Sophie de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "306367189", "profile_name": "Cornelia van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "937511110", "profile_name": "Michiel de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "937945430", "profile_name": "Miriam Ramdas", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "419982541", "profile_name": "Johanna van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "362555158", "profile_name": "Marieke Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "801308764", "profile_name": "Bas de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "750638036", "profile_name": "Johan van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "349984833", "profile_name": "Lotte de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "532129148", "profile_name": "Sophie Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "637721215", "profile_name": "Finn Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "737922365", "profile_name": "Marieke Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "267437283", "profile_name": "Michiel Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "168984737", "profile_name": "Hendrika de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "559153989", "profile_name": "Sophie Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "737519858", "profile_name": "Cornelia Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "641834574", "profile_name": "Sophie Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "825836564", "profile_name": "Fleur de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "184797678", "profile_name": "Cornelia Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "alcoholwet", "profile": "233185030", "profile_name": "Tim Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "586430435", "profile_name": "Hendrika Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "645708385", "profile_name": "Maud de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "648797086", "profile_name": "Piet Hendriks", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "821591118", "profile_name": "Indira Amelo", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "947451138", "profile_name": "Praveen Sedoc", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "480851263", "profile_name": "Anna van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "244283099", "profile_name": "Cornelis van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 2, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "763502175", "profile_name": "Tim Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "462114337", "profile_name": "Lisa Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "816960301", "profile_name": "Laura Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "746390644", "profile_name": "Dirk Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "414073383", "profile_name": "Tim Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "620503299", "profile_name": "Thomas van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "670987941", "profile_name": "Merve Yildiz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "431374668", "profile_name": "Jeanette Ramdin", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "974417942", "profile_name": "Thijs Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "436873818", "profile_name": "Thijs Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "812996641", "profile_name": "Thijs de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "571816509", "profile_name": "Tim Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "322268379", "profile_name": "Tim de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "301687335", "profile_name": "Thomas Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "362347711", "profile_name": "Lars Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "755766006", "profile_name": "Laura van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "173673728", "profile_name": "Daan Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "181341145", "profile_name": "Luuk Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "885995305", "profile_name": "Johanna de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "802922834", "profile_name": "Youssef El-Amrani", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "754869365", "profile_name": "Lisa van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "209120642", "profile_name": "Sophie van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "709780811", "profile_name": "Roos Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "365118787", "profile_name": "Finn Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "999016913", "profile_name": "Thijs Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "823464679", "profile_name": "Maud Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "184883487", "profile_name": "Daan de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "801392432", "profile_name": "Julia de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "215168751", "profile_name": "Daan Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "306021417", "profile_name": "Julia van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "220077600", "profile_name": "Fleur Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "165819306", "profile_name": "Anouk Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "628041804", "profile_name": "Finn Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "296608623", "profile_name": "Emma Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "540938152", "profile_name": "Nienke de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "642854431", "profile_name": "Laura Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "910829079", "profile_name": "Michiel Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "546751828", "profile_name": "Emma Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "560638447", "profile_name": "Emma Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "874309228", "profile_name": "Samira El-Moussaoui", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "542867443", "profile_name": "Anna Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "635238838", "profile_name": "Julia Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "153510694", "profile_name": "Henk Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "309528810", "profile_name": "Sophie Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "629306175", "profile_name": "Maarten de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "396139518", "profile_name": "Roos van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "372186501", "profile_name": "Thomas Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "692638795", "profile_name": "Sven Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "649143480", "profile_name": "Maud Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "661347254", "profile_name": "Sophie Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "alcoholwet", "profile": "933267762", "profile_name": "Emma Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 1, "nli_n_supported": 1}
+{"law": "bijstand", "profile": "280776299", "profile_name": "Anna Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "326889935", "profile_name": "Bram de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "263271979", "profile_name": "Piet Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "961800832", "profile_name": "Mustafa Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "942016411", "profile_name": "Johanna Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "149830333", "profile_name": "Pieter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "190599237", "profile_name": "Piet de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "114554643", "profile_name": "Eva de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "529541363", "profile_name": "Michiel Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "582408042", "profile_name": "Fleur Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "752360518", "profile_name": "Marieke de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "702809300", "profile_name": "Gerrit Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "919022564", "profile_name": "Lars van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "946665474", "profile_name": "Kemal Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "972551181", "profile_name": "Piet Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "553271327", "profile_name": "Hendrika van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "736730502", "profile_name": "Tim Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "487917127", "profile_name": "Lotte Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "441256912", "profile_name": "Cornelia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "895838726", "profile_name": "Ahmet Sahin", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "189497734", "profile_name": "Umut Celik", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "628707734", "profile_name": "Nabil Amrani", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "608988838", "profile_name": "Maarten de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "290290848", "profile_name": "Hendrika Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "880499800", "profile_name": "Wouter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "840836392", "profile_name": "Michiel Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "286806730", "profile_name": "Nabil El-Idrissi", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "829794436", "profile_name": "Mustafa Chakir", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "960600510", "profile_name": "Gladys Baldewsingh", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "200740861", "profile_name": "Anouk Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "374294578", "profile_name": "Anouk Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "710856627", "profile_name": "Kaan Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "735217937", "profile_name": "Michiel van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "729956537", "profile_name": "Willem de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "615998982", "profile_name": "Anna Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "737851543", "profile_name": "Gerrit Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "125679390", "profile_name": "Laura Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "172151331", "profile_name": "Julia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "305258283", "profile_name": "Ebru Aslan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "312259638", "profile_name": "Thomas van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "934259381", "profile_name": "Gerrit Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "720300302", "profile_name": "Michiel de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "943270344", "profile_name": "Emma Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "105886512", "profile_name": "Lars van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "989241827", "profile_name": "Roos Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "290657339", "profile_name": "Maria de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 4}
+{"law": "bijstand", "profile": "632734519", "profile_name": "Julia Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "205137625", "profile_name": "Lotte Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "323614113", "profile_name": "Gerrit Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "370746575", "profile_name": "Elisabeth Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "824316069", "profile_name": "Iris Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "381866542", "profile_name": "Gerrit Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "529932109", "profile_name": "Piet Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "271662022", "profile_name": "Emma de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "124247516", "profile_name": "Hendrika de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "409764968", "profile_name": "Wouter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "836847468", "profile_name": "Piet Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "112365897", "profile_name": "Johanna Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "241718283", "profile_name": "Berk Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "829953672", "profile_name": "Gerrit de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "514863678", "profile_name": "Marieke de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "779943326", "profile_name": "Sven Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "860331444", "profile_name": "Cornelis Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "142886115", "profile_name": "Sara Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "777157409", "profile_name": "Aya Bouazza", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 5, "nli_n_supported": 4}
+{"law": "bijstand", "profile": "943761044", "profile_name": "Dirk Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "655296958", "profile_name": "Ruben Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "681410504", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "936585296", "profile_name": "Asli Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "427321187", "profile_name": "Bram Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "924814864", "profile_name": "Cornelia van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "672621442", "profile_name": "Long Li", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "311768990", "profile_name": "Ruben Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "804398453", "profile_name": "Karima Kadiri", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "682592528", "profile_name": "Michiel de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "128499564", "profile_name": "Henk Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "831947857", "profile_name": "Olga Ionescu", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "586872064", "profile_name": "Sibel Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "444064714", "profile_name": "Michiel van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "983631859", "profile_name": "Luuk Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "345264421", "profile_name": "Ruben de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "348113992", "profile_name": "Henk van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "558807474", "profile_name": "Anouk Hendriks", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "934242004", "profile_name": "Miriam Ramdas", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "760304613", "profile_name": "Willem van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "678286159", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "229587036", "profile_name": "Elisabeth de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "242653176", "profile_name": "Cornelis Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "343938502", "profile_name": "Hafsa Tahiri", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "735058306", "profile_name": "Ruben Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "252107237", "profile_name": "Finn de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "501649890", "profile_name": "Roos Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "479459367", "profile_name": "Julia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "497399299", "profile_name": "Henk Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "216095414", "profile_name": "Serkan Kilic", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "770714911", "profile_name": "Maria Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "945180115", "profile_name": "Laura de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "798371702", "profile_name": "Khalid Tahiri", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "326692507", "profile_name": "Eva van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "748516748", "profile_name": "Ayse Dogan", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "197083824", "profile_name": "Yan Liu", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "524600276", "profile_name": "Fleur Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "872605369", "profile_name": "Johan van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "226080087", "profile_name": "Nienke Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "139735250", "profile_name": "Dirk van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "340798890", "profile_name": "Hakan Polat", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "686101104", "profile_name": "Marieke Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "474811657", "profile_name": "Maud de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "890980793", "profile_name": "Sara Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "673395009", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "541960568", "profile_name": "Emma Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "424803391", "profile_name": "Jan Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "374929650", "profile_name": "Piet van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "456479410", "profile_name": "Hendrika Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "795530451", "profile_name": "Sophie de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "986667010", "profile_name": "Maria Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "782691320", "profile_name": "Pieter de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "991139258", "profile_name": "Tim van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "151727718", "profile_name": "Emma Hendriks", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "862125049", "profile_name": "Bilal Chakir", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "416445800", "profile_name": "Lars Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "540844520", "profile_name": "Maria de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "344376483", "profile_name": "Sophie de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "306367189", "profile_name": "Cornelia van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "937511110", "profile_name": "Michiel de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "937945430", "profile_name": "Miriam Ramdas", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "419982541", "profile_name": "Johanna van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "362555158", "profile_name": "Marieke Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "801308764", "profile_name": "Bas de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "750638036", "profile_name": "Johan van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "349984833", "profile_name": "Lotte de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "532129148", "profile_name": "Sophie Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 4}
+{"law": "bijstand", "profile": "637721215", "profile_name": "Finn Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "737922365", "profile_name": "Marieke Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "267437283", "profile_name": "Michiel Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "168984737", "profile_name": "Hendrika de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "559153989", "profile_name": "Sophie Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "737519858", "profile_name": "Cornelia Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "641834574", "profile_name": "Sophie Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "825836564", "profile_name": "Fleur de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "184797678", "profile_name": "Cornelia Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "233185030", "profile_name": "Tim Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "586430435", "profile_name": "Hendrika Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "645708385", "profile_name": "Maud de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "648797086", "profile_name": "Piet Hendriks", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "821591118", "profile_name": "Indira Amelo", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "947451138", "profile_name": "Praveen Sedoc", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "480851263", "profile_name": "Anna van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "244283099", "profile_name": "Cornelis van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "763502175", "profile_name": "Tim Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "462114337", "profile_name": "Lisa Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "816960301", "profile_name": "Laura Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "746390644", "profile_name": "Dirk Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "bijstand", "profile": "414073383", "profile_name": "Tim Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "620503299", "profile_name": "Thomas van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "670987941", "profile_name": "Merve Yildiz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "431374668", "profile_name": "Jeanette Ramdin", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "974417942", "profile_name": "Thijs Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "436873818", "profile_name": "Thijs Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "812996641", "profile_name": "Thijs de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "571816509", "profile_name": "Tim Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "322268379", "profile_name": "Tim de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "301687335", "profile_name": "Thomas Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "362347711", "profile_name": "Lars Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "755766006", "profile_name": "Laura van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "173673728", "profile_name": "Daan Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "181341145", "profile_name": "Luuk Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "885995305", "profile_name": "Johanna de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "802922834", "profile_name": "Youssef El-Amrani", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "754869365", "profile_name": "Lisa van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "209120642", "profile_name": "Sophie van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "709780811", "profile_name": "Roos Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "365118787", "profile_name": "Finn Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "999016913", "profile_name": "Thijs Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "823464679", "profile_name": "Maud Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "184883487", "profile_name": "Daan de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 5, "nli_n_supported": 4}
+{"law": "bijstand", "profile": "801392432", "profile_name": "Julia de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "215168751", "profile_name": "Daan Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "306021417", "profile_name": "Julia van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "220077600", "profile_name": "Fleur Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "165819306", "profile_name": "Anouk Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "628041804", "profile_name": "Finn Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "296608623", "profile_name": "Emma Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "540938152", "profile_name": "Nienke de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "642854431", "profile_name": "Laura Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "910829079", "profile_name": "Michiel Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "546751828", "profile_name": "Emma Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "560638447", "profile_name": "Emma Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "874309228", "profile_name": "Samira El-Moussaoui", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "542867443", "profile_name": "Anna Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "635238838", "profile_name": "Julia Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "153510694", "profile_name": "Henk Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "309528810", "profile_name": "Sophie Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "629306175", "profile_name": "Maarten de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "396139518", "profile_name": "Roos van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "372186501", "profile_name": "Thomas Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "692638795", "profile_name": "Sven Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "649143480", "profile_name": "Maud Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "661347254", "profile_name": "Sophie Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "bijstand", "profile": "933267762", "profile_name": "Emma Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 2, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "280776299", "profile_name": "Anna Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "326889935", "profile_name": "Bram de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "263271979", "profile_name": "Piet Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "961800832", "profile_name": "Mustafa Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "942016411", "profile_name": "Johanna Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "149830333", "profile_name": "Pieter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "190599237", "profile_name": "Piet de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "114554643", "profile_name": "Eva de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "529541363", "profile_name": "Michiel Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "582408042", "profile_name": "Fleur Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "752360518", "profile_name": "Marieke de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "702809300", "profile_name": "Gerrit Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "919022564", "profile_name": "Lars van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 0.0, "nli_faith": 0.0, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "zorgtoeslag", "profile": "946665474", "profile_name": "Kemal Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "972551181", "profile_name": "Piet Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "553271327", "profile_name": "Hendrika van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "736730502", "profile_name": "Tim Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "487917127", "profile_name": "Lotte Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "441256912", "profile_name": "Cornelia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "895838726", "profile_name": "Ahmet Sahin", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "189497734", "profile_name": "Umut Celik", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "628707734", "profile_name": "Nabil Amrani", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "608988838", "profile_name": "Maarten de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "290290848", "profile_name": "Hendrika Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "880499800", "profile_name": "Wouter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "840836392", "profile_name": "Michiel Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "286806730", "profile_name": "Nabil El-Idrissi", "model": "gpt-4o", "approach": "flat", "string_faith": 0.0, "nli_faith": 0.0, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "zorgtoeslag", "profile": "829794436", "profile_name": "Mustafa Chakir", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "960600510", "profile_name": "Gladys Baldewsingh", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "200740861", "profile_name": "Anouk Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "374294578", "profile_name": "Anouk Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "710856627", "profile_name": "Kaan Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "735217937", "profile_name": "Michiel van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "729956537", "profile_name": "Willem de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "615998982", "profile_name": "Anna Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "737851543", "profile_name": "Gerrit Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "125679390", "profile_name": "Laura Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "172151331", "profile_name": "Julia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "305258283", "profile_name": "Ebru Aslan", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "312259638", "profile_name": "Thomas van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "934259381", "profile_name": "Gerrit Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "720300302", "profile_name": "Michiel de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "943270344", "profile_name": "Emma Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "105886512", "profile_name": "Lars van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "989241827", "profile_name": "Roos Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "290657339", "profile_name": "Maria de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "632734519", "profile_name": "Julia Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "205137625", "profile_name": "Lotte Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "323614113", "profile_name": "Gerrit Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "370746575", "profile_name": "Elisabeth Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "824316069", "profile_name": "Iris Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "381866542", "profile_name": "Gerrit Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "529932109", "profile_name": "Piet Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 0.0, "nli_faith": 0.0, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "zorgtoeslag", "profile": "271662022", "profile_name": "Emma de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "124247516", "profile_name": "Hendrika de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "409764968", "profile_name": "Wouter van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "836847468", "profile_name": "Piet Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "112365897", "profile_name": "Johanna Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "241718283", "profile_name": "Berk Yilmaz", "model": "gpt-4o", "approach": "flat", "string_faith": 0.0, "nli_faith": 0.0, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "zorgtoeslag", "profile": "829953672", "profile_name": "Gerrit de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "514863678", "profile_name": "Marieke de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "779943326", "profile_name": "Sven Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "860331444", "profile_name": "Cornelis Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "142886115", "profile_name": "Sara Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "777157409", "profile_name": "Aya Bouazza", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "943761044", "profile_name": "Dirk Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "655296958", "profile_name": "Ruben Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "681410504", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "936585296", "profile_name": "Asli Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "427321187", "profile_name": "Bram Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "924814864", "profile_name": "Cornelia van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "672621442", "profile_name": "Long Li", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "311768990", "profile_name": "Ruben Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "804398453", "profile_name": "Karima Kadiri", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "682592528", "profile_name": "Michiel de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "128499564", "profile_name": "Henk Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "831947857", "profile_name": "Olga Ionescu", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "586872064", "profile_name": "Sibel Erdogan", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "444064714", "profile_name": "Michiel van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "983631859", "profile_name": "Luuk Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "345264421", "profile_name": "Ruben de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.0, "nli_faith": 0.0, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "zorgtoeslag", "profile": "348113992", "profile_name": "Henk van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "558807474", "profile_name": "Anouk Hendriks", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "934242004", "profile_name": "Miriam Ramdas", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "760304613", "profile_name": "Willem van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "678286159", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "229587036", "profile_name": "Elisabeth de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "242653176", "profile_name": "Cornelis Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "343938502", "profile_name": "Hafsa Tahiri", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "735058306", "profile_name": "Ruben Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "252107237", "profile_name": "Finn de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "501649890", "profile_name": "Roos Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "479459367", "profile_name": "Julia Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "497399299", "profile_name": "Henk Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "216095414", "profile_name": "Serkan Kilic", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "770714911", "profile_name": "Maria Peters", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "945180115", "profile_name": "Laura de Wit", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 8, "nli_n_supported": 6}
+{"law": "zorgtoeslag", "profile": "798371702", "profile_name": "Khalid Tahiri", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "326692507", "profile_name": "Eva van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "748516748", "profile_name": "Ayse Dogan", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "197083824", "profile_name": "Yan Liu", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "524600276", "profile_name": "Fleur Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "872605369", "profile_name": "Johan van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "226080087", "profile_name": "Nienke Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "139735250", "profile_name": "Dirk van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "340798890", "profile_name": "Hakan Polat", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "686101104", "profile_name": "Marieke Smit", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "474811657", "profile_name": "Maud de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "890980793", "profile_name": "Sara Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "673395009", "profile_name": "Hendrika Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "541960568", "profile_name": "Emma Brouwer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "424803391", "profile_name": "Jan Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.0, "nli_faith": 0.0, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "zorgtoeslag", "profile": "374929650", "profile_name": "Piet van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "456479410", "profile_name": "Hendrika Janssen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "795530451", "profile_name": "Sophie de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "986667010", "profile_name": "Maria Dekker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "782691320", "profile_name": "Pieter de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "991139258", "profile_name": "Tim van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "151727718", "profile_name": "Emma Hendriks", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "862125049", "profile_name": "Bilal Chakir", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "416445800", "profile_name": "Lars Visser", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "540844520", "profile_name": "Maria de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "344376483", "profile_name": "Sophie de Jong", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "306367189", "profile_name": "Cornelia van Dijk", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "937511110", "profile_name": "Michiel de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 0.0, "nli_faith": 0.0, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "zorgtoeslag", "profile": "937945430", "profile_name": "Miriam Ramdas", "model": "gpt-4o", "approach": "flat", "string_faith": 0.0, "nli_faith": 0.0, "nli_n_claims": 4, "nli_n_supported": 1}
+{"law": "zorgtoeslag", "profile": "419982541", "profile_name": "Johanna van den Berg", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "362555158", "profile_name": "Marieke Vos", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "801308764", "profile_name": "Bas de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "750638036", "profile_name": "Johan van Leeuwen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "349984833", "profile_name": "Lotte de Groot", "model": "gpt-4o", "approach": "flat", "string_faith": 1.0, "nli_faith": 1.0, "nli_n_claims": 4, "nli_n_supported": 3}
+{"law": "zorgtoeslag", "profile": "532129148", "profile_name": "Sophie Bos", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "637721215", "profile_name": "Finn Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "737922365", "profile_name": "Marieke Mulder", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "267437283", "profile_name": "Michiel Dijkstra", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "168984737", "profile_name": "Hendrika de Boer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.5, "nli_faith": 0.5, "nli_n_claims": 4, "nli_n_supported": 2}
+{"law": "zorgtoeslag", "profile": "559153989", "profile_name": "Sophie Bakker", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}
+{"law": "zorgtoeslag", "profile": "737519858", "profile_name": "Cornelia Meijer", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "641834574", "profile_name": "Sophie Jansen", "model": "gpt-4o", "approach": "flat", "string_faith": 0.667, "nli_faith": 0.667, "nli_n_claims": 8, "nli_n_supported": 5}
+{"law": "zorgtoeslag", "profile": "825836564", "profile_name": "Fleur de Vries", "model": "gpt-4o", "approach": "flat", "string_faith": 0.333, "nli_faith": 0.333, "nli_n_claims": 8, "nli_n_supported": 4}

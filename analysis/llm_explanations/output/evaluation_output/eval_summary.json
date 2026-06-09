@@ -1,0 +1,104 @@
+{
+  "n": 8500,
+  "d3": {
+    "flesch_avg": 54.85,
+    "flesch_n": 8499,
+    "flesch_readable_n": 3380,
+    "contestability_avg": 0.295,
+    "decisive_condition_n": 84,
+    "decisive_condition_pct": 0.01,
+    "counterfactual_n": 4568,
+    "counterfactual_pct": 0.537,
+    "action_mention_n": 2939,
+    "action_mention_pct": 0.346
+  },
+  "d2": {
+    "faithfulness_avg": 0.77,
+    "n": 8500,
+    "nli_auc": null,
+    "note": "graphrag approach only (open approach has no evaluation_trace)"
+  },
+  "by_model": {
+    "deepseek-r1:8b": {
+      "n": 1300,
+      "flesch_avg": 52.851,
+      "contestability_avg": 0.29,
+      "faithfulness_avg": 0.754,
+      "nli_auc": null
+    },
+    "gpt-4o": {
+      "n": 1800,
+      "flesch_avg": 58.438,
+      "contestability_avg": 0.281,
+      "faithfulness_avg": 0.798,
+      "nli_auc": null
+    },
+    "claude-haiku-4-5-20251001": {
+      "n": 1800,
+      "flesch_avg": 56.354,
+      "contestability_avg": 0.288,
+      "faithfulness_avg": 0.818,
+      "nli_auc": null
+    },
+    "llama3.1:8b": {
+      "n": 1800,
+      "flesch_avg": 60.728,
+      "contestability_avg": 0.274,
+      "faithfulness_avg": 0.732,
+      "nli_auc": null
+    },
+    "mistral:7b": {
+      "n": 1800,
+      "flesch_avg": 45.323,
+      "contestability_avg": 0.342,
+      "faithfulness_avg": 0.745,
+      "nli_auc": null
+    }
+  },
+  "by_law": {
+    "alcoholwet": {
+      "n": 2884,
+      "flesch_avg": 49.853,
+      "contestability_avg": 0.289,
+      "faithfulness_avg": 0.975,
+      "nli_auc": null
+    },
+    "bijstand": {
+      "n": 2895,
+      "flesch_avg": 53.28,
+      "contestability_avg": 0.272,
+      "faithfulness_avg": 0.79,
+      "nli_auc": null
+    },
+    "zorgtoeslag": {
+      "n": 2721,
+      "flesch_avg": 61.819,
+      "contestability_avg": 0.327,
+      "faithfulness_avg": 0.533,
+      "nli_auc": null
+    }
+  },
+  "by_approach": {
+    "flat": {
+      "n": 2861,
+      "flesch_avg": 55.714,
+      "contestability_avg": 0.318,
+      "faithfulness_avg": 0.802,
+      "nli_auc": null
+    },
+    "graph": {
+      "n": 2939,
+      "flesch_avg": 50.732,
+      "contestability_avg": 0.235,
+      "faithfulness_avg": 0.927,
+      "nli_auc": null
+    },
+    "open": {
+      "n": 2700,
+      "flesch_avg": 58.416,
+      "contestability_avg": 0.337,
+      "faithfulness_avg": 0.567,
+      "nli_auc": null
+    }
+  }
+}

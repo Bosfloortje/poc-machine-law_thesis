@@ -1,0 +1,16 @@
+annotator,auto,human,n,pearson_r,pearson_p,spearman_r,spearman_p
+burger,Flesch,citizen (duidelijkh+leesbaarh avg),29,-0.344,0.067,-0.44,0.017
+burger,Contestability,citizen (duidelijkh+leesbaarh avg),29,0.388,0.038,0.425,0.022
+burger,Faithfulness,citizen (duidelijkh+leesbaarh avg),29,0.095,0.623,0.102,0.599
+burger,Flesch,duidelijkheid,29,-0.369,0.049,-0.498,0.006
+burger,Contestability,duidelijkheid,29,0.375,0.045,0.377,0.044
+burger,Faithfulness,duidelijkheid,29,0.112,0.561,0.268,0.161
+burger,Flesch,leesbaarheid,29,-0.189,0.327,-0.3,0.114
+burger,Contestability,leesbaarheid,29,0.266,0.162,0.243,0.204
+burger,Faithfulness,leesbaarheid,29,0.038,0.844,-0.042,0.828
+burger,Flesch,actionability,29,-0.402,0.031,-0.352,0.061
+burger,Contestability,actionability,29,-0.027,0.889,-0.14,0.467
+burger,Faithfulness,actionability,29,0.085,0.66,0.352,0.061
+jurist,Faithfulness,juridische_correctheid,29,0.406,0.029,0.608,0.0
+jurist,Flesch,juridische_correctheid,29,-0.624,0.0,-0.696,0.0
+jurist,Contestability,juridische_correctheid,29,-0.184,0.34,-0.097,0.618
