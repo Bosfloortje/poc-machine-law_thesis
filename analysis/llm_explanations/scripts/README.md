@@ -8,7 +8,7 @@ All runnable scripts for the LLM explanation pipeline.
 Generates LLM explanations for all three approaches (open, flat, graph).
 
 ```bash
-# Graph approach — full decision graph as GraphRAG input
+# Graph approach — structured decision skeleton
 uv run python analysis/llm_explanations/scripts/extract.py \
     --approach graph --law zorgtoeslag --models haiku mistral
 
@@ -31,11 +31,11 @@ uv run python analysis/llm_explanations/scripts/extract.py \
 |---|---|---|
 | `--approach` | required | `open`, `flat`, or `graph` |
 | `--law` | required | `zorgtoeslag`, `participatiewet/bijstand`, `alcoholwet/vergunning` |
-| `--models` | required | One or more of `haiku` (claude-haiku-4-5-20251001), `mistral` (mistral:7b), `llama3.1` (llama3.1:8b), `gpt4` (GPT-4o), `deepseek` (deepseek-r1:8b) |
+| `--models` | required | One or more of `haiku`, `mistral`, `llama3.1`, `gpt4`, `deepseek` |
 | `--profiles` | all | Filter to specific BSN numbers |
 | `--quiet` | off | Suppress verbose output |
 
-Output goes to `output/<timestamp>_<law>_<profiles>_<approach>/<model>/`.
+Final thesis results are in `output/final_output_complete/`.
 
 ### `extraction_generic.py` — core engine
 Shared infrastructure imported by `extract.py`. Contains the `DecisionGraphExtractor`, graph builders, and YAML law loaders. Not run directly.
@@ -75,13 +75,20 @@ Runs Dim2 (faithfulness) and Dim3 (citizen quality) metrics over a JSONL output 
 
 ```bash
 uv run python analysis/llm_explanations/scripts/evaluation/evaluate.py \
-    --input analysis/llm_explanations/output/final_output/haiku/graph_haiku_zorgtoeslag.jsonl
+    --input analysis/llm_explanations/output/final_output_complete/haiku/graph/graph_haiku_zorgtoeslag.jsonl
+```
+
+### `run_nli_eval.py` — full NLI faithfulness run
+Runs mDeBERTa NLI scoring across all models, approaches, and laws. Saves per-record results (including per-claim NLI scores and string labels for ROC AUC) to `output/evaluation_output/nli_results.jsonl`.
+
+```bash
+uv run python analysis/llm_explanations/scripts/evaluation/run_nli_eval.py
 ```
 
 ### `dim2_faithfulness.py` — faithfulness scoring
 Hybrid scorer: outcome and amount claims use string matching; condition claims use mDeBERTa NLI.
 Score = supported required claims / total required claims (outcome + amount).
-Imported by `evaluate.py`.
+Imported by `evaluate.py` and `run_nli_eval.py`.
 
 ### `dim3_citizen.py` — citizen quality metrics
 Computes Flesch reading ease (NL) and contestability (3 binary checks / 3).
@@ -94,5 +101,8 @@ Computes Pearson and Spearman correlations between automated metrics (Dim2, Dim3
 uv run python analysis/llm_explanations/scripts/evaluation/correlate.py
 ```
 
-### `evaluation_output_thesis/`
-Thesis evaluation results (small, ~9 KB). Kept for reproducibility.
+### `evaluation_output/`
+Automated evaluation results:
+- `eval_results_complete.jsonl` — full Dim2 + Dim3 results for all models/approaches/laws
+- `nli_results.jsonl` — per-record NLI scores with per-claim breakdowns
+- `eval_summary.json` — aggregated summary statistics
