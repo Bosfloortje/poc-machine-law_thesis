@@ -106,3 +106,41 @@ Automated evaluation results:
 - `eval_results_complete.jsonl` — full Dim2 + Dim3 results for all models/approaches/laws
 - `nli_results.jsonl` — per-record NLI scores with per-claim breakdowns
 - `eval_summary.json` — aggregated summary statistics
+
+---
+
+## Profiles (`profiles/`)
+
+### `profiles/generate_profiles.py` — rule-based profile generator
+Generates synthetic citizen profiles in `profiles.yaml` format. Uses no LLM — all variation is produced by rule-based sampling weighted to match CBS (Statistics Netherlands) population statistics for 2023.
+
+**Covers all three laws** by including the data sources required by each:
+- Zorgtoeslag: RvIG, Belastingdienst, RVZ, SVB
+- Bijstand/Participatiewet: UWV, SZW, gemeente (`werk_en_re_integratie`)
+- Alcoholwet/vergunning: KVK (incl. `inrichtingen`, `vergunningen`), SVH (Register Sociale Hygiene), LBB (Bibob advies), RECHTSPRAAK (curatele)
+
+**Demographic distributions (CBS 2023):**
+- Herkomst: NL 81.5%, AR 6%, TR 5.5%, SR 4%, AS 2%, EE 1%
+- Werkstatus: loondienst 59.6%, gepensioneerd 26.7%, ZZP 8.6%, werkloos 2.9%
+- Inkomen: laag/midden/hoog (~33% elk), CBS-gemiddeld per leeftijdsklasse
+- Leeftijd: ZZP-specifieke verdeling (45-75j 60%), gepensioneerden 65+, overig 18-64
+
+```bash
+# Generate 200 new profiles (auto-saves to data/profielen/profiles_200_<timestamp>.yaml)
+uv run python analysis/llm_explanations/scripts/profiles/generate_profiles.py --count 200
+
+# Use a specific input and output file
+uv run python analysis/llm_explanations/scripts/profiles/generate_profiles.py \
+    --input data/profielen/profiles.yaml \
+    --count 100 \
+    --output data/profielen/my_profiles.yaml
+```
+
+**Arguments:**
+
+| Flag | Default | Description |
+|---|---|---|
+| `--input` | `data/profielen/profiles.yaml` | Existing profiles.yaml to read `globalServices` from |
+| `--count` | `10` | Number of profiles to generate |
+| `--output` | auto | Output path; auto-generates `profiles_<count>_<timestamp>.yaml` in `data/profielen/` |
+| `--start-bsn` | `100000100` | Starting BSN seed (unused BSNs are picked randomly above this) |

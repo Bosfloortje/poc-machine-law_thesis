@@ -6,8 +6,9 @@ This directory contains the full pipeline for generating and evaluating LLM-gene
 
 ```
 llm_explanations/
-├── scripts/            # All runnable scripts (extraction, evaluation, chat)
-│   └── evaluation/     # Evaluation metrics and correlation analysis
+├── scripts/            # All runnable scripts (extraction, evaluation, chat, profile generation)
+│   ├── evaluation/     # Evaluation metrics and correlation analysis
+│   └── profiles/       # Rule-based synthetic profile generator (no LLM)
 ├── annotations/        # Human annotation input and parsed results
 │   ├── input/          # Raw Excel survey responses (6 sheets, 3 laws × 2 rater groups)
 │   └── results/        # Parsed CSVs: scores, inter-rater, auto-metrics, correlations
@@ -42,6 +43,12 @@ Each JSONL file contains one header record followed by one explanation record pe
 The `flat` condition isolates whether quality gains come from *having the decisive condition available* versus from *graph structure itself*.
 
 ## Quick Start
+
+### Generate citizen profiles
+```bash
+# Generate 200 CBS-weighted synthetic profiles (no LLM required)
+uv run python analysis/llm_explanations/scripts/profiles/generate_profiles.py --count 200
+```
 
 ### Generate explanations
 ```bash
