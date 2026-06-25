@@ -10,6 +10,7 @@ llm_explanations/
 │   ├── evaluation/     # Evaluation metrics and correlation analysis
 │   └── profiles/       # Rule-based synthetic profile generator (no LLM)
 ├── annotations/        # Human annotation input and parsed results
+│   ├── first_initial_look/  # Exploratory pre-study annotations — informed the final methodology
 │   ├── input/          # Raw Excel survey responses (6 sheets, 3 laws × 2 rater groups)
 │   └── results/        # Parsed CSVs: scores, inter-rater, auto-metrics, correlations
 └── output/
@@ -84,6 +85,16 @@ uv run python analysis/llm_explanations/scripts/evaluation/run_nli_eval.py
 | Dim3 — Contestability | 3 binary checks / 3 | Decisive condition present, counterfactual phrasing, action mention |
 
 Results are aggregated in `output/evaluation_output/eval_results_complete.jsonl`.
+
+## Annotation Methodology
+
+Human evaluation was set up in two phases:
+
+**Phase 1 — `annotations/first_initial_look/`**  
+Exploratory annotations collected before the formal evaluation survey was designed. A small set of explanations (20 records + cross-law comparison by a second annotator) was assessed using open coding across different models and approaches (llama3.1 and haiku, graph approach, zorgtoeslag). This first look at the data informed which evaluation dimensions to use, which models/approaches to include in the formal study, and the wording and scale anchors of the final survey questions.
+
+**Phase 2 — `annotations/input/`**  
+Formal Google Forms survey with fixed rubrics, distributed to two rater groups (citizens and jurists) across all three laws. Responses parsed with `parse_annotations.py`; inter-rater agreement computed with `inter_rater.py`.
 
 ## Laws Supported
 
