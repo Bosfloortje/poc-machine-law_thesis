@@ -3,7 +3,10 @@ import os
 from fastapi import Request
 
 from .base_llm_service import BaseLLMService
-from .claude_service import claude_service
+from .claude_service import ClaudeService, claude_service
+
+_haiku_service = ClaudeService()
+_haiku_service._model_id = "claude-haiku-4-5-20251001"
 from .ollama_service import OllamaService
 from .openai_service import gpt4o_mini_service, gpt4o_service
 from .vlam_service import vlam_service
@@ -19,6 +22,7 @@ class LLMFactory:
     # Provider mapping
     _provider_map = {
         PROVIDER_CLAUDE: claude_service,
+        "haiku": _haiku_service,
         PROVIDER_VLAM: vlam_service,
         # OpenAI
         "gpt-4o":      gpt4o_service,

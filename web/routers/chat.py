@@ -64,6 +64,7 @@ async def handle_application_display(
     messages,
     user_msg_content,
     templates,
+    lang: str = "nl",
 ):
     """Display an application panel in the chat interface."""
     from web.routers.laws import evaluate_law
@@ -172,11 +173,18 @@ async def handle_application_display(
             available_services = mcp_connector.registry.get_service_names()
             service_list = ", ".join([s for s in available_services])
 
-            error_msg = (
-                "Ik kan geen specifieke regeling vinden om een aanvraagformulier voor te tonen. "
-                "Kunt u aangeven voor welke van de volgende regelingen u een aanvraag wilt doen?\n\n"
-                f"Beschikbare regelingen: {service_list}"
-            )
+            if lang == "en":
+                error_msg = (
+                    "I cannot find a specific regulation to show an application form for. "
+                    "Could you indicate for which of the following regulations you want to apply?\n\n"
+                    f"Available regulations: {service_list}"
+                )
+            else:
+                error_msg = (
+                    "Ik kan geen specifieke regeling vinden om een aanvraagformulier voor te tonen. "
+                    "Kunt u aangeven voor welke van de volgende regelingen u een aanvraag wilt doen?\n\n"
+                    f"Beschikbare regelingen: {service_list}"
+                )
             html_message = format_message(error_msg)
             await websocket.send_text(json.dumps({"message": error_msg, "html": str(html_message)}))
 
@@ -193,7 +201,11 @@ async def handle_application_display(
         traceback.print_exc()
 
         # Send error message as a system message
-        error_msg = "Er is een fout opgetreden bij het tonen van het aanvraagformulier. Probeer het later opnieuw."
+        error_msg = (
+            "An error occurred while displaying the application form. Please try again later."
+            if lang == "en"
+            else "Er is een fout opgetreden bij het tonen van het aanvraagformulier. Probeer het later opnieuw."
+        )
         html_message = format_message(error_msg)
         await websocket.send_text(
             json.dumps({"message": error_msg, "html": str(html_message), "isSystemMessage": True})
@@ -207,7 +219,7 @@ async def handle_application_display(
 
 
 async def handle_application_submission(
-    websocket: WebSocket, bsn: str, services, case_manager, mcp_connector, service_name, law_path=None
+    websocket: WebSocket, bsn: str, services, case_manager, mcp_connector, service_name, law_path=None, lang: str = "nl"
 ):
     """Handle submission of an application from the chat interface."""
     try:
@@ -218,7 +230,11 @@ async def handle_application_submission(
         service_obj = mcp_connector.registry.get_service(service_name)
 
         if not service_obj:
-            error_msg = f"Service '{service_name}' niet gevonden in het systeem."
+            error_msg = (
+                f"Service '{service_name}' not found in the system."
+                if lang == "en"
+                else f"Service '{service_name}' niet gevonden in het systeem."
+            )
             html_message = format_message(error_msg)
             await websocket.send_text(json.dumps({"message": error_msg, "html": str(html_message)}))
             return True
@@ -243,7 +259,11 @@ async def handle_application_submission(
 
         # Send confirmation message
         # This will be the final message shown to the user, no additional LLM response needed
-        confirmation_msg = f"Uw aanvraag voor {rule_spec.get('name')} is succesvol verzonden."
+        confirmation_msg = (
+            f"Your application for {rule_spec.get('name')} has been successfully submitted."
+            if lang == "en"
+            else f"Uw aanvraag voor {rule_spec.get('name')} is succesvol verzonden."
+        )
         html_message = format_message(confirmation_msg)
         await websocket.send_text(
             json.dumps({"message": confirmation_msg, "html": str(html_message), "isSystemMessage": True})
@@ -252,7 +272,11 @@ async def handle_application_submission(
         return True
 
     except Exception as e:
-        error_msg = f"Er is een fout opgetreden bij het indienen van uw aanvraag: {str(e)}"
+        error_msg = (
+            f"An error occurred while submitting your application: {str(e)}"
+            if lang == "en"
+            else f"Er is een fout opgetreden bij het indienen van uw aanvraag: {str(e)}"
+        )
         html_message = format_message(error_msg)
         await websocket.send_text(
             json.dumps({"message": error_msg, "html": str(html_message), "isSystemMessage": True})
@@ -506,7 +530,7 @@ async def websocket_endpoint(
                 law = user_message.get("law")
 
                 if await handle_application_submission(
-                    websocket, bsn, services, case_manager, mcp_connector, service_name, law
+                    websocket, bsn, services, case_manager, mcp_connector, service_name, law, lang=lang
                 ):
                     continue
 
@@ -632,7 +656,11 @@ async def websocket_endpoint(
 
             if service_results:
                 # Let the user know we're executing services
-                processing_msg = "Ik ben even bezig met het uitvoeren van berekeningen... ⏳"
+                processing_msg = (
+                    "Working on the calculations... ⏳"
+                    if lang == "en"
+                    else "Ik ben even bezig met het uitvoeren van berekeningen... ⏳"
+                )
                 html_message = format_message(processing_msg)
                 await websocket.send_text(
                     json.dumps({"message": processing_msg, "html": str(html_message), "isProcessing": True})
@@ -793,6 +821,7 @@ async def websocket_endpoint(
                     messages,
                     f"Toon aanvraagformulier voor {app_form_request['service']}",
                     templates,
+                    lang=lang,
                 )
 
             # Helper function for recursive law chaining and claim processing
@@ -855,7 +884,11 @@ async def websocket_endpoint(
                         continue
 
                     # Let the user know we're executing this service
-                    processing_msg = f"Ik ga nu kijken naar uw recht op {service_name}... ⏳"
+                    processing_msg = (
+                        f"Checking your entitlement for {service_name}... ⏳"
+                        if lang == "en"
+                        else f"Ik ga nu kijken naar uw recht op {service_name}... ⏳"
+                    )
                     html_message = format_message(processing_msg)
                     await websocket.send_text(
                         json.dumps({"message": processing_msg, "html": str(html_message), "isProcessing": True})

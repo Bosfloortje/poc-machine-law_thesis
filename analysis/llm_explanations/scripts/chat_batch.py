@@ -31,6 +31,7 @@ Requires the web server:
 import argparse
 import asyncio
 import json
+import re
 import sys
 import uuid
 from datetime import datetime
@@ -108,6 +109,69 @@ _GENERIC_SCRIPT = [
 ]
 
 
+_OUTCOME_SIGNALS_POS = [
+    "recht op", "heeft recht", "komt in aanmerking", "kunt u aanspraak",
+    "toegekend", "u ontvangt", "u krijgt", "vergunning verleend",
+    "in aanmerking", "wel recht",
+]
+_OUTCOME_SIGNALS_NEG = [
+    "geen recht", "niet in aanmerking", "afgewezen", "geen vergunning",
+    "voldoet niet", "niet gehonoreerd", "helaas niet", "komt u niet",
+]
+
+
+def _check_cf_used(question: str, answer: str) -> dict:
+    """
+    Check whether the LLM actually used the changed input from the counterfactual question.
+
+    Returns a dict with:
+        cf_value_in_response: bool  — the hypothetical value from the question appears in the answer
+        cf_has_outcome:       bool  — the answer contains a clear yes/no outcome signal
+        cf_outcome_positive:  bool | None — True=positive, False=negative, None=unclear
+        cf_used_input:        bool  — best-effort overall: value present AND outcome stated
+    """
+    answer_lower = answer.lower()
+
+    # Extract euro amounts from the question (e.g. "€20.000", "€ 20.000", "€500")
+    euro_amounts = re.findall(r"€\s?[\d.,]+", question)
+    # Also extract plain numbers followed by context words
+    plain_amounts = re.findall(r"\b(\d[\d.,]*)\s*(euro|per maand|spaargeld|inkomen|jaarinkomen)", question, re.I)
+
+    value_found = False
+    for amt in euro_amounts:
+        # Normalise: strip €, spaces, try both . and , as thousands separator
+        digits = re.sub(r"[€\s]", "", amt)
+        variants = {digits, digits.replace(".", ""), digits.replace(",", ""), digits.replace(".", ","), digits.replace(",", ".")}
+        if any(v in answer_lower for v in variants):
+            value_found = True
+            break
+    if not value_found:
+        for digits, _ in plain_amounts:
+            variants = {digits, digits.replace(".", ""), digits.replace(",", "")}
+            if any(v in answer_lower for v in variants):
+                value_found = True
+                break
+
+    # Boolean conditions in question (KVK, SVH) — check if response addresses them
+    boolean_keywords = re.findall(r"\b(kvk|svh|ingeschreven|registratie|sociale hygiëne)\b", question, re.I)
+    for kw in boolean_keywords:
+        if kw.lower() in answer_lower:
+            value_found = True
+            break
+
+    pos = any(s in answer_lower for s in _OUTCOME_SIGNALS_POS)
+    neg = any(s in answer_lower for s in _OUTCOME_SIGNALS_NEG)
+    has_outcome = pos or neg
+    outcome_positive = True if (pos and not neg) else (False if (neg and not pos) else None)
+
+    return {
+        "cf_value_in_response": value_found,
+        "cf_has_outcome": has_outcome,
+        "cf_outcome_positive": outcome_positive,
+        "cf_used_input": value_found and has_outcome,
+    }
+
+
 def get_script(law: str) -> list[str]:
     if law in SCRIPTS:
         return SCRIPTS[law]
@@ -122,6 +186,25 @@ def load_profiles(profiles_file: str) -> dict[str, dict]:
     with open(profiles_file, encoding="utf-8") as f:
         data = yaml.safe_load(f)
     return data.get("profiles", {})
+
+
+def load_done_bsns(output_path: Path) -> set[str]:
+    """Return the set of BSNs that already have a completed conversation record."""
+    done: set[str] = set()
+    if not output_path.exists():
+        return done
+    with open(output_path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if rec.get("record_type") == "conversation" and rec.get("bsn"):
+                done.add(str(rec["bsn"]))
+    return done
 
 
 def save_graph(law: str, bsn: str, profile: dict, graphs_dir: Path) -> None:
@@ -244,11 +327,13 @@ async def run_conversation(
                             if verbose and contestability:
                                 print(f"      contestability: {contestability.get('contestability_score', '?'):.2f}")
 
-                        # Short wait for chained follow-up messages
+                        # Wait for chained follow-up messages (tool call may take time)
                         try:
-                            follow_raw = await asyncio.wait_for(ws.recv(), timeout=3.0)
+                            follow_raw = await asyncio.wait_for(ws.recv(), timeout=timeout)
                             follow_data = json.loads(follow_raw)
                             if follow_data.get("isProcessing"):
+                                continue
+                            if follow_data.get("applicationPanel") or follow_data.get("graphPanel"):
                                 continue
                             follow_text = follow_data.get("message", "")
                             if follow_text:
@@ -262,12 +347,22 @@ async def run_conversation(
                         break
 
                 if assistant_parts:
+                    full_answer = "\n\n".join(assistant_parts)
                     turn_record: dict = {
                         "role": "assistant",
-                        "message": "\n\n".join(assistant_parts),
+                        "message": full_answer,
                     }
                     if current_contestability:
                         turn_record["contestability"] = current_contestability
+                    # For counterfactual turns (2+), check if LLM used the changed input
+                    if i > 1:
+                        cf = _check_cf_used(message, full_answer)
+                        turn_record["cf_check"] = cf
+                        if verbose:
+                            used = "Y" if cf["cf_used_input"] else "N"
+                            val = "Y" if cf["cf_value_in_response"] else "N"
+                            out = "Y" if cf["cf_has_outcome"] else "N"
+                            print(f"      cf_used={used}  value_in_resp={val}  has_outcome={out}")
                     turns.append(turn_record)
 
 
@@ -310,32 +405,50 @@ async def run_batch(
     verbose: bool,
     limit: int | None,
     save_graphs: bool = False,
+    resume: bool = False,
 ) -> None:
     script = get_script(law)
     bsns = list(profiles.keys())
     if limit:
         bsns = bsns[:limit]
 
+    done_bsns: set[str] = set()
+    if resume:
+        done_bsns = load_done_bsns(output_path)
+        remaining = [b for b in bsns if b not in done_bsns]
+        print(f"\nResume: {len(done_bsns)} al gedaan, {len(remaining)} resterend -> {output_path.name}")
+        bsns = remaining
+    else:
+        print(f"\nBatch chat: {len(bsns)} profiles x {len(script)} turns -> {output_path.name}")
+
     total = len(bsns)
-    print(f"\nBatch chat: {total} profiles x {len(script)} turns -> {output_path.name}")
     print(f"Law: {law} | Provider: {provider} | GraphRAG: {graphrag} | Guard: {not no_guard}")
     print("=" * 60)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    file_mode = "a" if resume else "w"
 
-    with open(output_path, "w", encoding="utf-8") as f:
-        # Metadata record
-        f.write(json.dumps({
-            "record_type": "metadata",
-            "timestamp": datetime.now().isoformat(),
-            "law": law,
-            "provider": provider,
-            "graphrag": graphrag,
-            "guard_enabled": not no_guard,
-            "profiles_count": total,
-            "script_turns": len(script),
-            "script": script,
-        }, ensure_ascii=False) + "\n")
+    with open(output_path, file_mode, encoding="utf-8") as f:
+        if not resume:
+            f.write(json.dumps({
+                "record_type": "metadata",
+                "timestamp": datetime.now().isoformat(),
+                "law": law,
+                "provider": provider,
+                "graphrag": graphrag,
+                "guard_enabled": not no_guard,
+                "profiles_count": total,
+                "script_turns": len(script),
+                "script": script,
+            }, ensure_ascii=False) + "\n")
+        else:
+            f.write(json.dumps({
+                "record_type": "metadata",
+                "timestamp": datetime.now().isoformat(),
+                "resumed": True,
+                "skipped_bsns": len(done_bsns),
+                "remaining": total,
+            }, ensure_ascii=False) + "\n")
 
         for i, bsn in enumerate(bsns, 1):
             profile_data = profiles[bsn]
@@ -370,6 +483,13 @@ async def run_batch(
                     print(f"  contestability: {score:.2f}  decisive={'Y' if decisive else 'N'}  counterfactual={'Y' if counterfact else 'N'}")
                 elif verbose:
                     print(f"  {len(assistant_turns)} turns (no contestability data)")
+                # Counterfactual input-use: did the LLM use the changed input in CF turns?
+                cf_turns = [t for t in assistant_turns if t.get("cf_check")]
+                if cf_turns:
+                    cf_used_all = [t["cf_check"]["cf_used_input"] for t in cf_turns]
+                    cf_used_pct = sum(cf_used_all) / len(cf_used_all)
+                    record["cf_used_input_pct"] = round(cf_used_pct, 2)
+                    print(f"  cf_used_input: {sum(cf_used_all)}/{len(cf_used_all)} turns ({cf_used_pct:.0%})")
 
             f.write(json.dumps(record, ensure_ascii=False) + "\n")
 
@@ -417,7 +537,7 @@ Available scripts:
     parser.add_argument(
         "--provider",
         default="claude",
-        choices=["claude", "vlam", "gpt-4o", "gpt-4o-mini", "llama3.1", "llama3.2", "llama3.3", "mistral", "deepseek", "gemma2"],
+        choices=["claude", "haiku", "vlam", "gpt-4o", "gpt-4o-mini", "llama3.1", "llama3.2", "llama3.3", "mistral", "deepseek", "gemma2"],
         help="LLM provider (default: claude)",
     )
     parser.add_argument("--bsn", nargs="+", help="Filter to specific BSN(s)")
@@ -430,6 +550,8 @@ Available scripts:
     parser.add_argument("--verbose", action="store_true", help="Show turn details and guard decisions")
     parser.add_argument("--save-graphs", action="store_true", dest="save_graphs",
                         help="Save decision graph PNG per profile to output/chat/graphs/ (requires networkx + matplotlib)")
+    parser.add_argument("--resume", metavar="FILE",
+                        help="Resume an interrupted batch run: append to FILE, skipping already-completed BSNs")
 
     args = parser.parse_args()
 
@@ -449,12 +571,20 @@ Available scripts:
 
     # Output path
     output_dir = script_dir.parent / "output" / "chat"
-    if args.output:
+    if args.resume:
+        output_path = Path(args.resume)
+        if not output_path.exists():
+            print(f"[FOUT] Resume-bestand niet gevonden: {output_path}", file=sys.stderr)
+            sys.exit(1)
+        resume = True
+    elif args.output:
         output_path = Path(args.output)
+        resume = False
     else:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         mode = "graphrag" if args.graphrag else "chat"
         output_path = output_dir / f"{timestamp}_{args.law}_{args.provider}_{mode}_batch.jsonl"
+        resume = False
 
     base_url = f"ws://{args.host}"
 
@@ -470,6 +600,7 @@ Available scripts:
         verbose=args.verbose,
         limit=args.limit,
         save_graphs=args.save_graphs,
+        resume=resume,
     ))
 
 

@@ -96,8 +96,29 @@ def avg(vals: list) -> float | None:
     return round(sum(vals) / len(vals), 3) if vals else None
 
 
+def _record_key(row: dict) -> tuple:
+    return (row["law"], row["profile"], row["model"], row["approach"])
+
+
+def load_existing_results(path: Path) -> list[dict]:
+    results: list[dict] = []
+    if not path.exists():
+        return results
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                results.append(json.loads(line))
+            except json.JSONDecodeError:
+                continue
+    return results
+
+
 def print_table(results: list[dict], log_fh=None) -> None:
     MODEL_SHORT = {
+        "gpt-4o": "gpt4",
         "gpt-4o-mini": "gpt4",
         "claude-haiku-4-5-20251001": "haiku",
         "llama3.1:8b": "llama3.1",
@@ -139,8 +160,23 @@ def print_table(results: list[dict], log_fh=None) -> None:
 
 
 def main() -> None:
-    with open(LOG_PATH, "w", encoding="utf-8") as log_fh, \
-         open(OUT_PATH, "w", encoding="utf-8") as out_fh:
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Run mDeBERTa NLI faithfulness evaluation.")
+    parser.add_argument("--resume", action="store_true",
+                        help="Resume from existing nli_results.jsonl, skipping already-scored records")
+    args = parser.parse_args()
+
+    existing_results = load_existing_results(OUT_PATH) if args.resume else []
+    done_keys = {_record_key(r) for r in existing_results}
+
+    file_mode = "a" if args.resume else "w"
+
+    with open(LOG_PATH, file_mode, encoding="utf-8") as log_fh, \
+         open(OUT_PATH, file_mode, encoding="utf-8") as out_fh:
+
+        if args.resume:
+            log(f"\n=== RESUMING: {len(existing_results)} records already scored, skipping those ===\n", log_fh)
 
         log(f"Loading mDeBERTa...", log_fh)
         nli_pipe = _get_nli_pipeline()
@@ -149,8 +185,9 @@ def main() -> None:
         trace_index = build_trace_index(GRAPH_FILES)
         log(f"Trace index: {len(trace_index)} entries\n", log_fh)
 
-        all_results: list[dict] = []
-        total_done = 0
+        all_results: list[dict] = list(existing_results)
+        total_done = len(existing_results)
+        new_done = 0
         t_start = time.time()
 
         for file_path in INPUT_FILES:
@@ -186,14 +223,18 @@ def main() -> None:
                     model = record.get("model", "?")
                     approach = record.get("approach", "?")
 
+                    if (law, bsn, model, approach) in done_keys:
+                        continue
+
                     # String-based (fast reference)
                     str_scores = score_faithfulness(record["explanation"], trace, nli_pipe=None)
                     # NLI-based
                     nli_scores = score_faithfulness(record["explanation"], trace, nli_pipe=nli_pipe)
 
                     total_done += 1
+                    new_done += 1
                     elapsed = time.time() - t_start
-                    rate = total_done / elapsed if elapsed > 0 else 0
+                    rate = new_done / elapsed if elapsed > 0 else 0
 
                     str_f = str_scores["faithfulness_score"]
                     nli_f = nli_scores["faithfulness_score"]
