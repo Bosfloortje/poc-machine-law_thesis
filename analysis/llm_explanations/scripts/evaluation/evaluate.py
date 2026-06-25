@@ -2,12 +2,12 @@
 """
 evaluate.py — Main evaluation orchestrator.
 
-Reads JSONL output from extract.py / extract_graphrag.py and runs:
+Reads JSONL output from extract.py / extract_graph.py and runs:
 
   Dim 3: Citizen-focused  (readability, jargon, contestability)
           — always computed; maps to "makkelijkheid burgers" in annotation
   Dim 2: Faithfulness     (NLI-based sentence-level fact matching vs trace)
-          — only for records with evaluation_trace (graphrag approach)
+          — only for records with evaluation_trace (graph approach)
           — maps to "juridische aantoonbaarheid" in annotation
           — requires 'transformers' + mDeBERTa model
 
@@ -29,7 +29,7 @@ Usage:
         --output analysis/llm_explanations/output/eval_results.jsonl
 
     # Filter by law/model/approach:
-    uv run ... --law zorgtoeslag --model gpt-4o --approach graphrag
+    uv run ... --law zorgtoeslag --model gpt-4o --approach graph
 """
 from __future__ import annotations
 
@@ -229,7 +229,7 @@ def summarize(results: list[dict]) -> dict:
         },
     }
 
-    # Dim2 faithfulness (graphrag only — open approach has no trace)
+    # Dim2 faithfulness (graph only — open approach has no trace)
     d2_vals = [r["d2_faithfulness"] for r in results if r.get("d2_faithfulness") is not None]
     all_nli_scores: list[float] = []
     all_string_labels: list[int] = []
@@ -244,7 +244,7 @@ def summarize(results: list[dict]) -> dict:
             "faithfulness_avg": _avg(d2_vals),
             "n": len(d2_vals),
             "nli_auc": _roc_auc(all_string_labels, all_nli_scores),
-            "note": "graphrag approach only (open approach has no evaluation_trace)",
+            "note": "graph approach only (open approach has no evaluation_trace)",
         }
 
     # Gold agreement (kept for backwards compatibility)
@@ -385,7 +385,7 @@ def main() -> None:
         epilog=__doc__,
     )
     parser.add_argument("--input", nargs="+", required=True,
-                        help="JSONL file(s) from extract.py / extract_graphrag.py")
+                        help="JSONL file(s) from extract.py / extract_graph.py")
     parser.add_argument("--gold-dir", default=None,
                         help="Directory with gold YAML templates")
     parser.add_argument("--dim2", action="store_true",

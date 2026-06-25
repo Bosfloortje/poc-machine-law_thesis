@@ -1,13 +1,13 @@
 """
-GraphRAG chat client — identiek aan chat_client.py maar altijd in GraphRAG modus.
+Graph chat client — identiek aan chat_client.py maar altijd in graph modus.
 
-In GraphRAG modus krijgt de LLM een geserialiseerde knowledge graph als JSON
+In graph modus krijgt de LLM een geserialiseerde knowledge graph als JSON
 in plaats van de ruwe engine-output. Bedoeld als vergelijking met de nulmeting.
 
 Usage:
-    uv run python analysis/llm_explanations/scripts/chat_client_graphrag.py
-    uv run python analysis/llm_explanations/scripts/chat_client_graphrag.py --bsn 403987006
-    uv run python analysis/llm_explanations/scripts/chat_client_graphrag.py --bsn 403987006 --verbose
+    uv run python analysis/llm_explanations/scripts/chat_client_graph.py
+    uv run python analysis/llm_explanations/scripts/chat_client_graph.py --bsn 403987006
+    uv run python analysis/llm_explanations/scripts/chat_client_graph.py --bsn 403987006 --verbose
 
 Requires the web server:
     $env:FEATURE_CHAT='1'; uv run web/main.py
@@ -27,14 +27,14 @@ VERBOSE = False
 
 
 async def chat_session(bsn: str, provider: str) -> None:
-    client_id = f"graphrag_{bsn}_{uuid.uuid4().hex[:8]}"
+    client_id = f"graph_{bsn}_{uuid.uuid4().hex[:8]}"
     uri = f"{BASE_URL}/chat/ws/{client_id}"
 
-    print(f"[GraphRAG] Verbinding maken met {uri} (BSN: {bsn}, provider: {provider})...")
+    print(f"[Graph] Verbinding maken met {uri} (BSN: {bsn}, provider: {provider})...")
 
     try:
         async with websockets.connect(uri, ping_interval=20, ping_timeout=120) as ws:
-            await ws.send(json.dumps({"bsn": bsn, "provider": provider, "graphrag": True}))
+            await ws.send(json.dumps({"bsn": bsn, "provider": provider, "graph": True}))
 
             raw = await ws.recv()
             data = json.loads(raw)
@@ -48,7 +48,7 @@ async def chat_session(bsn: str, provider: str) -> None:
                 return
 
             model = data.get("model", "onbekend")
-            print(f"Verbonden. Model: {model} | Modus: GraphRAG")
+            print(f"Verbonden. Model: {model} | Modus: Graph")
             print("Type uw vraag en druk op Enter. Typ 'exit' om te stoppen.\n")
             print("=" * 60)
 
@@ -131,7 +131,7 @@ async def _send_and_receive(ws, message: str) -> None:
 def main() -> None:
     global BASE_URL, VERBOSE
 
-    parser = argparse.ArgumentParser(description="GraphRAG chat client voor machine-law")
+    parser = argparse.ArgumentParser(description="Graph chat client voor machine-law")
     parser.add_argument("--bsn", default="403987006", help="BSN van het profiel (default: 403987006)")
     parser.add_argument("--provider", default="claude",
         choices=["claude", "vlam", "gpt-4o", "gpt-4o-mini", "llama3.1", "llama3.2", "llama3.3", "mistral", "deepseek", "gemma2"],

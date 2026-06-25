@@ -6,7 +6,7 @@ Simulates multi-turn conversations with the chat LLM for a set of profiles,
 using a predefined conversation script per law. Records all turns to JSONL.
 
 Unlike extract.py (which calls the engine directly), this goes through the
-full WebSocket chat — so the LLM, MCP connector, guard and graphrag context
+full WebSocket chat — so the LLM, MCP connector, guard and graph context
 are all active, exactly as a real user would experience.
 
 Usage:
@@ -250,7 +250,7 @@ async def run_conversation(
     provider: str,
     script: list[str],
     base_url: str,
-    graphrag: bool,
+    graph: bool,
     no_guard: bool,
     timeout: float,
     verbose: bool,
@@ -270,7 +270,7 @@ async def run_conversation(
             await ws.send(json.dumps({
                 "bsn": bsn,
                 "provider": provider,
-                "graphrag": graphrag,
+                "graph": graph,
                 "no_guard": no_guard,
             }))
             raw = await asyncio.wait_for(ws.recv(), timeout=30.0)
@@ -399,7 +399,7 @@ async def run_batch(
     provider: str,
     output_path: Path,
     base_url: str,
-    graphrag: bool,
+    graph: bool,
     no_guard: bool,
     timeout: float,
     verbose: bool,
@@ -422,7 +422,7 @@ async def run_batch(
         print(f"\nBatch chat: {len(bsns)} profiles x {len(script)} turns -> {output_path.name}")
 
     total = len(bsns)
-    print(f"Law: {law} | Provider: {provider} | GraphRAG: {graphrag} | Guard: {not no_guard}")
+    print(f"Law: {law} | Provider: {provider} | Graph: {graph} | Guard: {not no_guard}")
     print("=" * 60)
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -435,7 +435,7 @@ async def run_batch(
                 "timestamp": datetime.now().isoformat(),
                 "law": law,
                 "provider": provider,
-                "graphrag": graphrag,
+                "graph": graph,
                 "guard_enabled": not no_guard,
                 "profiles_count": total,
                 "script_turns": len(script),
@@ -463,7 +463,7 @@ async def run_batch(
                 provider=provider,
                 script=script,
                 base_url=base_url,
-                graphrag=graphrag,
+                graph=graph,
                 no_guard=no_guard,
                 timeout=timeout,
                 verbose=verbose,
@@ -520,9 +520,9 @@ Examples:
         --profiles-file data/profiles_500_chat_20260402.yaml \\
         --provider claude
 
-    # GraphRAG mode (full knowledge graph context):
+    # Graph mode (full knowledge graph context):
     uv run python analysis/llm_explanations/scripts/chat_batch.py \\
-        --law zorgtoeslag --provider claude --graphrag
+        --law zorgtoeslag --provider claude --graph
 
 Available scripts:
 """ + "\n".join(f"  {k}: {len(v)} turns" for k, v in SCRIPTS.items()),
@@ -544,7 +544,7 @@ Available scripts:
     parser.add_argument("--limit", type=int, help="Max number of profiles to process")
     parser.add_argument("--host", default="localhost:8000", help="Server host:port (default: localhost:8000)")
     parser.add_argument("--output", default=None, help="Output JSONL path (default: auto-timestamped)")
-    parser.add_argument("--graphrag", action="store_true", help="Use GraphRAG knowledge graph context")
+    parser.add_argument("--graph", action="store_true", help="Use graph knowledge graph context")
     parser.add_argument("--no-guard", action="store_true", dest="no_guard", help="Disable LLM guard")
     parser.add_argument("--timeout", type=float, default=120.0, help="Seconds to wait per LLM response (default: 120)")
     parser.add_argument("--verbose", action="store_true", help="Show turn details and guard decisions")
@@ -582,7 +582,7 @@ Available scripts:
         resume = False
     else:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        mode = "graphrag" if args.graphrag else "chat"
+        mode = "graph" if args.graph else "chat"
         output_path = output_dir / f"{timestamp}_{args.law}_{args.provider}_{mode}_batch.jsonl"
         resume = False
 
@@ -594,7 +594,7 @@ Available scripts:
         provider=args.provider,
         output_path=output_path,
         base_url=base_url,
-        graphrag=args.graphrag,
+        graph=args.graph,
         no_guard=args.no_guard,
         timeout=args.timeout,
         verbose=args.verbose,

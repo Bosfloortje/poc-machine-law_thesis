@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GraphRAG extraction: pass the full decision knowledge graph directly to a large LLM.
+Graph extraction: pass the full decision knowledge graph directly to a large LLM.
 
 Unlike the skeleton approach (extract.py / extraction_generic.py), this script
 serialises the knowledge graph as structured JSON and sends it to a large LLM
@@ -8,8 +8,8 @@ serialises the knowledge graph as structured JSON and sends it to a large LLM
 
 Difference vs skeleton approach
 --------------------------------
-  Skeleton approach   →  graph is flattened to Markdown → small/local LLM
-  GraphRAG approach   →  graph serialised as JSON → large LLM reasons over structure
+  Skeleton approach →  graph is flattened to Markdown → small/local LLM
+  Graph approach    →  graph serialised as JSON → large LLM reasons over structure
 
 The LLM receives:
   - All DECISION nodes  (final outcome + label)
@@ -21,10 +21,10 @@ This lets the LLM traverse the reasoning chain itself and produce a richer,
 more contextual explanation — without a hand-crafted skeleton as intermediary.
 
 Usage (run from project root):
-    uv run python analysis/llm_explanations/scripts/extract_graphrag.py \\
+    uv run python analysis/llm_explanations/scripts/extract_graph.py \\
         --law zorgtoeslag --model claude-sonnet-4-6
 
-    uv run python analysis/llm_explanations/scripts/extract_graphrag.py \\
+    uv run python analysis/llm_explanations/scripts/extract_graph.py \\
         --law zorgtoeslag bijstand alcoholwet \\
         --model claude-opus-4-6 \\
         --profiles 403987006 909990066
@@ -250,7 +250,7 @@ VERBODEN:
 - GEEN feiten uit `feiten_context` noemen"""
 
 
-def create_graphrag_prompt(graph_json: dict, person_name: str) -> str:
+def create_graph_prompt(graph_json: dict, person_name: str) -> str:
     contact = ""
     law_name = graph_json.get("regeling", "")
     if "toeslagen" in law_name.lower() or "toeslag" in law_name.lower():
@@ -330,7 +330,7 @@ def call_llm(model_key: str, system_prompt: str, user_prompt: str, api_key: str 
 # Core extraction
 # ---------------------------------------------------------------------------
 
-def generate_graphrag_explanation(
+def generate_graph_explanation(
     decision_extractor: DecisionGraphExtractor,
     person_name: str,
     model: str,
@@ -341,13 +341,13 @@ def generate_graphrag_explanation(
     """
     graph = decision_extractor.graph  # already extracted by caller
     graph_json = serialize_graph(graph, decision_extractor, person_name)
-    prompt = create_graphrag_prompt(graph_json, person_name)
+    prompt = create_graph_prompt(graph_json, person_name)
 
     explanation, usage = call_llm(model, GRAPHRAG_SYSTEM_PROMPT, prompt, api_key)
     return explanation, graph_json, usage, prompt
 
 
-def run_graphrag_for_law(
+def run_graph_for_law(
     law: str,
     model: str,
     profiles_filter: list[str] | None,
@@ -358,7 +358,7 @@ def run_graphrag_for_law(
     graphs_dir: Path | None = None,
     resume: bool = False,
 ) -> None:
-    """Run the GraphRAG pipeline for one law, write results to JSONL."""
+    """Run the graph pipeline for one law, write results to JSONL."""
     all_profiles = load_profiles()
     profiles_to_process = profiles_filter or list(all_profiles.keys())
     law_yaml = load_law_yaml(law)
@@ -404,7 +404,7 @@ def run_graphrag_for_law(
                 "law": law,
                 "profiles_count": total,
                 "graph_type": "decision",
-                "approach": "graphrag",
+                "approach": "graph",
                 "git_info": get_git_info(),
             }
             out_f.write(json.dumps(metadata, ensure_ascii=False) + "\n")
@@ -462,7 +462,7 @@ def run_graphrag_for_law(
                         print(f"    Graph visualization skipped: {viz_exc}", file=sys.stderr)
 
             try:
-                explanation, graph_json, usage, prompt_used = generate_graphrag_explanation(
+                explanation, graph_json, usage, prompt_used = generate_graph_explanation(
                     decision_extractor, person_name, model, api_key
                 )
             except Exception as exc:
@@ -477,7 +477,7 @@ def run_graphrag_for_law(
             entry = {
                 "record_type": "explanation",
                 "graph_type": "decision",
-                "approach": "graphrag",
+                "approach": "graph",
                 "law": law,
                 "profile": bsn,
                 "profile_name": person_name,
@@ -507,7 +507,7 @@ def run_graphrag_for_law(
             processed += 1
 
     if verbose:
-        print(f"Completed graphrag approach! {processed} profiles.", file=sys.stderr)
+        print(f"Completed graph approach! {processed} profiles.", file=sys.stderr)
         print(f"Output saved to: {output_file}", file=sys.stderr)
 
 
@@ -517,7 +517,7 @@ def run_graphrag_for_law(
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="GraphRAG: pass decision graph directly to large LLM (Claude/GPT-4)."
+        description="Graph: pass decision graph directly to large LLM (Claude/GPT-4)."
     )
     parser.add_argument(
         "--law", nargs="+", required=True,
@@ -581,21 +581,21 @@ def main() -> None:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         n_laws = len(laws)
         n_profiles = len(profiles_filter) if profiles_filter else "all"
-        folder_name = f"{timestamp}_{n_laws}laws_{n_profiles}profiles_graphrag"
+        folder_name = f"{timestamp}_{n_laws}laws_{n_profiles}profiles_graph"
         base_dir = Path(args.output_dir) if args.output_dir else OUTPUT_DIR
         run_dir = base_dir / folder_name / model_key
 
     if verbose:
         _, model_id = AVAILABLE_MODELS[model_key]
-        print(f"GraphRAG run: {n_laws} laws, {n_profiles} profiles, model={model_id}", file=sys.stderr)
+        print(f"Graph run: {n_laws} laws, {n_profiles} profiles, model={model_id}", file=sys.stderr)
         print(f"Output dir: {run_dir}", file=sys.stderr)
 
     for law in laws:
         if verbose:
             print(f"\n=== {law.upper()} ===", file=sys.stderr)
-        output_file = run_dir / f"graphrag_{model_key}_{law}.jsonl"
+        output_file = run_dir / f"graph_{model_key}_{law}.jsonl"
         graphs_dir = run_dir / "graphs" / law if save_graphs else None
-        run_graphrag_for_law(
+        run_graph_for_law(
             law=law,
             model=model_key,
             profiles_filter=profiles_filter,

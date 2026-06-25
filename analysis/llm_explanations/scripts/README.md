@@ -40,7 +40,7 @@ Final thesis results are in `output/final_output_complete/`.
 ### `extraction_generic.py` — core engine
 Shared infrastructure imported by `extract.py`. Contains the `DecisionGraphExtractor`, graph builders, and YAML law loaders. Not run directly.
 
-### `extract_graphrag.py` — graph serializer
+### `extract_graph.py` — graph serializer
 Serializes the decision graph to the structured text format used by the graph approach prompt. Imported by `extract.py`.
 
 ---

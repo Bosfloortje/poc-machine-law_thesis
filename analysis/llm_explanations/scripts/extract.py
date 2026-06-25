@@ -128,7 +128,7 @@ def _call_llm(
 
 def _create_flat_prompt(decision_extractor, person_name: str, law_name: str) -> str:
     """
-    Build a plain-text prompt with the same engine output as the GraphRAG approach,
+    Build a plain-text prompt with the same engine output as the graph approach,
     but without any graph structure. Isolates graph structure contribution from
     mere information availability as an ablation baseline.
     """

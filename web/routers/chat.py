@@ -448,8 +448,8 @@ async def websocket_endpoint(
         selected_provider = connection_data.get("provider") or LLMFactory.get_provider()
         # Guard can be disabled per-connection (e.g. for testing/comparison)
         guard_enabled = not connection_data.get("no_guard", False)
-        # GraphRAG mode: use knowledge graph as LLM context instead of raw service output
-        graphrag_enabled = connection_data.get("graphrag", False)
+        # Graph mode: use knowledge graph as LLM context instead of raw service output
+        graph_enabled = connection_data.get("graph", False)
         # Language preference for LLM responses
         lang = connection_data.get("lang", "nl")
 
@@ -666,8 +666,8 @@ async def websocket_endpoint(
                     json.dumps({"message": processing_msg, "html": str(html_message), "isProcessing": True})
                 )
 
-                # Format the service results — use graph context in graphrag mode
-                if graphrag_enabled:
+                # Format the service results — use graph context in graph mode
+                if graph_enabled:
                     graph_result = build_graph_context(
                         service_results=service_results,
                         services=services,
@@ -786,10 +786,10 @@ async def websocket_endpoint(
             else:
                 valid, guard_explanation = True, "guard disabled"
 
-            # Contestability score — on every assistant turn when graphrag is active
+            # Contestability score — on every assistant turn when graph mode is active
             # rac_traces may be empty for follow-up turns (no service call); decisive_condition falls back to ""
             c_score = None
-            if graphrag_enabled:
+            if graph_enabled:
                 primary_trace = next(iter(rac_traces.values()), {}) if rac_traces else {}
                 c_score = contestability_score(cleaned_message, primary_trace)
 

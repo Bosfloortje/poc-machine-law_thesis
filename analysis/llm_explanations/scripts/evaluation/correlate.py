@@ -9,7 +9,7 @@ then computes Pearson/Spearman correlations between:
 
 Annotation CSV format (one row per annotated explanation):
     record_id,makkelijkheid_burgers,juridische_aantoonbaarheid
-    zorgtoeslag__312847291__haiku__graphrag,4,3
+    zorgtoeslag__312847291__haiku__graph,4,3
     ...
 
   record_id must match: {law}__{profile}__{model}__{approach}
@@ -179,7 +179,7 @@ def main() -> None:
             "d3_flesch": ev.get("d3_flesch"),
             "d3_contestability": ev.get("d3_contestability"),
             "d3_word_count": ev.get("d3_word_count"),
-            # Dim2 (faithfulness — only graphrag)
+            # Dim2 (faithfulness — only graph approach)
             "d2_faithfulness": ev.get("d2_faithfulness"),
             "d2_nli_claim_scores": ev.get("d2_nli_claim_scores"),
             "d2_string_labels": ev.get("d2_string_labels"),
